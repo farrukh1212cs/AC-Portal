@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContactsComponent } from './contacts/contacts.component';
+import { ContactComponent } from './contact.component';
 import { LoginComponent } from '../account/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactdetailComponent } from './contactdetail/contactdetail.component';
 
 
 const routes: Routes = [
-  {path: '', component: ContactsComponent},
-  {path: 'contact', component: ContactsComponent},
-  {path: 'contactdetails', component: ContactdetailComponent},
+ 
+  {path: '', component: ContactComponent, pathMatch: 'full'},
+  {path: ':id', component: ContactdetailComponent},
+  
+
 
 ]
-
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     RouterModule.forChild(routes)
   ]
 })

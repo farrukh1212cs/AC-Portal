@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -13,6 +13,7 @@ export class ContactdetailComponent {
     this.route.paramMap.subscribe(params => {
       const contactId =  params.get('id');
       this.contact = history.state.model;
+      
       console.log(this.contact);
     });
   }
