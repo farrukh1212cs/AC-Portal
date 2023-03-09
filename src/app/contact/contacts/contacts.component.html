@@ -99,7 +99,7 @@
                                         <tbody>
                                            
                                             
-                                            <tr *ngFor="let contact of contacts">
+                                            <tr *ngFor="let contact of contacts"  (click)="redirect(contact)">
                                                 <td>
                                                     <div class="d-flex">{{contact.firstName + ' ' + contact.lastName}} </div>
                                                     <!-- <div class="d-flex text-muted">Mon Nov 8, 1:00PM - 2:30PM

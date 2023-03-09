@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AddcontactComponent } from '../addcontact/addcontact.component';
 import { ContactService } from '../contact.service';
 
@@ -11,7 +12,7 @@ import { ContactService } from '../contact.service';
 export class ContactsComponent {
  
   contacts: any[] = [];
- constructor(private contactService: ContactService,private dialog: MatDialog) {
+ constructor( private router: Router,private contactService: ContactService,private dialog: MatDialog) {
 
 
  }
@@ -39,4 +40,8 @@ export class ContactsComponent {
   openAddContactsModal() {
     this.dialog.open(AddcontactComponent);
   }
+   redirect(contact:any){
+    console.log(contact);
+    this.router.navigate(['contactdetails', contact.id], { state: { model: contact }});
+  };
 }
