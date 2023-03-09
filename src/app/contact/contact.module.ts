@@ -5,12 +5,14 @@ import { ContactRoutingModule } from './contact-routing.module';
 import { CoreModule } from '../core/core.module';
 import { AddcontactComponent } from './addcontact/addcontact.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ContactdetailComponent } from './contactdetail/contactdetail.component';
 
 
 @NgModule({
   declarations: [
     ContactsComponent,
-    AddcontactComponent
+    AddcontactComponent,
+    ContactdetailComponent
   ],
   imports: [
     CommonModule,
