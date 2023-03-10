@@ -26,10 +26,9 @@ export class ContactComponent {
     this.contactService.allResult().subscribe(
       res => {
         this.contacts = res.payload;
-       console.log(res);
       },
       err => {
-        alert("UserName Or Password Is Invalid!");
+        alert(err);
       },
       () => {
        

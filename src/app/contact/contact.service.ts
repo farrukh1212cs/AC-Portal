@@ -15,4 +15,9 @@ export class ContactService {
   allResult() {
     return this.http.get<any>(this.baseUrl + "/Contact/allContacts");
   }
+
+  //-----------officeLocations
+  allOfficeLocations(){
+    return this.http.get<any>(this.baseUrl + "/OfficeLocation/officelocationsdropdown");
+  }
 }

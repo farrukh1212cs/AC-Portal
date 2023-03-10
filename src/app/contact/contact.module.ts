@@ -6,8 +6,11 @@ import { CoreModule } from '../core/core.module';
 import { AddcontactComponent } from './addcontact/addcontact.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ContactdetailComponent } from './contactdetail/contactdetail.component';
-import { RouterModule } from '@angular/router';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input'; // Import this if you want to use the input component within MatFormField
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,13 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     CoreModule,
     MatDialogModule,
-    ContactRoutingModule
+    ContactRoutingModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    CommonModule 
   ]
 })
 export class ContactModule { }
