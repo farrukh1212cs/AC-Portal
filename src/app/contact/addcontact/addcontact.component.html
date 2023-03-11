@@ -1,5 +1,5 @@
 
-<div class="modal-dialog modal-dialog- modal-xl">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
                   <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel17">Add Contact</h4>
@@ -143,18 +143,69 @@
 
                      </div>
                      <!-- GenernalInformation -->
+                    
                      <div class="col-md-12">
-                        <div className="divider divider-start">
-                           <div className="divider-text gray-2px">
+
+                        <div class="divider divider-start">
+                           <div class="divider-text gray-2px">
                                <h3>General Information</h3>
                            </div>
                        </div>
-                       <div class="row"></div>
+                       
+                       <div class="row">
+                        <div class="col-md-6">
+                           <div class="row">
+                              <div class="col-md-6">
+                                    <div class="mb-1"><label class="form-label" for="displayName">Display Name</label><input type="text" name="displayName" class="form-control" id="displayName" placeholder="John" value=""></div>
+                                    <div class="mb-1"><label class="form-label" for="address1">Address 1</label><input type="text" name="address1" class="form-control" id="address1" placeholder="ABC street" value=""></div>
+                                    <div class="mb-1"><label class="form-label" for="address2">Address 2</label><input type="text" name="address2" class="form-control" id="address2" placeholder="DEF address" value=""></div>
+                                    <div class="mb-1"><label class="form-label" for="city">City</label><input type="text" name="city" class="form-control" id="city" placeholder="City" value=""></div>
+                                    <div class="mb-1">
+                                       <label class="form-label" for="city">State</label>
+                                       <select class="form-select" id="status"
+                                       aria-invalid="false">
+                                       <option>Sales Rep</option>
+                                       <option>Blocked</option>
+                                       <option>Deactivated</option>
+                                       </select>
+                                    </div>
+                                    <div class="mb-1"><label class="form-label" for="zip">Zip</label><input type="text" name="zip" class="form-control" id="zip" placeholder="Zip" value=""></div>
+                                 </div>
+                              <div class="col-md-6">
+                                 <div class="mb-1"><label class="form-label" for="email">Email</label><input type="email" name="email" class="form-control" id="email" placeholder="John@xxxx.com" value=""></div>
+                                 <div class="mb-1"><label class="form-label" for="website">Website</label><input type="url" name="website" class="form-control" id="website" placeholder="http://abc.com" value=""></div>
+                                 <div class="mb-1"><label class="form-label" for="faxNumber">Fax Number</label><input type="text" name="faxNumber" class="form-control" id="faxNumber" placeholder="xxxx..." value=""></div>
+                                 <div class="mb-1"><label class="form-label" for="mobileNumber">Mobile Number</label><input type="text" name="mobileNumber" class="form-control" id="mobileNumber" placeholder="xxxx..." value=""></div>
+                                 <div class="mb-1"><label class="form-label" for="homeNumber">Home Number</label><input type="text" name="homeNumber" class="form-control" id="homeNumber" placeholder="xxxx..." value=""></div>
+                                 <div class="mb-1"><label class="form-label" for="officeNumber">Office Number</label><input type="text" name="officeNumber" class="form-control" id="officeNumber" placeholder="xxxx..." value=""></div>
+                              </div>
+
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="mb-1"><label class="form-label" for="startDate">Start Date</label><input type="date" name="startDate" class="form-control" id="startDate" value=""></div>
+                                    <div class="mb-1"><label class="form-label" for="endDate">End Date</label><input type="date" name="endDate" class="form-control" id="endDate" value=""></div>
+                                    <div class="mb-1"><label class="form-label">Tags</label><span><input type="text" class="form-control" placeholder="Add a tag" value=""></span></div>
+
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="mb-1"><label class="form-label" for="note">Note</label><input type="text" name="note" class="form-control" id="note" placeholder="Some note..." value=""></div>
+                                    <div class="mb-1"><label class="form-label" for="description">Description</label><textarea name="description" class="form-control" id="description" placeholder="Description..."></textarea></div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="divider divider-start"><div class="divider-text gray-2px"><h3>Additional Information</h3></div></div>
+                                 </div>
+                              </div>
+                        </div>
+
+                       </div>
 
 
                      </div>
                   </div>
-
+                  <div class="modal-footer"><button type="submit" class="btn btn-primary me-1">Add</button></div>
       </div>
 </div>
 
