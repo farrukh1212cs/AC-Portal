@@ -29,18 +29,15 @@ export class LoginComponent {
       password: ['', [Validators.required]]
     });
   }
-  login() {
-    this.authService.login(this.userLoginForm.value).subscribe(
-      res => {
-        this.localStorage.set("Obj", res.payload);
-      },
-      err => {
-        alert("UserName Or Password Is Invalid!");
-      },
-      () => {
-        alert("Logged in successfully");
-        this.router.navigate(['./home']);
-      }
-    );
+  async login() {
+    try {
+      const res = await this.authService.login(this.userLoginForm.value).toPromise();
+      this.localStorage.set("Obj", res.payload);
+      alert("Logged in successfully");
+      this.router.navigate(['./home']);
+    } catch (err) {
+      alert("UserName Or Password Is Invalid!");
+    }
   }
+  
 }

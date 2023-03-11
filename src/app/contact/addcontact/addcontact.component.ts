@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ContactService } from '../contact.service';
 import { MatCardModule } from '@angular/material/card';
 import { FormControl } from '@angular/forms';
+import { CreateContactDto } from '../CreateContactDto';
 
 
 @Component({
@@ -44,4 +45,26 @@ export class AddcontactComponent {
       }
     );
   }
+ 
+  createNewContact() {
+    const newContact: CreateContactDto = {
+      firstName: 'John',
+      lastName: 'Doe',
+      company: 'Acme Inc.'
+      
+      // ... other properties of CreateContactDto
+    };
+  
+    this.contactService.createContact(newContact).subscribe(
+      (response) => {
+        console.log(response);
+        // handle success response
+      },
+      (error) => {
+        console.log(error);
+        // handle error response
+      }
+    );
+  }
+  
 }

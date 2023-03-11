@@ -38,6 +38,7 @@ export class ContactComponent {
 
   openAddContactsModal() {
     this.dialog.open(AddcontactComponent);
+    
   }
    redirect(contact:any){
     this.router.navigate(['/contact', contact.id], { state: { model: contact }});
