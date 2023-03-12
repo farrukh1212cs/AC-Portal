@@ -57,6 +57,7 @@ export class JobsComponent {
       });
     }
     else {
+      data = data[0];
       data.FormTitle = "Update Job";
       data.Request_Type = "Edit";
       dialogRef = this.dialog.open(AddJobsComponent, {
