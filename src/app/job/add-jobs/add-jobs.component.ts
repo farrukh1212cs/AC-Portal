@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { FormControl } from '@angular/forms';
 import { JobService } from '../job.service';
 import { CreateJobDto } from '../CreateJobsDto';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-add-jobs',
@@ -13,9 +14,12 @@ import { CreateJobDto } from '../CreateJobsDto';
 export class AddJobsComponent {
   officeLocationDropdownValues: any = [];
   public model: any = {};
+  public modelMain: any = {};
 
-  constructor(private dialogRef: MatDialogRef<AddJobsComponent>, private jobService: JobService, private dialog: MatDialog) {
-
+  constructor(private dialogRef: MatDialogRef<AddJobsComponent>, private jobService: JobService, private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any,) {
+    debugger;
+    this.modelMain = data;
+    this.model = Object.assign({}, this.modelMain);
 
   }
 

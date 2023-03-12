@@ -36,9 +36,40 @@ export class JobsComponent {
     );
   }
 
-  openAddJobsModal() {
-    this.dialog.open(AddJobsComponent);
+  //openAddJobsModal() {
+  //  this.dialog.open(AddJobsComponent);
+  //}
+
+  openAddJobsModal(data:any): void {
+    debugger;
+    let dialogRef: any = {};
+    if (data == null) {
+      data = {};
+      data.FormTitle = "Add Job";
+      data.Request_Type = "Add";
+      dialogRef = this.dialog.open(AddJobsComponent, {
+        width: 'auto',
+        height: 'auto',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result:any) => {
+      });
+    }
+    else {
+      data.FormTitle = "Update Job";
+      data.Request_Type = "Edit";
+      dialogRef = this.dialog.open(AddJobsComponent, {
+        width: 'auto',
+        height: 'auto',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result: any) => {
+      });
+    }
   }
+
   redirect(jobs:any){
      this.router.navigate(['/jobs', jobs.id], { state: { model: jobs }});
   
