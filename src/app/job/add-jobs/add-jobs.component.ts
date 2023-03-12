@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { FormControl } from '@angular/forms';
-/*import { CreateContactDto } from '../CreateContactDto';*/
 import { JobService } from '../job.service';
 
 @Component({
