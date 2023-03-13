@@ -11,6 +11,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'; // Import this if you want to use the input component within MatFormField
 import { MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon'; 
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
-    CommonModule 
+    CommonModule ,
+    MatDatepickerModule,
+    MatNativeDateModule, 
+    MatIconModule
   ]
 })
 export class ContactModule { }
