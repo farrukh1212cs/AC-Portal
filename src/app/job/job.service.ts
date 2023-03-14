@@ -22,21 +22,51 @@ export class JobService {
   allOfficeLocations() {
     return this.http.get<any>(this.baseUrl + "/OfficeLocation/officelocationsdropdown");
   }
+  allSalesRep() {
+    return this.http.get<any>(this.baseUrl + "/SalesRepresentative/getsalesrepresentative");
+  }
+  allWorkFlows() {
+    return this.http.get<any>(this.baseUrl + "/WorkFlow/allWorkFlows");
+  }
+  allStatus() {
+    return this.http.get<any>(this.baseUrl + "/Status/allStatuses");
+  }
+  allSubcontractors() {
+    return this.http.get<any>(this.baseUrl + "/SubContractor/getsubcontractors");
+  }
+  allRelatedContacts() {
+    return this.http.get<any>(this.baseUrl + "/RelatedContact/getRelatedContactsDropDown");
+  }
+  ///TeamMember/getteammebers
+  allTeamMembers() {
+    return this.http.get<any>(this.baseUrl + "/TeamMember/getteammebers");
+  }
+  allSource() {
+    return this.http.get<any>(this.baseUrl + "/DropDown/allDropDownsList?PageName=addcontact");
+  }
+  allState() {
+    return this.http.get<any>(this.baseUrl + "/States");
+  }
 
   //----------Add Jobs
-  createJob(formData:any): Observable<any> {
+  createJob(Jobs: CreateJobDto): Observable<any> {
+    debugger;
     const url = `${this.baseUrl}/addJob`;
-    //const formData = new FormData();
-    //formData.append('id', Job.id);
-    //formData.append('name', Job.name);
-    //formData.append('address1', Job.address1);
-    //formData.append('addressLine1', "123");
-    //formData.append('addressLine2', "123");
-    //formData.append('city', "123");
-    //formData.append('email', "123@g.com");
-    //formData.append('faxNo', "123");
-    //formData.append('displayName', "123");
-    //formData.append('discription', "123");
-    return this.http.post<any>("https://localhost:7063/api/Job/addJob", formData);
+    const formData = new FormData();
+    formData.append('address1', Jobs?.address1?.toString() ?? "");
+    formData.append('address2', Jobs?.address2?.toString() ?? "");
+    formData.append('city', Jobs?.city?.toString() ?? "");
+    formData.append('zip', Jobs?.zip?.toString() ?? "");
+    formData.append('name', Jobs?.name?.toString() ?? "");
+    formData.append('startDate', Jobs?.startDate?.toISOString() ?? "");
+    formData.append('endDate', Jobs?.endDate?.toISOString() ?? "");
+    formData.append('description', Jobs?.description?.toString() ?? "");
+    formData.append('leadSource', Jobs?.leadSource?.toString() ?? "");
+    formData.append('state', Jobs?.state?.toString() ?? "");
+    formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
+    formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
+    formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
+    formData.append('jobStatus', Jobs?.jobStatus?.toString() ?? "");
+    return this.http.post<any>(this.baseUrl + "/Jobs/addJob", formData);
   }
 }
