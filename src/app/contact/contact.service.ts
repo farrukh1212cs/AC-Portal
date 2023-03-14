@@ -69,7 +69,6 @@ export class ContactService {
 
 createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<any> {
 debugger;
-  const url = `${this.baseUrl}/addContact`;
   const formData = new FormData();
   formData.append('firstName', contact.firstName);
   formData.append('lastName', contact.lastName);
@@ -149,7 +148,7 @@ debugger;
     formData.append('file', img, img.name);
   }
   console.log(formData);
-  return this.http.post<any>("https://localhost:7063/api/Contact/addContact", formData);
+  return this.http.post<any>(this.baseUrl + "/Contact/addContact", formData);
 }
   //--------------
 }
