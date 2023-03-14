@@ -1,7 +1,8 @@
 import { Component, OnInit , ViewChild } from '@angular/core';
-import { FormArray, FormBuilder,FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
 import { ContactService } from '../contact.service';
 import { CreateContactDto } from '../CreateContactDto';
+import { CreatePhoneNumbersDto } from '../CreatePhoneNumbersDto';
 
 
 @Component({
@@ -11,10 +12,12 @@ import { CreateContactDto } from '../CreateContactDto';
 })
 export class AddcontactComponent  implements OnInit {
   contactForm!: FormGroup;
+  phoneNumbersForm!: FormGroup;
   contactDto?: CreateContactDto;
+  phoneTypes: any[] = [];
+  phoneNumbers: { phoneNumber: string, typeId: string, typeName: string}[] = [];
+  ph : CreatePhoneNumbersDto[] = [];
   //-----------
-
- 
  
   //-----------DropDowns
   salesReps : any;
@@ -58,12 +61,20 @@ export class AddcontactComponent  implements OnInit {
       this.getRelatedcontacts(),
       this.getTeamMembers(),
       this.getSources(),
-      this.getState()
+      this.getState(),
+      this.getPhoneTypes()
     ]).then(() => {
       // All asynchronous functions have completed
     }).catch((error) => {
       console.error('An error occurred while fetching data:', error);
     });
+    //----------PH
+    this.phoneNumbersForm = this.formBuilder.group({
+      phoneNumber: ['', Validators.required],
+      type : ['', Validators.required],
+      typeId: ['', Validators.required]
+    });
+    //---------
     this.contactForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -97,70 +108,68 @@ export class AddcontactComponent  implements OnInit {
         this.createPhoneNumberFormGroup()
       ]),
       customFields: this.formBuilder.array([
-        this.createCustomFieldFormGroup()
+        //this.createCustomFieldFormGroup()
       ])
     });
   }
  
+  //---------
   createPhoneNumberFormGroup(): FormGroup {
     return this.formBuilder.group({
-      type: [''],
-      number: ['']
+      typeId: [''],
+      phoneNumber: [''],
+      typeName : ['']
     });
   }
-  addPhoneNumber(): void {
-    const phoneNumbers = this.contactForm.get('phoneNumbers') as FormArray;
-    phoneNumbers.push(this.createPhoneNumberFormGroup());
-  }
-  removePhoneNumber(index: number): void {
-    const phoneNumbers = this.contactForm.get('phoneNumbers') as FormArray;
-    phoneNumbers.removeAt(index);
-  }
-  createCustomFieldFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      name: [''],
-      value: ['']
-    });
-  }  
-  addCustomField(): void {
-    const customFields = this.contactForm.get('customFields') as FormArray;
-    customFields.push(this.createCustomFieldFormGroup());
-  }
 
-  removeCustomField(index: number): void {
-    const customFields = this.contactForm.get('customFields') as FormArray;
-    customFields.removeAt(index);
-  }
-
-  get phoneNumbers(): FormArray {
-    return this.contactForm.get('phoneNumbers') as FormArray;
-  }
-
-  get customFields(): FormArray {
-    return this.contactForm.get('customFields') as FormArray;
-  }
-  formData = new FormData();
-  upload(e: any) {
-    this.formData.append("file", this.fileInput.nativeElement.files[0]);
-  }
-  onSubmit(): void {
-  
-
-   
-    this.contactDto = this.contactForm.value;
-
-    
-    this.contactService.createContact(this.contactForm.value,this.fileInput.nativeElement.files[0]).subscribe(
-      res => {
-       console.log(res);
-      },
-      err => {
-        alert(err);
-      },
-      () => {
-  
+  //----------
+  addPhoneNumber(types : any): void {
+    debugger;
+    const phoneNumber = this.phoneNumbersForm.value.phoneNumber.trim();
+    const typeId = this.phoneNumbersForm.value.typeId;
+    const  typeName = types.find((x:any)=>x.id===typeId).value ;
+    if(this.phoneNumbers.find(pn => pn.phoneNumber === phoneNumber)){
+      const index = this.phoneNumbers.findIndex(pn => pn.phoneNumber === phoneNumber);
+      if (index >= 0) {
+        this.phoneNumbers.splice(index, 1);
       }
-    );
+    }
+
+    if (phoneNumber && typeId && !this.phoneNumbers.find(pn => pn.phoneNumber === phoneNumber)) {    
+      this.phoneNumbers.push({ phoneNumber, typeId,typeName });
+      this.phoneNumbersForm.reset();
+    }
+  }
+
+  removePhoneNumber(phoneNumber: string): void {
+    const index = this.phoneNumbers.findIndex(pn => pn.phoneNumber === phoneNumber);
+    if (index >= 0) {
+      this.phoneNumbers.splice(index, 1);
+    }
+  }
+ 
+
+  // formData = new FormData();
+  // upload(e: any) {
+  //   this.formData.append("file", this.fileInput.nativeElement.files[0]);
+  // }
+  onSubmit(): void {
+    this.contactForm.markAllAsTouched();
+    if (this.contactForm.valid) {
+      this.contactDto = this.contactForm.value
+      this.contactService.createContact(this.contactForm.value,this.fileInput.nativeElement.files[0],this.phoneNumbers).subscribe(
+        res => {
+         console.log(res);
+        },
+        err => {
+          alert(err);
+        },
+        () => {
+    
+        }
+      );
+    }   
+    
 
     // Call your service to save the contact data
   }//==================================================================
@@ -265,6 +274,20 @@ getSources(){
     res => {
       const sourceTypeDropdown = res.payload[0].dropDown.find((dropdown : any) => dropdown.dropDownName === "SourceType");
       this.sources = sourceTypeDropdown.dropDownValues;;
+    },
+    err => {
+      alert(err);
+    },
+    () => {
+
+    }
+  );
+}
+getPhoneTypes(){
+  this.contactService.allphoneTypes().subscribe(
+    res => {
+      const sourcePhoneTypes = res.payload[0].dropDown.find((dropdown : any) => dropdown.dropDownName === "MobileType");
+      this.phoneTypes = sourcePhoneTypes.dropDownValues;;
     },
     err => {
       alert(err);

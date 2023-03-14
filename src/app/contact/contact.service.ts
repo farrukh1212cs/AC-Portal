@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CreateContactDto } from './CreateContactDto';
+import { CreatePhoneNumbersDto } from './CreatePhoneNumbersDto';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,9 @@ export class ContactService {
   allSource(){
     return this.http.get<any>(this.baseUrl + "/DropDown/allDropDownsList?PageName=addcontact");
   }
+  allphoneTypes(){
+    return this.http.get<any>(this.baseUrl + "/DropDown/allDropDownsList?PageName=addcontact");
+  }
   allState(){
     return this.http.get<any>(this.baseUrl + "/States");
   }
@@ -63,13 +67,13 @@ export class ContactService {
   }
 
 
-createContact(contact: CreateContactDto, img : any): Observable<any> {
-
+createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<any> {
+debugger;
   const url = `${this.baseUrl}/addContact`;
   const formData = new FormData();
   formData.append('firstName', contact.firstName);
   formData.append('lastName', contact.lastName);
-formData.append('company', contact.company);
+  formData.append('company', contact.company);
   formData.append('addressLine1', contact?.addressLine1?.toString() ?? "");
   formData.append('addressLine2', contact?.addressLine2?.toString() ?? "");
   formData.append('city', contact?.city?.toString() ?? "");
@@ -90,6 +94,17 @@ formData.append('company', contact.company);
   formData.append('workFlowId', contact?.workFlowId?.toString() ?? "");
   formData.append('statusId', contact?.statusId?.toString() ?? "");
   contact?.relatedContacts?.forEach((id) => formData.append('relatedContacts[]', id.toString()));
+  
+
+
+
+  phonesno?.forEach((phoneNumber : any, index : number) => {
+    const keyPrefix = `phoneNumbers[${index}]`;  
+    formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);
+    formData.append(`${keyPrefix}.typeId`, phoneNumber.typeId);
+  });
+
+ 
   // if (contact.tags) {
   //   contact.tags.forEach((tag) => formData.append('tags[]', tag));
   // }
@@ -97,22 +112,44 @@ formData.append('company', contact.company);
   //   formData.append('note.title', contact.note.title);
   //   formData.append('note.text', contact.note.text);
   // }
-  // if (contact.phoneNumbers) {
-  //   contact.phoneNumbers.forEach((phone) => {
-  //     formData.append(`phoneNumbers[${phone.type}].number`, phone.number);
-  //     formData.append(`phoneNumbers[${phone.type}].extension`, phone.extension);
-  //   });
-  // }
+
+
+  if (phonesno) {
+
+   
+
+
+    // const createPhoneNumbersDtoArray: any = [];
+    // phonesno.forEach((item:any)=>{
+    //   console.log(item);
+    //   createPhoneNumbersDtoArray.phoneNumber = item.phoneNumber;
+    //   createPhoneNumbersDtoArray.typeId = item.typeId;
+    //   formData.append('phoneNumbers[]',JSON.stringify(createPhoneNumbersDtoArray));      
+    // })
+
+    // assume models is an array of models
+
+
+    
+
+
+    // createPhoneNumbersDtoArray.forEach((phoneNumber) => {
+    //   formData.append('phoneNumbers', JSON.stringify(phoneNumber));
+    // });
+    // formData.append('phoneNumbers[]', createPhoneNumbersDtoArray);
+  }
   // if (contact.customFields) {
   //   contact.customFields.forEach((field) => {
   //     formData.append(`customFields[${field.fieldName}].fieldValue`, field.fieldValue);
   //     formData.append(`customFields[${field.fieldName}].fieldType`, field.fieldType.toString());
   //   });
   // }
+  debugger;
   if (img != null) {
     formData.append('file', img, img.name);
   }
-  return this.http.post<any>(this.baseUrl + "/Contact/addContact", formData);
+  console.log(formData);
+  return this.http.post<any>("https://localhost:7063/api/Contact/addContact", formData);
 }
   //--------------
 }

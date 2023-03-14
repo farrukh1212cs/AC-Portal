@@ -35,7 +35,8 @@
                                                              
                                                                <mat-label>First Name</mat-label>
                                                                <input class="form-control form-control-sm" matInput formControlName="firstName" required>
-                                                               <mat-error *ngIf="contactForm.get('firstName')?.touched && contactForm.get('firstName')?.invalid">Please enter a first name</mat-error>
+                                                               <mat-error *ngIf="contactForm.get('firstName')?.touched && contactForm.get('firstName')?.invalid"
+                                                               >Please enter a first name</mat-error>
                                                         
 
                                                          </div>
@@ -53,48 +54,55 @@
                                           <div class="col-md-3">
                                                 <div class="mb-1">
                                                    <mat-label>Office Location</mat-label>
-                                                   <mat-select class="form-control form-control-sm" formControlName="officeLocationId" required>
-                                                      <mat-option value="">Choose an Office</mat-option>
+                                                   <mat-select class="form-control form-control-sm" formControlName="officeLocationId" required placeholder="Choose an office">
                                                       <mat-option *ngFor="let ofc of officeLocations" [value]="ofc.id">
                                                          {{ofc.name}}
                                                        </mat-option>
                                                    </mat-select>
+                                                   <mat-error *ngIf="contactForm.get('officeLocationId')?.touched && contactForm.get('officeLocationId')?.value === ''">
+                                                      Please select an office location
+                                                    </mat-error>
                                                 </div>
                                                 <div class="mb-1">
                                                    <mat-label>Workflow</mat-label>
                                                    <mat-select formControlName="workFlowId" class="form-control form-control-sm" placeholder="Choose a Workflow" required>
-                                                      <mat-option value="">Choose an workflow</mat-option>
                                                       <mat-option *ngFor="let wf of workflows" [value]="wf.id">
                                                          {{wf.workFlowName}}
                                                        </mat-option>
                                                    </mat-select>
+                                                   <mat-error *ngIf="contactForm.get('workFlowId')?.touched && contactForm.get('workFlowId')?.value === ''">
+                                                      Please select an workflow
+                                                    </mat-error>
                                                 </div>
                                                 <div class="mb-1">                                                   
                                                       <mat-label className="form-label">Status</mat-label>
-                                                      <mat-select class="form-control form-control-sm" formControlName="statusId" required>
-                                                        <mat-option value="">Choose a Status</mat-option>
+                                                      <mat-select class="form-control form-control-sm" formControlName="statusId" required placeholder="Choose a status">
                                                         <mat-option *ngFor="let ss of statuses" [value]="ss.id">
                                                          {{ss.statusName}}
                                                        </mat-option>
                                                       </mat-select>
-                                               
+                                                      <mat-error *ngIf="contactForm.get('statusId')?.touched && contactForm.get('statusId')?.value === ''">
+                                                         Please select an status
+                                                       </mat-error>
                                                 </div>
                                     </div>
                                     <div class="col-md-3">
                                        <div class="mb-1">
                                           <mat-label>Sales Representative</mat-label>
-                                          <mat-select formControlName="salesRepId" class="form-control form-control-sm" required>
-                                             <mat-option value="">Choose sales representative</mat-option>
+                                          <mat-select formControlName="salesRepId" class="form-control form-control-sm" required placeholder="Choose sales representative" required>
+                                      
                                             <mat-option *ngFor="let salesRep of salesReps" [value]="salesRep.id">
                                               {{salesRep.name}}
                                             </mat-option>
                                           </mat-select>
+                                          <mat-error *ngIf="contactForm.get('salesRepId')?.touched && contactForm.get('salesRepId')?.value === ''">
+                                             Please select an sales representative
+                                           </mat-error>
                                        </div>
                                        <div class="mb-1">
                                           <mat-label>Source</mat-label>
-                                          <mat-select formControlName="sourceId" class="form-control form-control-sm">
-                                            <mat-option value="">Choose a source</mat-option>
-                                            <mat-option *ngFor="let src of sources" [value]="src.id">
+                                          <mat-select formControlName="sourceId" class="form-control form-control-sm" placeholder="Choose a source">
+                                          <mat-option *ngFor="let src of sources" [value]="src.id">
                                              {{src.value}}
                                            </mat-option>
                                           </mat-select>
@@ -102,7 +110,6 @@
                                        <div class="mb-1">
                                           <mat-label>Subcontractor</mat-label>
                                           <mat-select formControlName="subContractorId" class="form-control form-control-sm" placeholder="Choose a subcontractor" multiple>
-                                             <mat-option value="">Choose sales sub contractor</mat-option>
                                              <mat-option *ngFor="let sc of subcontractors" [value]="sc.id">
                                                 {{sc.name}}
                                               </mat-option>
@@ -113,7 +120,6 @@
                                        <div class="mb-1"> 
                                           <mat-label>Related Contacts</mat-label>
                                           <mat-select formControlName="relatedContacts" class="form-control form-control-sm" placeholder="Choose a related contacts" multiple>
-                                             <mat-option value="">Choose related contacts</mat-option>
                                              <mat-option *ngFor="let rl of relatedcontacts" [value]="rl.id">
                                                 {{rl.name}}
                                               </mat-option>
@@ -123,7 +129,6 @@
                                          
                                        <mat-label>Assigned Team Members</mat-label>
                                        <mat-select formControlName="teamMembers" class="form-control form-control-sm" placeholder="Choose a team members" multiple>
-                                          <mat-option value="">Choose team members</mat-option>
                                           <mat-option *ngFor="let tm of teamMembers" [value]="tm.id">
                                              {{tm.name}}
                                            </mat-option>
@@ -168,12 +173,14 @@
                                     </div>
                                     <div class="mb-1">
                                        <mat-label className="form-label">State</mat-label>
-                                       <mat-select class="form-control form-control-sm" formControlName="stateId" required>
-                                         <mat-option value="">Choose a state</mat-option>   
+                                       <mat-select class="form-control form-control-sm" formControlName="stateId" required placeholder="Choose a state"> 
                                          <mat-option *ngFor="let state of states" [value]="state.id">
                                           {{state.name}}
                                         </mat-option>
                                        </mat-select>
+                                       <mat-error *ngIf="contactForm.get('stateId')?.touched && contactForm.get('stateId')?.value === ''">
+                                          Please select a state
+                                        </mat-error>
                                     </div>
                                     <div class="mb-1">
                                        <mat-label>Zip Code</mat-label>
@@ -217,7 +224,37 @@
                                        <mat-datepicker #endDatePicker></mat-datepicker>
 
                                     </div>
-                                    <div class="mb-1"><label class="form-label">Tags</label><span><input type="text" class="form-control form-control-sm" placeholder="Add a tag" value=""></span></div>
+                                    <div class="mb-1"  [formGroup]="phoneNumbersForm">
+                                       <mat-label>Phone Number</mat-label>
+                                       <input matInput class="form-control form-control-sm" formControlName="phoneNumber" placeholder="Enter phone number">
+                                       
+                                       <mat-label>Type</mat-label>
+                                       <mat-select formControlName="typeId" placeholder="Select type" class="form-control form-control-sm">
+                                         <mat-option *ngFor="let type of phoneTypes" [value]="type.id">{{ type.value }}</mat-option>
+                                       </mat-select>
+
+                                       <button mat-raised-button (click)="addPhoneNumber(phoneTypes)" class="form-control form-control-sm">Add</button>
+
+                                       <div *ngIf="phoneNumbers.length > 0">
+                                          <p *ngFor="let phoneNumber of phoneNumbers">
+                                             {{ phoneNumber.phoneNumber }} ({{ phoneNumber.typeName }})  
+                                                                              
+                                          </p>
+                                            <!-- <mat-chip *ngFor="let phoneNumber of phoneNumbers" (removed)="removePhoneNumber(phoneNumber.phoneNumber)">
+                                              {{ phoneNumber.phoneNumber }} ({{ phoneNumber.typeId }})
+                                              <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip> -->
+                                         
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-1">
+                                       <label class="form-label">Tags</label>
+
+                                          <tag-input formControlName="tags" class="form-control form-control-sm"></tag-input>
+                                          <!-- <input type="text" class="form-control form-control-sm" placeholder="Add a tag" value=""> -->
+                                   
+                                    </div>
 
                                  </div>
                                  <div class="col-md-6">
@@ -225,6 +262,9 @@
                                     <div class="mb-1">
                                        <mat-label>Description</mat-label>
                                        <textarea matInput formControlName="discription"  class="form-control form-control-sm"></textarea>
+                                    </div>
+                                    <div class="mb-1">
+                                      
                                     </div>
                                  </div>
                                  <div class="col-md-12">
