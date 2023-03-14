@@ -113,41 +113,15 @@ debugger;
   // }
 
 
-  if (phonesno) {
-
-   
-
-
-    // const createPhoneNumbersDtoArray: any = [];
-    // phonesno.forEach((item:any)=>{
-    //   console.log(item);
-    //   createPhoneNumbersDtoArray.phoneNumber = item.phoneNumber;
-    //   createPhoneNumbersDtoArray.typeId = item.typeId;
-    //   formData.append('phoneNumbers[]',JSON.stringify(createPhoneNumbersDtoArray));      
-    // })
-
-    // assume models is an array of models
-
-
-    
-
-
-    // createPhoneNumbersDtoArray.forEach((phoneNumber) => {
-    //   formData.append('phoneNumbers', JSON.stringify(phoneNumber));
-    // });
-    // formData.append('phoneNumbers[]', createPhoneNumbersDtoArray);
-  }
   // if (contact.customFields) {
   //   contact.customFields.forEach((field) => {
   //     formData.append(`customFields[${field.fieldName}].fieldValue`, field.fieldValue);
   //     formData.append(`customFields[${field.fieldName}].fieldType`, field.fieldType.toString());
   //   });
   // }
-  debugger;
   if (img != null) {
     formData.append('file', img, img.name);
   }
-  console.log(formData);
   return this.http.post<any>(this.baseUrl + "/Contact/addContact", formData);
 }
   //--------------

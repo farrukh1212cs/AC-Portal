@@ -173,7 +173,7 @@
                                     </div>
                                     <div class="mb-1">
                                        <mat-label className="form-label">State</mat-label>
-                                       <mat-select class="form-control form-control-sm" formControlName="stateId" required placeholder="Choose a state"> 
+                                       <mat-select class="form-control form-control-sm" formControlName="stateId" required placeholder="Choose a state" [value]="contactForm.get('stateId')?.value"> 
                                          <mat-option *ngFor="let state of states" [value]="state.id">
                                           {{state.name}}
                                         </mat-option>

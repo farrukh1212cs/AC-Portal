@@ -1,9 +1,10 @@
-import { Component, OnInit , ViewChild } from '@angular/core';
+import { Component, Inject, OnInit , ViewChild } from '@angular/core';
 import { FormArray, FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ContactService } from '../contact.service';
 import { CreateContactDto } from '../CreateContactDto';
 import { CreatePhoneNumbersDto } from '../CreatePhoneNumbersDto';
-
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-addcontact',
@@ -17,6 +18,7 @@ export class AddcontactComponent  implements OnInit {
   phoneTypes: any[] = [];
   phoneNumbers: { phoneNumber: string, typeId: string, typeName: string}[] = [];
   ph : CreatePhoneNumbersDto[] = [];
+  updateData:any = {};
   //-----------
  
   //-----------DropDowns
@@ -47,27 +49,18 @@ export class AddcontactComponent  implements OnInit {
 
   //--------------------
 
-  constructor(private formBuilder: FormBuilder,public contactService : ContactService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,public contactService : ContactService,private route: ActivatedRoute) {
+    console.log(data);
+    if(data)
+    {
+      this.updateData = data;
+    }
+   }
   get ssForm() {
     return this.contactForm.controls;
   }
   ngOnInit(): void {
-    Promise.all([
-      this.getOfficeLocation(),
-      this.getSalesRep(),
-      this.getWorkflows(),
-      this.getStatuses(),
-      this.getSubcontractors(),
-      this.getRelatedcontacts(),
-      this.getTeamMembers(),
-      this.getSources(),
-      this.getState(),
-      this.getPhoneTypes()
-    ]).then(() => {
-      // All asynchronous functions have completed
-    }).catch((error) => {
-      console.error('An error occurred while fetching data:', error);
-    });
+   
     //----------PH
     this.phoneNumbersForm = this.formBuilder.group({
       phoneNumber: ['', Validators.required],
@@ -111,6 +104,62 @@ export class AddcontactComponent  implements OnInit {
         //this.createCustomFieldFormGroup()
       ])
     });
+    Promise.all([
+      this.getOfficeLocation(),
+      this.getSalesRep(),
+      this.getWorkflows(),
+      this.getStatuses(),
+      this.getSubcontractors(),
+      this.getRelatedcontacts(),
+      this.getTeamMembers(),
+      this.getSources(),
+      this.getState(),
+      this.getPhoneTypes()
+    ]).then(() => {
+      // All asynchronous functions have completed
+      this.contactForm.patchValue({
+        firstName: this.updateData.contact.firstName,
+        lastName: this.updateData.contact.lastName,
+        company: this.updateData.contact.company,
+        addressLine1: this.updateData.contact.addressLine1,
+        addressLine2: this.updateData.contact.addressLine2,
+        city: this.updateData.contact.city,
+        zipCode: this.updateData.contact.zipCode,
+        email: this.updateData.contact.email,
+        website: this.updateData.contact.website,
+        faxNo: this.updateData.contact.faxNo,
+        displayName: this.updateData.contact.displayName,
+        startDate: this.updateData.contact.startDate,
+        endDate: this.updateData.contact.endDate,
+        description: this.updateData.contact.description,
+        file: this.updateData.contact.file,
+        sourceId: this.updateData.contact.sourceId,
+        stateId: this.updateData.contact.stateId,
+        salesRepId: this.updateData.contact.salesRepId,
+        subContractorId: this.updateData.contact.subContractorId,
+        teamMembers: this.updateData.contact.teamMembers,
+        officeLocationId: this.updateData.contact.officeLocationId,
+        workFlowId: this.updateData.contact.workFlowId,
+        statusId: this.updateData.contact.state.id,
+        relatedContacts: this.updateData.contact.relatedContacts,
+        tags: this.updateData.contact.tags,
+        note: {
+          text: this.updateData.contact.note.text
+        },
+        phoneNumbers: this.updateData.contact.phoneNumbers.map((phoneNumber: any) => ({
+          number: phoneNumber.number,
+          type: phoneNumber.type
+        })),
+        customFields: this.updateData.contact.customFields.map((customField: any) => ({
+          name: customField.name,
+          value: customField.value
+        }))
+      });
+    }).catch((error) => {
+      console.error('An error occurred while fetching data:', error);
+    });
+   
+    
   }
  
   //---------
@@ -120,8 +169,10 @@ export class AddcontactComponent  implements OnInit {
       phoneNumber: [''],
       typeName : ['']
     });
-  }
 
+   
+  }
+ 
   //----------
   addPhoneNumber(types : any): void {
     debugger;
