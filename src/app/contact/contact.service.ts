@@ -87,16 +87,16 @@ createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<a
         const startDateObj = new Date(startDate);
         startDateObj.setDate(startDateObj.getDate() + 1);
         formData.append('startDate', startDateObj.toISOString());
-        // Use startDateISOString in the request body
+
       }
       const endDate = contact?.endDate;
       if (endDate !== undefined) {
         const endDateObj = new Date(endDate);
         endDateObj.setDate(endDateObj.getDate() + 1);
         formData.append('endDate', endDateObj.toISOString());
-        // Use startDateISOString in the request body
+       
       }
-  // formData.append('endDate',new Date(contact?.endDate?.toString() ?? "").toISOString()  ?? "");
+
   formData.append('discription', contact?.discription?.toString() ?? "");
   formData.append('sourceId', contact?.sourceId?.toString() ?? "");
   formData.append('stateId', contact?.stateId?.toString() ?? "");
