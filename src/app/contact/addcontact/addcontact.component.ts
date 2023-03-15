@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit , ViewChild } from '@angular/core';
 import { FormArray, FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContactService } from '../contact.service';
 import { CreateContactDto } from '../CreateContactDto';
 import { CreatePhoneNumbersDto } from '../CreatePhoneNumbersDto';
@@ -51,8 +51,7 @@ export class AddcontactComponent  implements OnInit {
 
   //--------------------
 
-  constructor(private dialogRef: MatDialogRef<AddcontactComponent>,private snackBar: MatSnackBar,@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,public contactService : ContactService,private route: ActivatedRoute) {
-    console.log(data);
+  constructor(private router: Router,public dialogRef: MatDialogRef<AddcontactComponent>,private snackBar: MatSnackBar,@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,public contactService : ContactService,private route: ActivatedRoute) {
     if(data)
     {
       this.updateData = data;
@@ -221,6 +220,10 @@ export class AddcontactComponent  implements OnInit {
   // upload(e: any) {
   //   this.formData.append("file", this.fileInput.nativeElement.files[0]);
   // }
+
+  closeDailog(){
+    this.dialogRef.close();
+  }
   onSubmit(): void {
     this.contactForm.markAllAsTouched();
     if (this.contactForm.valid) {
@@ -233,7 +236,9 @@ export class AddcontactComponent  implements OnInit {
             verticalPosition: 'top',
             panelClass: ['success-snackbar']
           });
+          this.router.navigate(['/contact']);
           this.dialogRef.close();
+        
         },
         err => {
           console.log(err)

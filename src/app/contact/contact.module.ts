@@ -16,6 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon'; 
 import { TagInputModule } from 'ngx-chips';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatNativeDateModule, 
     MatIconModule,
     TagInputModule,
-    MatMenuModule 
+    MatMenuModule ,
+    MatSnackBarModule
   ]
 })
 export class ContactModule { }
