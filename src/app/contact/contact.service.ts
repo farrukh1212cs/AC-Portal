@@ -61,10 +61,6 @@ export class ContactService {
  //---------------------
  
 
-  create(contact: FormData){
-
-    return this.http.post<any>("https://localhost:7063/api/contact/addContact", contact);   
-  }
 
 
 createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<any> {
@@ -138,11 +134,11 @@ createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<a
     formData.append('file', img, img.name);
   }
   if(contact?.id?.toString())
-  {  return this.http.put<any>("https://localhost:7063/api/Contact/updateContact", formData);
+  {  return this.http.put<any>(this.baseUrl + "/Contact/updateContact", formData);
 
   }else
   {
-    return this.http.post<any>("https://localhost:7063/api/Contact/addContact", formData);
+    return this.http.post<any>(this.baseUrl + "/Contact/addContact", formData);
   
   }
 
