@@ -1,6 +1,7 @@
 import { CreatePhoneNumbersDto } from "./CreatePhoneNumbersDto";
 
 export interface CreateContactDto {
+    id?:number;
     firstName: string;
     lastName: string;
     company: string;

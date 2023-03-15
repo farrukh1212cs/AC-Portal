@@ -16,7 +16,7 @@ export class AddcontactComponent  implements OnInit {
   phoneNumbersForm!: FormGroup;
   contactDto?: CreateContactDto;
   phoneTypes: any[] = [];
-  phoneNumbers: { phoneNumber: string, typeId: string, typeName: string}[] = [];
+  phoneNumbers: { id : string, phoneNumber: string, typeId: string, typeName: string}[] = [];
   ph : CreatePhoneNumbersDto[] = [];
   updateData:any = {};
   //-----------
@@ -32,6 +32,8 @@ export class AddcontactComponent  implements OnInit {
   sources : any;
   states:any;
   //-----------DropDowns
+  //---------Patch
+  //-------------------
   imagePath: any = "assets/images/5.png"; // initialize with a default image
   @ViewChild('fileInput') fileInput: any;
 
@@ -69,6 +71,7 @@ export class AddcontactComponent  implements OnInit {
     });
     //---------
     this.contactForm = this.formBuilder.group({
+      id:[''],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       company: [''],
@@ -87,7 +90,7 @@ export class AddcontactComponent  implements OnInit {
       sourceId: [''],
       stateId: [''],
       salesRepId: ['', Validators.required],
-      subContractorId: [[]],
+      subContractorId: [],
       teamMembers: [[]],
       officeLocationId: ['', Validators.required],
       workFlowId: ['', Validators.required],
@@ -117,44 +120,58 @@ export class AddcontactComponent  implements OnInit {
       this.getPhoneTypes()
     ]).then(() => {
       // All asynchronous functions have completed
-      this.contactForm.patchValue({
-        firstName: this.updateData.contact.firstName,
-        lastName: this.updateData.contact.lastName,
-        company: this.updateData.contact.company,
-        addressLine1: this.updateData.contact.addressLine1,
-        addressLine2: this.updateData.contact.addressLine2,
-        city: this.updateData.contact.city,
-        zipCode: this.updateData.contact.zipCode,
-        email: this.updateData.contact.email,
-        website: this.updateData.contact.website,
-        faxNo: this.updateData.contact.faxNo,
-        displayName: this.updateData.contact.displayName,
-        startDate: this.updateData.contact.startDate,
-        endDate: this.updateData.contact.endDate,
-        description: this.updateData.contact.description,
-        file: this.updateData.contact.file,
-        sourceId: this.updateData.contact.sourceId,
-        stateId: this.updateData.contact.stateId,
-        salesRepId: this.updateData.contact.salesRepId,
-        subContractorId: this.updateData.contact.subContractorId,
-        teamMembers: this.updateData.contact.teamMembers,
-        officeLocationId: this.updateData.contact.officeLocationId,
-        workFlowId: this.updateData.contact.workFlowId,
-        statusId: this.updateData.contact.state.id,
-        relatedContacts: this.updateData.contact.relatedContacts,
-        tags: this.updateData.contact.tags,
-        note: {
-          text: this.updateData.contact.note.text
-        },
-        phoneNumbers: this.updateData.contact.phoneNumbers.map((phoneNumber: any) => ({
-          number: phoneNumber.number,
-          type: phoneNumber.type
-        })),
-        customFields: this.updateData.contact.customFields.map((customField: any) => ({
-          name: customField.name,
-          value: customField.value
+      if(this.updateData.contact?.firstName){
+
+        this.contactForm.patchValue({
+          id: this.updateData.contact?.id,
+          firstName: this.updateData.contact?.firstName,
+          lastName: this.updateData.contact?.lastName,
+          company: this.updateData.contact?.company,
+          addressLine1: this.updateData.contact?.addressLine1,
+          addressLine2: this.updateData.contact?.addressLine2,
+          city: this.updateData.contact?.city,
+          zipCode: this.updateData.contact?.zipCode,
+          email: this.updateData.contact?.email,
+          website: this.updateData.contact?.website,
+          faxNo: this.updateData.contact?.faxNo,
+          displayName: this.updateData.contact?.displayName,
+          startDate: this.updateData.contact?.startDate,
+          endDate: this.updateData.contact?.endDate,
+          description: this.updateData.contact?.description,
+          file: this.updateData.contact?.file,
+          sourceId: this.updateData.contact?.source?.id,
+          stateId: this.updateData.contact?.state?.id,
+          salesRepId: this.updateData.contact?.salesRep?.id,
+          subContractorId:this.updateData.contact?.subContractor?.id,
+          teamMembers: this.updateData.contact?.teamMembers?.map((contact:any) => contact.id),
+          officeLocationId: this.updateData.contact?.officeLocation.id,
+          workFlowId: this.updateData.contact?.workFlow?.id,
+          statusId: this.updateData.contact?.status?.id,
+          relatedContacts: this.updateData.contact?.relatedContacts?.map((contact:any) => contact.id),        
+          tags: this.updateData?.contact?.tags?.map((tagd:any)=>({
+            display : tagd.tag,
+            value : tagd.tag
+          })),
+          note: {
+            text: this.updateData.contact?.note?.text
+          },
+          
+         
+          // customFields: this.updateData.contact.customFields.map((customField: any) => ({
+          //   name: customField.name,
+          //   value: customField.value
+          // }))
+        });
+  
+        this.phoneNumbers = this.updateData.contact?.phoneNumbers?.map((phoneNumber: any) => ({
+          id : phoneNumber.id,
+          phoneNumber: phoneNumber.phoneNumber,
+          typeId: phoneNumber.phoneNumberType.id,
+          typeName : phoneNumber.phoneNumberType.value
         }))
-      });
+      }
+      
+     
     }).catch((error) => {
       console.error('An error occurred while fetching data:', error);
     });
@@ -175,9 +192,9 @@ export class AddcontactComponent  implements OnInit {
  
   //----------
   addPhoneNumber(types : any): void {
-    debugger;
     const phoneNumber = this.phoneNumbersForm.value.phoneNumber.trim();
     const typeId = this.phoneNumbersForm.value.typeId;
+    const id = this.phoneNumbersForm.value.id;
     const  typeName = types.find((x:any)=>x.id===typeId).value ;
     if(this.phoneNumbers.find(pn => pn.phoneNumber === phoneNumber)){
       const index = this.phoneNumbers.findIndex(pn => pn.phoneNumber === phoneNumber);
@@ -187,7 +204,7 @@ export class AddcontactComponent  implements OnInit {
     }
 
     if (phoneNumber && typeId && !this.phoneNumbers.find(pn => pn.phoneNumber === phoneNumber)) {    
-      this.phoneNumbers.push({ phoneNumber, typeId,typeName });
+      this.phoneNumbers.push({ phoneNumber, typeId,typeName,id });
       this.phoneNumbersForm.reset();
     }
   }
@@ -207,6 +224,7 @@ export class AddcontactComponent  implements OnInit {
   onSubmit(): void {
     this.contactForm.markAllAsTouched();
     if (this.contactForm.valid) {
+
       this.contactDto = this.contactForm.value
       this.contactService.createContact(this.contactForm.value,this.fileInput.nativeElement.files[0],this.phoneNumbers).subscribe(
         res => {
@@ -292,7 +310,6 @@ getSubcontractors(){
     }
   );
 }
-//relatedcontacts
 getRelatedcontacts(){
   this.contactService.allRelatedContacts().subscribe(
     res => {

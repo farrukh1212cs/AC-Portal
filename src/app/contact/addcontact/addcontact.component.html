@@ -109,7 +109,7 @@
                                        </div>
                                        <div class="mb-1">
                                           <mat-label>Subcontractor</mat-label>
-                                          <mat-select formControlName="subContractorId" class="form-control form-control-sm" placeholder="Choose a subcontractor" multiple>
+                                          <mat-select formControlName="subContractorId" class="form-control form-control-sm" placeholder="Choose a subcontractor">
                                              <mat-option *ngFor="let sc of subcontractors" [value]="sc.id">
                                                 {{sc.name}}
                                               </mat-option>
@@ -173,7 +173,7 @@
                                     </div>
                                     <div class="mb-1">
                                        <mat-label className="form-label">State</mat-label>
-                                       <mat-select class="form-control form-control-sm" formControlName="stateId" required placeholder="Choose a state" [value]="contactForm.get('stateId')?.value"> 
+                                       <mat-select class="form-control form-control-sm" formControlName="stateId" required placeholder="Choose a state" (value)="contactForm.get('stateId')?.value"> 
                                          <mat-option *ngFor="let state of states" [value]="state.id">
                                           {{state.name}}
                                         </mat-option>
@@ -211,19 +211,28 @@
                                  <div class="col-md-6">
                                     <div class="mb-1">
                                        <mat-label>Start Date</mat-label>
-                                       <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" class="form-control form-control-sm">
+                                       <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" class="form-control form-control-sm" required>
                                        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                                        <mat-datepicker #startDatePicker></mat-datepicker>
+                                       <mat-error *ngIf="contactForm.get('startDate')?.touched && contactForm.get('startDate')?.invalid"
+                                       >Please select date</mat-error>
                                     </div>
-                                    <div class="mb-1">
-                                       <mat-label>End Date</mat-label>
+                                       <div class="mb-1">
+                                          <mat-label>End Date</mat-label>
+                                          <input matInput
+                                          formControlName="endDate"
+                                          [matDatepicker]="picker"
+                                          [value]="contactForm.get('endDate')?.value"
+                                          class="form-control form-control-sm"
+                                          required
+                                          />
+                                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                          <mat-datepicker #picker></mat-datepicker>
+                                          <mat-error *ngIf="contactForm.get('endDate')?.touched && contactForm.get('endDate')?.invalid"
+                                          >Please select date</mat-error>
+                                       </div>                                     
 
-                                       <input matInput [matDatepicker]="endDatePicker"  formControlName="endDate" class="form-control form-control-sm">
-                              
-                                       <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                                       <mat-datepicker #endDatePicker></mat-datepicker>
-
-                                    </div>
+                                  
                                     <div class="mb-1"  [formGroup]="phoneNumbersForm">
                                        <mat-label>Phone Number</mat-label>
                                        <input matInput class="form-control form-control-sm" formControlName="phoneNumber" placeholder="Enter phone number">
