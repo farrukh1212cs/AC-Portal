@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ContactService } from '../contact.service';
 import { CreateContactDto } from '../CreateContactDto';
 import { CreatePhoneNumbersDto } from '../CreatePhoneNumbersDto';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-addcontact',
   templateUrl: './addcontact.component.html',
@@ -51,7 +51,7 @@ export class AddcontactComponent  implements OnInit {
 
   //--------------------
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,public contactService : ContactService,private route: ActivatedRoute) {
+  constructor(private dialogRef: MatDialogRef<AddcontactComponent>,private snackBar: MatSnackBar,@Inject(MAT_DIALOG_DATA) public data: any,private formBuilder: FormBuilder,public contactService : ContactService,private route: ActivatedRoute) {
     console.log(data);
     if(data)
     {
@@ -228,10 +228,20 @@ export class AddcontactComponent  implements OnInit {
       this.contactDto = this.contactForm.value
       this.contactService.createContact(this.contactForm.value,this.fileInput.nativeElement.files[0],this.phoneNumbers).subscribe(
         res => {
-         console.log(res);
+          this.snackBar.open('Record inserted successfully', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.dialogRef.close();
         },
         err => {
-          alert(err);
+          console.log(err)
+          this.snackBar.open('Error', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
         },
         () => {
     
