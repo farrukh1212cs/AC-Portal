@@ -41,11 +41,11 @@ export class AddJobsComponent implements OnInit {
 
 
   get phoneNumbers(): FormArray {
-    return this.contactForm.get('phoneNumbers') as FormArray;
+    return this.jobForm.get('phoneNumbers') as FormArray;
   }
 
   get customFields(): FormArray {
-    return this.contactForm.get('customFields') as FormArray;
+    return this.jobForm.get('customFields') as FormArray;
   }
   ngOnInit(): void {
     Promise.all([
