@@ -39,6 +39,14 @@ export class AddJobsComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
+  get phoneNumbers(): FormArray {
+    return this.contactForm.get('phoneNumbers') as FormArray;
+  }
+
+  get customFields(): FormArray {
+    return this.contactForm.get('customFields') as FormArray;
+  }
   ngOnInit(): void {
     Promise.all([
       this.getOfficeLocation(),
