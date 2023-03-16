@@ -1,4 +1,7 @@
+import { CreatePhoneNumbersDto } from "./CreatePhoneNumbersDto";
+
 export interface CreateContactDto {
+    id?:number;
     firstName: string;
     lastName: string;
     company: string;
@@ -31,11 +34,6 @@ export interface CreateContactDto {
   
   export interface CreateNotesDto {
     text: string;
-  }
-  
-  export interface CreatePhoneNumbersDto {
-    type: string;
-    number: string;
   }
   
   export interface CreateCustomFieldsDto {

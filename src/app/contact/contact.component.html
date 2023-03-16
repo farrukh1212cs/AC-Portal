@@ -98,16 +98,16 @@
                                         </thead>
                                         <tbody>
                                            
-                                            
-                                            <tr *ngFor="let contact of contacts"  (click)="redirect(contact)">
-                                                <td>
+                                            <!--  -->
+                                            <tr *ngFor="let contact of contacts" >
+                                                <td  (click)="redirect(contact)" style="cursor: pointer;">
                                                     <div class="d-flex">{{contact.firstName + ' ' + contact.lastName}} </div>
                                                     <!-- <div class="d-flex text-muted">Mon Nov 8, 1:00PM - 2:30PM
                                                     </div> -->
                                                 </td>
-                                                <td>{{contact.workFlow.workFlowName}}</td>
+                                                <td  (click)="redirect(contact)" style="cursor: pointer;">{{contact.workFlow.workFlowName}}</td>
 
-                                                <td>
+                                                <td  (click)="redirect(contact)" style="cursor: pointer;">
                                                     <div class="d-flex">
                                                         <i class="material-symbols-outlined text-success icon-size-dot">
                                                             radio_button_checked
@@ -115,8 +115,8 @@
                                                         &nbsp; {{contact.status.statusName}}
                                                     </div>
                                                 </td>
-                                                <td>{{contact?.salesRep?.name}}</td>
-                                                <td>
+                                                <td  (click)="redirect(contact)" style="cursor: pointer;">{{contact?.salesRep?.name}}</td>
+                                                <td  (click)="redirect(contact)" style="cursor: pointer;">
                                                     <div class="avatar-group">
                                                         <div data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                                             data-bs-placement="top" class="avatar pull-up my-0" title=""
@@ -138,27 +138,23 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>{{contact.addressLine1 + ',' + contact.city}}</td>
+                                                <td  (click)="redirect(contact)" style="cursor: pointer;">{{contact.addressLine1 + ',' + contact.city}}</td>
                                                 <td>
-                                                    <div class="dropdown">
-                                                        <button type="button"
-                                                            class="btn btn-sm dropdown-toggle hide-arrow"
-                                                            data-bs-toggle="dropdown">
-                                                            <i class="material-symbols-outlined">more_vert</i>
+                                                    <mat-menu #menu="matMenu"  class="dropdown" >
+                                                        <button mat-menu-item (click)="editContact(contact)">
+                                                          <mat-icon  class="material-symbols-outlined">border_color</mat-icon>
+                                                          <span>Edit</span>
                                                         </button>
-                                                        <div class="dropdown-menu">
-                                                            <a href="#" class="dropdown-item d-flex align-items-center">
-                                                                <i
-                                                                    class="material-symbols-outlined me-50 fs-15px">border_color</i>
-                                                                <span>Edit</span>
-                                                            </a>
-                                                            <a href="#" class="dropdown-item d-flex align-items-center">
-                                                                <i
-                                                                    class="material-symbols-outlined me-50 fs-15px">delete</i>
-                                                                <span>Delete</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                                                        <button mat-menu-item class="btn btn-sm dropdown-toggle hide-arrow"> 
+                                                          <mat-icon >delete</mat-icon>
+                                                          <span>Delete</span>
+                                                        </button>
+                                                      </mat-menu>
+                                                      
+                                                      <button mat-icon-button [matMenuTriggerFor]="menu"  class="btn btn-sm dropdown-toggle hide-arrow">
+                                                        <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
+                                                      </button>
+                                                      
                                                 </td>
                                             </tr>
                                         </tbody>

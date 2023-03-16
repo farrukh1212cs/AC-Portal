@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AddcontactComponent } from './addcontact/addcontact.component';
 import { ContactService } from './contact.service';
+
 
 @Component({
   selector: 'app-contact',
@@ -44,4 +45,10 @@ export class ContactComponent {
     this.router.navigate(['/contact', contact.id], { state: { model: contact }});
   
   };
+
+  editContact(contact:any){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { contact };
+    this.dialog.open(AddcontactComponent, dialogConfig);
+  }
 }
