@@ -52,22 +52,50 @@ export class JobService {
   }
 
   //----------Add Jobs
-  createJob(Jobs: CreateJobDto): Observable<any> {
-    // const formData = new FormData();
-    // formData.append('address1', Jobs?.address1?.toString() ?? "");
-    // formData.append('address2', Jobs?.address2?.toString() ?? "");
-    // formData.append('city', Jobs?.city?.toString() ?? "");
-    // formData.append('zip', Jobs?.zip?.toString() ?? "");
-    // formData.append('name', Jobs?.name?.toString() ?? "");
-    // formData.append('startDate', Jobs?.startDate?.toISOString() ?? "");
-    // formData.append('endDate', Jobs?.endDate?.toISOString() ?? "");
-    // formData.append('description', Jobs?.description?.toString() ?? "");
-    // formData.append('leadSource', Jobs?.leadSource?.toString() ?? "");
-    // formData.append('state', Jobs?.state?.toString() ?? "");
-    // formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
-    // formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
-    // formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    // formData.append('jobStatus', Jobs?.jobStatus?.toString() ?? "");
-    return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", Jobs);
+  createJob(Jobs: CreateJobDto, phonesno: any): Observable<any> {
+    debugger;
+    const formData = new FormData();
+    if (Jobs?.id?.toString()) {
+      formData.append('id', Jobs?.id?.toString() ?? "0");
+    }
+    formData.append('addressLine1', Jobs?.address1?.toString() ?? "");
+    formData.append('addressLine2', Jobs?.address2?.toString() ?? "");
+    formData.append('city', Jobs?.city?.toString() ?? "");
+    formData.append('zipCode', Jobs?.zip?.toString() ?? "");
+    formData.append('displayName', Jobs?.name?.toString() ?? "");
+    const startDate = Jobs?.startDate;
+    if (startDate !== undefined) {
+      const startDateObj = new Date(startDate);
+      startDateObj.setDate(startDateObj.getDate() + 1);
+      formData.append('startDate', startDateObj.toISOString());
+    }
+    const endDate = Jobs?.endDate;
+    if (endDate !== undefined) {
+      const endDateObj = new Date(endDate);
+      endDateObj.setDate(endDateObj.getDate() + 1);
+      formData.append('endDate', endDateObj.toISOString());
+    }
+    formData.append('discription', Jobs?.description?.toString() ?? "");
+    formData.append('sourceId', Jobs?.leadSource?.toString() ?? "");
+    formData.append('stateId', Jobs?.state?.toString() ?? "");
+    formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
+    formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
+    formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
+    formData.append('statusId', Jobs?.jobStatus?.toString() ?? "");
+    debugger;
+    phonesno?.forEach((phoneNumber: any, index: number) => {
+      const keyPrefix = `phoneNumbers[${index}]`;
+      formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);
+      formData.append(`${keyPrefix}.typeId`, phoneNumber.typeId);
+      formData.append(`${keyPrefix}.id`, phoneNumber.id ?? "0");
+    });
+    if (Jobs.tags) {
+      Jobs.tags.forEach((tag: any) => formData.append('tags[]', tag.value));
+    }
+    if (Jobs?.id?.toString()) {
+      return this.http.put<any>(this.baseUrl + "/Jobs/CreateJob", formData);
+    } else {
+      return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", formData);
+    }
   }
 }

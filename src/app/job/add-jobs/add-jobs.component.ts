@@ -192,7 +192,7 @@ export class AddJobsComponent implements OnInit {
     if (this.jobForm.valid) {
       debugger;
       this.JobDto = this.jobForm.value
-      this.jobService.createJob(this.jobForm.value).subscribe(
+      this.jobService.createJob(this.jobForm.value, this.phoneNumbers).subscribe(
         res => {
           this.snackBar.open('Record inserted successfully', 'Close', {
             duration: 3000,
