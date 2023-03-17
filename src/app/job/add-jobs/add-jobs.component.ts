@@ -87,12 +87,12 @@ export class AddJobsComponent implements OnInit {
       if (this.updateData.job?.firstName) {
         this.jobForm.patchValue({
           id: this.updateData.job?.id,
-          address1: this.updateData.job?.addressLine1,
-          address2: this.updateData.job?.addressLine2,
+          address1: this.updateData.job?.address1,
+          address2: this.updateData.job?.address2,
           city: this.updateData.job?.city,
-          zip: this.updateData.job?.zipCode,
+          zip: this.updateData.job?.zip,
           jobStatus: this.updateData.job?.jobStatus,
-          name: this.updateData.job?.displayName,
+          name: this.updateData.job?.name,
           startDate: this.updateData.job?.startDate,
           endDate: this.updateData.job?.endDate,
           description: this.updateData.job?.description,
@@ -103,7 +103,7 @@ export class AddJobsComponent implements OnInit {
           teamMembers: this.updateData.job?.teamMembers?.map((job: any) => job.id),
           officeLocationId: this.updateData.job?.officeLocation.id,
           workFlowId: this.updateData.job?.workFlow?.id,
-          statusId: this.updateData.job?.status?.id,
+          statusId: this.updateData.job?.statusId?.id,
           relatedContacts: this.updateData.job?.relatedContacts?.map((job: any) => job.id),
           tags: this.updateData?.job?.tags?.map((tagd: any) => ({
             display: tagd.tag,
