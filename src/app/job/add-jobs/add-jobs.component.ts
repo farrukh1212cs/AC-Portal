@@ -84,39 +84,33 @@ export class AddJobsComponent implements OnInit {
       this.getState(),
     ]).then(() => {
       // All asynchronous functions have completed
-      if (this.updateData.contact?.firstName) {
+      if (this.updateData.job?.firstName) {
         this.jobForm.patchValue({
-          id: this.updateData.contact?.id,
-          firstName: this.updateData.contact?.firstName,
-          lastName: this.updateData.contact?.lastName,
-          company: this.updateData.contact?.company,
-          addressLine1: this.updateData.contact?.addressLine1,
-          addressLine2: this.updateData.contact?.addressLine2,
-          city: this.updateData.contact?.city,
-          zipCode: this.updateData.contact?.zipCode,
-          email: this.updateData.contact?.email,
-          website: this.updateData.contact?.website,
-          faxNo: this.updateData.contact?.faxNo,
-          displayName: this.updateData.contact?.displayName,
-          startDate: this.updateData.contact?.startDate,
-          endDate: this.updateData.contact?.endDate,
-          description: this.updateData.contact?.description,
-          file: this.updateData.contact?.file,
-          sourceId: this.updateData.contact?.source?.id,
-          stateId: this.updateData.contact?.state?.id,
-          salesRepId: this.updateData.contact?.salesRep?.id,
-          subContractorId: this.updateData.contact?.subContractor?.id,
-          teamMembers: this.updateData.contact?.teamMembers?.map((contact: any) => contact.id),
-          officeLocationId: this.updateData.contact?.officeLocation.id,
-          workFlowId: this.updateData.contact?.workFlow?.id,
-          statusId: this.updateData.contact?.status?.id,
-          relatedContacts: this.updateData.contact?.relatedContacts?.map((contact: any) => contact.id),
-          tags: this.updateData?.contact?.tags?.map((tagd: any) => ({
+          id: this.updateData.job?.id,
+          address1: this.updateData.job?.addressLine1,
+          address2: this.updateData.job?.addressLine2,
+          city: this.updateData.job?.city,
+          zip: this.updateData.job?.zipCode,
+          jobStatus: this.updateData.job?.jobStatus,
+          name: this.updateData.job?.displayName,
+          startDate: this.updateData.job?.startDate,
+          endDate: this.updateData.job?.endDate,
+          description: this.updateData.job?.description,
+          leadSource: this.updateData.job?.leadSource?.id,
+          state: this.updateData.job?.state?.id,
+          salesRepId: this.updateData.job?.salesRep?.id,
+          subContractorId: this.updateData.job?.subContractor?.id,
+          teamMembers: this.updateData.job?.teamMembers?.map((job: any) => job.id),
+          officeLocationId: this.updateData.job?.officeLocation.id,
+          workFlowId: this.updateData.job?.workFlow?.id,
+          statusId: this.updateData.job?.status?.id,
+          relatedContacts: this.updateData.job?.relatedContacts?.map((job: any) => job.id),
+          tags: this.updateData?.job?.tags?.map((tagd: any) => ({
             display: tagd.tag,
             value: tagd.tag
           })),
           note: {
-            text: this.updateData.contact?.note?.text
+            text: this.updateData.job?.note?.text
           },
         });
       }
@@ -168,7 +162,7 @@ export class AddJobsComponent implements OnInit {
         }
       );
     }
-    // Call your service to save the contact data
+    // Call your service to save the job data
   }//==================================================================
 
   //-------------Callings
