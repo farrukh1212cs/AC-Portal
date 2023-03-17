@@ -5,6 +5,7 @@ import { JobService } from '../job.service';
 import { CreateJobDto } from '../CreateJobsDto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CreatePhoneNumbersDto } from '../../contact/CreatePhoneNumbersDto';
 
 @Component({
   selector: 'app-add-jobs',
@@ -16,7 +17,11 @@ export class AddJobsComponent implements OnInit {
   public model: any = {};
   public modelMain: any = {};
   jobForm!: FormGroup;
+  phoneNumbersForm!: FormGroup;
   JobDto?: CreateJobDto;
+  phoneTypes: any[] = [];
+  phoneNumbers: { id: string, phoneNumber: string, typeId: string, typeName: string }[] = [];
+  ph: CreatePhoneNumbersDto[] = [];
   //-----------DropDowns
   updateData: any = {};
   //-----------DropDowns
@@ -47,6 +52,14 @@ export class AddJobsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //----------PH
+    this.phoneNumbersForm = this.formBuilder.group({
+      phoneNumber: ['', Validators.required],
+      type: ['', Validators.required],
+      typeId: ['', Validators.required]
+    });
+
+    //---------
     this.jobForm = this.formBuilder.group({
       id: [''],
       addressLine1: [''],
@@ -71,6 +84,12 @@ export class AddJobsComponent implements OnInit {
       note: this.formBuilder.group({
         text: ['']
       }),
+      phoneNumbers: this.formBuilder.array([
+        this.createPhoneNumberFormGroup()
+      ]),
+      customFields: this.formBuilder.array([
+        //this.createCustomFieldFormGroup()
+      ])
     });
     Promise.all([
       this.getOfficeLocation(),
@@ -82,6 +101,7 @@ export class AddJobsComponent implements OnInit {
       this.getTeamMembers(),
       this.getSources(),
       this.getState(),
+      this.getPhoneTypes()
     ]).then(() => {
       // All asynchronous functions have completed
       if (this.updateData.job?.firstName) {
@@ -119,6 +139,38 @@ export class AddJobsComponent implements OnInit {
     });
   }
 
+  //---------
+  createPhoneNumberFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      typeId: [''],
+      phoneNumber: [''],
+      typeName: ['']
+    });
+  }
+
+  //----------
+  addPhoneNumber(types: any): void {
+    const phoneNumber = this.phoneNumbersForm.value.phoneNumber.trim();
+    const typeId = this.phoneNumbersForm.value.typeId;
+    const id = this.phoneNumbersForm.value.id;
+    const typeName = types.find((x: any) => x.id === typeId).value;
+    if (this.phoneNumbers.find(pn => pn.phoneNumber === phoneNumber)) {
+      const index = this.phoneNumbers.findIndex(pn => pn.phoneNumber === phoneNumber);
+      if (index >= 0) {
+        this.phoneNumbers.splice(index, 1);
+      }
+    }
+    if (phoneNumber && typeId && !this.phoneNumbers.find(pn => pn.phoneNumber === phoneNumber)) {
+      this.phoneNumbers.push({ phoneNumber, typeId, typeName, id });
+      this.phoneNumbersForm.reset();
+    }
+  }
+  removePhoneNumber(phoneNumber: string): void {
+    const index = this.phoneNumbers.findIndex(pn => pn.phoneNumber === phoneNumber);
+    if (index >= 0) {
+      this.phoneNumbers.splice(index, 1);
+    }
+  }
 
   //------------------
   getOfficeLocation() {
@@ -237,6 +289,20 @@ export class AddJobsComponent implements OnInit {
     this.jobService.allTeamMembers().subscribe(
       res => {
         this.teamMembers = res.payload;
+      },
+      err => {
+        alert(err);
+      },
+      () => {
+
+      }
+    );
+  }
+  getPhoneTypes() {
+    this.jobService.allphoneTypes().subscribe(
+      res => {
+        const sourcePhoneTypes = res.payload[0].dropDown.find((dropdown: any) => dropdown.dropDownName === "MobileType");
+        this.phoneTypes = sourcePhoneTypes.dropDownValues;;
       },
       err => {
         alert(err);

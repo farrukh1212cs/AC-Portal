@@ -41,6 +41,9 @@ export class JobService {
   allTeamMembers() {
     return this.http.get<any>(this.baseUrl + "/TeamMember/getteammebers");
   }
+  allphoneTypes() {
+    return this.http.get<any>(this.baseUrl + "/DropDown/allDropDownsList?PageName=addcontact");
+  }
   allSource() {
     return this.http.get<any>(this.baseUrl + "/DropDown/allDropDownsList?PageName=addcontact");
   }

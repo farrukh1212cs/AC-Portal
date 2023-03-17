@@ -136,20 +136,18 @@
                       Please select a state
                     </mat-error>
                   </div>
-                  <div class="mb-1">
-                    <mat-label>Zip Code</mat-label>
-                    <input matInput formControlName="zipCode" class="form-control form-control-sm">
-                  </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="mb-1">
-                  </div>
-                  <div class="mb-1">
-                  </div>
                   <div class="mb-1"><label class="form-label" for="faxNumber">Fax Number</label><input type="text" name="faxNumber" class="form-control form-control-sm" id="faxNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="mobileNumber">Mobile Number</label><input type="text" name="mobileNumber" class="form-control form-control-sm" id="mobileNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="homeNumber">Home Number</label><input type="text" name="homeNumber" class="form-control form-control-sm" id="homeNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="officeNumber">Office Number</label><input type="text" name="officeNumber" class="form-control form-control-sm" id="officeNumber" placeholder="xxxx..." value=""></div>
+                  <div class="mb-1">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput formControlName="zipCode" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-1">
+                  </div>
                 </div>
               </div>
             </div>
@@ -175,11 +173,19 @@
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error *ngIf="jobForm.get('endDate')?.touched && jobForm.get('endDate')?.invalid">Please select date</mat-error>
                   </div>
-                  <div class="mb-1">
-                  </div>
-                  <div class="mb-1">
-                    <label class="form-label">Tags</label>
-                    <tag-input formControlName="tags" class="form-control form-control-sm"></tag-input>
+                  <div class="mb-1" [formGroup]="phoneNumbersForm">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput class="form-control form-control-sm" formControlName="phoneNumber" placeholder="Enter phone number">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="typeId" placeholder="Select type" class="form-control form-control-sm">
+                      <mat-option *ngFor="let type of phoneTypes" [value]="type.id">{{ type.value }}</mat-option>
+                    </mat-select>
+                    <button mat-raised-button (click)="addPhoneNumber(phoneTypes)" class="form-control form-control-sm">Add</button>
+                    <div *ngIf="phoneNumbers.length > 0">
+                      <p *ngFor="let phoneNumber of phoneNumbers">
+                        {{ phoneNumber.phoneNumber }} ({{ phoneNumber.typeName }})
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -189,6 +195,8 @@
                     <textarea matInput formControlName="discription" class="form-control form-control-sm"></textarea>
                   </div>
                   <div class="mb-1">
+                    <label class="form-label">Tags</label>
+                    <tag-input formControlName="tags" class="form-control form-control-sm"></tag-input>
                   </div>
                 </div>
                 <div class="col-md-12">
