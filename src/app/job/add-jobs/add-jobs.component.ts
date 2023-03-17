@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JobService } from '../job.service';
 import { CreateJobDto } from '../CreateJobsDto';
-import { Inject } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-jobs',
@@ -17,37 +18,60 @@ export class AddJobsComponent implements OnInit {
   jobForm!: FormGroup;
   JobDto?: CreateJobDto;
   //-----------DropDowns
-  public salesReps: any;
-  public officeLocations: any;
-  public workflows: any;
-  public statuses: any;
-  public subcontractors: any;
-  public relatedcontacts: any;
-  public teamMembers: any;
-  public sources: any;
-  public states: any;
+  updateData: any = {};
+  //-----------DropDowns
+  salesReps: any;
+  officeLocations: any;
+  workflows: any;
+  statuses: any;
+  subcontractors: any;
+  relatedcontacts: any;
+  teamMembers: any;
+  sources: any;
+  states: any;
   @ViewChild('fileInput') fileInput: any;
 
-  constructor(private dialogRef: MatDialogRef<AddJobsComponent>, private jobService: JobService, private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder) {
+  constructor(private dialogRef: MatDialogRef<AddJobsComponent>, private jobService: JobService, @Inject(MAT_DIALOG_DATA) public data: any,
+    private formBuilder: FormBuilder, private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
     debugger;
-    this.modelMain = data;
-    this.model = Object.assign({}, this.modelMain);
+    if (data) {
+      this.modelMain = data;
+      this.updateData = Object.assign({}, this.modelMain);
+    }
   }
-
+  get ssForm() {
+    return this.jobForm.controls;
+  }
   closeAddJobsModal() {
     this.dialogRef.close();
   }
 
-
-  get phoneNumbers(): FormArray {
-    return this.jobForm.get('phoneNumbers') as FormArray;
-  }
-
-  get customFields(): FormArray {
-    return this.jobForm.get('customFields') as FormArray;
-  }
   ngOnInit(): void {
+    this.jobForm = this.formBuilder.group({
+      id: [''],
+      addressLine1: [''],
+      addressLine2: [''],
+      city: [''],
+      zipCode: [''],
+      faxNo: [''],
+      displayName: [''],
+      startDate: [''],
+      endDate: [''],
+      discription: [''],
+      sourceId: [''],
+      stateId: [''],
+      salesRepId: ['', Validators.required],
+      subContractorId: [],
+      teamMembers: [[]],
+      officeLocationId: ['', Validators.required],
+      workFlowId: ['', Validators.required],
+      statusId: ['', Validators.required],
+      relatedContacts: [[]],
+      tags: [[]],
+      note: this.formBuilder.group({
+        text: ['']
+      }),
+    });
     Promise.all([
       this.getOfficeLocation(),
       this.getSalesRep(),
@@ -57,82 +81,51 @@ export class AddJobsComponent implements OnInit {
       this.getRelatedcontacts(),
       this.getTeamMembers(),
       this.getSources(),
-      this.getState()
+      this.getState(),
     ]).then(() => {
       // All asynchronous functions have completed
+      if (this.updateData.contact?.firstName) {
+        this.jobForm.patchValue({
+          id: this.updateData.contact?.id,
+          firstName: this.updateData.contact?.firstName,
+          lastName: this.updateData.contact?.lastName,
+          company: this.updateData.contact?.company,
+          addressLine1: this.updateData.contact?.addressLine1,
+          addressLine2: this.updateData.contact?.addressLine2,
+          city: this.updateData.contact?.city,
+          zipCode: this.updateData.contact?.zipCode,
+          email: this.updateData.contact?.email,
+          website: this.updateData.contact?.website,
+          faxNo: this.updateData.contact?.faxNo,
+          displayName: this.updateData.contact?.displayName,
+          startDate: this.updateData.contact?.startDate,
+          endDate: this.updateData.contact?.endDate,
+          description: this.updateData.contact?.description,
+          file: this.updateData.contact?.file,
+          sourceId: this.updateData.contact?.source?.id,
+          stateId: this.updateData.contact?.state?.id,
+          salesRepId: this.updateData.contact?.salesRep?.id,
+          subContractorId: this.updateData.contact?.subContractor?.id,
+          teamMembers: this.updateData.contact?.teamMembers?.map((contact: any) => contact.id),
+          officeLocationId: this.updateData.contact?.officeLocation.id,
+          workFlowId: this.updateData.contact?.workFlow?.id,
+          statusId: this.updateData.contact?.status?.id,
+          relatedContacts: this.updateData.contact?.relatedContacts?.map((contact: any) => contact.id),
+          tags: this.updateData?.contact?.tags?.map((tagd: any) => ({
+            display: tagd.tag,
+            value: tagd.tag
+          })),
+          note: {
+            text: this.updateData.contact?.note?.text
+          },
+        });
+      }
     }).catch((error) => {
       console.error('An error occurred while fetching data:', error);
     });
-    this.jobForm = this.formBuilder.group({
-      address1: [''],
-      address2: [''],
-      city: [''],
-      zip: [''],
-      name: [''],
-      startDate: [''],
-      endDate: [''],
-      description: [''],
-      leadSource: [''],
-      state: [''],
-      salesRepId: ['', Validators.required],
-      officeLocationId: ['', Validators.required],
-      workFlowId: ['', Validators.required],
-      jobStatus: ['', Validators.required],
-      primaryContactId: [[]],
-      zipCode: [''],
-      email: ['', Validators.email],
-      website: [''],
-      faxNo: [''],
-      displayName: [''],
-      discription: [''],
-      file: [''],
-      sourceId: [''],
-      stateId: [''],
-      subContractorId: [[]],
-      teamMembers: [[]],
-      statusId: ['', Validators.required],
-      relatedContacts: [[]],
-      tags: [[]],
-      note: this.formBuilder.group({
-        text: ['']
-      }),
-      phoneNumbers: this.formBuilder.array([
-        this.createPhoneNumberFormGroup()
-      ]),
-      customFields: this.formBuilder.array([
-        this.createCustomFieldFormGroup()
-      ])
-    });
   }
 
-  createPhoneNumberFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      type: [''],
-      number: ['']
-    });
-  }
-  addPhoneNumber(): void {
-    const phoneNumbers = this.jobForm.get('phoneNumbers') as FormArray;
-    phoneNumbers.push(this.createPhoneNumberFormGroup());
-  }
-  removePhoneNumber(index: number): void {
-    const phoneNumbers = this.jobForm.get('phoneNumbers') as FormArray;
-    phoneNumbers.removeAt(index);
-  }
 
-  createCustomFieldFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      name: [''],
-      value: ['']
-    });
-  }
-
-  saveData() {
-    // Your code to save user's data to the database goes here
-
-    // Close the dialog
-    this.dialogRef.close();
-  }
   //------------------
   getOfficeLocation() {
     this.jobService.allOfficeLocations().subscribe(
@@ -149,20 +142,34 @@ export class AddJobsComponent implements OnInit {
   }
 
   onSubmit(): void {
-    debugger;
-    this.JobDto = this.jobForm.value;
-    this.jobService.createJob(this.jobForm.value).subscribe(
-      res => {
-        console.log(res);
-      },
-      err => {
-        alert(err);
-      },
-      () => {
-      }
-    );
+    this.jobForm.markAllAsTouched();
+    if (this.jobForm.valid) {
+      debugger;
+      this.JobDto = this.jobForm.value
+      this.jobService.createJob(this.jobForm.value).subscribe(
+        res => {
+          this.snackBar.open('Record inserted successfully', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.router.navigate(['/jobs']);
+          this.dialogRef.close();
+        },
+        err => {
+          console.log(err)
+          this.snackBar.open('Error', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
+        },
+        () => {
+        }
+      );
+    }
     // Call your service to save the contact data
-  }
+  }//==================================================================
 
   //-------------Callings
   getSalesRep() {

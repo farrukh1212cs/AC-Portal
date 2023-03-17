@@ -10,8 +10,12 @@ import { MatInputModule } from '@angular/material/input'; // Import this if you 
 import { MatSelectModule } from '@angular/material/select';
 import { AddJobsComponent } from './add-jobs/add-jobs.component';
 import { JobRoutingModule } from './job-routing.module';
-
-
+import { MatNativeDateModule, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { TagInputModule } from 'ngx-chips';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,13 @@ import { JobRoutingModule } from './job-routing.module';
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    TagInputModule,
+    MatMenuModule,
+    MatSnackBarModule
   ]
 })
 export class JobModule { }
