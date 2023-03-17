@@ -2,58 +2,66 @@
   <form [formGroup]="jobForm">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel17">{{model.FormTitle}}</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeAddJobsModal()" aria-label="Close"></button>
+        <h4 class="modal-title" id="myModalLabel17">Add job</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeAddJobsModal()"></button>
       </div>
       <div class="modal-body">
         <!-- information -->
         <div class="col-lg-12">
           <div class="row">
+            <!-- otherdata -->
             <div class="col-md-10">
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-1">
                     <mat-label>Office Location</mat-label>
-                    <mat-select class="form-control form-control-sm" formControlName="officeLocationId" required>
-                      <mat-option value="">Choose an Office</mat-option>
+                    <mat-select class="form-control form-control-sm" formControlName="officeLocationId" required placeholder="Choose an office">
                       <mat-option *ngFor="let ofc of officeLocationDropdownValues" [value]="ofc.id">
                         {{ofc.name}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="jobForm.get('officeLocationId')?.touched && jobForm.get('officeLocationId')?.value === ''">
+                      Please select an office location
+                    </mat-error>
                   </div>
                   <div class="mb-1">
                     <mat-label>Workflow</mat-label>
                     <mat-select formControlName="workFlowId" class="form-control form-control-sm" placeholder="Choose a Workflow" required>
-                      <mat-option value="">Choose an workflow</mat-option>
                       <mat-option *ngFor="let wf of workflows" [value]="wf.id">
                         {{wf.workFlowName}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="jobForm.get('workFlowId')?.touched && jobForm.get('workFlowId')?.value === ''">
+                      Please select an workflow
+                    </mat-error>
                   </div>
                   <div class="mb-1">
                     <mat-label className="form-label">Status</mat-label>
-                    <mat-select class="form-control form-control-sm" formControlName="statusId" required>
-                      <mat-option value="">Choose a Status</mat-option>
+                    <mat-select class="form-control form-control-sm" formControlName="statusId" required placeholder="Choose a status">
                       <mat-option *ngFor="let ss of statuses" [value]="ss.id">
                         {{ss.statusName}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="jobForm.get('statusId')?.touched && jobForm.get('statusId')?.value === ''">
+                      Please select an status
+                    </mat-error>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-1">
                     <mat-label>Sales Representative</mat-label>
-                    <mat-select formControlName="salesRepId" class="form-control form-control-sm" required>
-                      <mat-option value="">Choose sales representative</mat-option>
+                    <mat-select formControlName="salesRepId" class="form-control form-control-sm" required placeholder="Choose sales representative" required>
                       <mat-option *ngFor="let salesRep of salesReps" [value]="salesRep.id">
                         {{salesRep.name}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="jobForm.get('salesRepId')?.touched && jobForm.get('salesRepId')?.value === ''">
+                      Please select an sales representative
+                    </mat-error>
                   </div>
                   <div class="mb-1">
                     <mat-label>Source</mat-label>
-                    <mat-select formControlName="sourceId" class="form-control form-control-sm">
-                      <mat-option value="">Choose a source</mat-option>
+                    <mat-select formControlName="sourceId" class="form-control form-control-sm" placeholder="Choose a source">
                       <mat-option *ngFor="let src of sources" [value]="src.id">
                         {{src.value}}
                       </mat-option>
@@ -61,8 +69,7 @@
                   </div>
                   <div class="mb-1">
                     <mat-label>Subcontractor</mat-label>
-                    <mat-select formControlName="subContractorId" class="form-control form-control-sm" placeholder="Choose a subcontractor" multiple>
-                      <mat-option value="">Choose sales sub contractor</mat-option>
+                    <mat-select formControlName="subContractorId" class="form-control form-control-sm" placeholder="Choose a subcontractor">
                       <mat-option *ngFor="let sc of subcontractors" [value]="sc.id">
                         {{sc.name}}
                       </mat-option>
@@ -73,7 +80,6 @@
                   <div class="mb-1">
                     <mat-label>Related Contacts</mat-label>
                     <mat-select formControlName="relatedContacts" class="form-control form-control-sm" placeholder="Choose a related contacts" multiple>
-                      <mat-option value="">Choose related contacts</mat-option>
                       <mat-option *ngFor="let rl of relatedcontacts" [value]="rl.id">
                         {{rl.name}}
                       </mat-option>
@@ -82,7 +88,6 @@
                   <div class="mb-1">
                     <mat-label>Assigned Team Members</mat-label>
                     <mat-select formControlName="teamMembers" class="form-control form-control-sm" placeholder="Choose a team members" multiple>
-                      <mat-option value="">Choose team members</mat-option>
                       <mat-option *ngFor="let tm of teamMembers" [value]="tm.id">
                         {{tm.name}}
                       </mat-option>
@@ -104,24 +109,43 @@
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
-                  <div class="mb-1"><label class="form-label" for="JobName">Job Name</label><input type="text" name="JobName" class="form-control form-control-sm" id="JobName" placeholder="John" value="model.name"></div>
-                  <div class="mb-1"><label class="form-label" for="address1">Address 1</label><input type="text" name="address1" class="form-control form-control-sm" id="address1" placeholder="ABC street" value="model.address1"></div>
-                  <div class="mb-1"><label class="form-label" for="address2">Address 2</label><input type="text" name="address2" class="form-control form-control-sm" id="address2" placeholder="DEF address" value="model.address2"></div>
-                  <div class="mb-1"><label class="form-label" for="city">City</label><input type="text" name="city" class="form-control form-control-sm" id="city" placeholder="City" value="model.city"></div>
+                  <div class="mb-1">
+                    <mat-label>Display Name</mat-label>
+                    <input matInput formControlName="displayName" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-1">
+                    <mat-label>Address Line 1</mat-label>
+                    <input matInput formControlName="addressLine1" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-1">
+                    <mat-label>Address Line 2</mat-label>
+                    <input matInput formControlName="addressLine2" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-1">
+                    <mat-label>City</mat-label>
+                    <input matInput formControlName="city" class="form-control form-control-sm">
+                  </div>
                   <div class="mb-1">
                     <mat-label className="form-label">State</mat-label>
-                    <mat-select class="form-control form-control-sm" formControlName="stateId" required>
-                      <mat-option value="">Choose a state</mat-option>
+                    <mat-select class="form-control form-control-sm" formControlName="stateId" required placeholder="Choose a state" (value)="jobForm.get('stateId')?.value">
                       <mat-option *ngFor="let state of states" [value]="state.id">
                         {{state.name}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="jobForm.get('stateId')?.touched && jobForm.get('stateId')?.value === ''">
+                      Please select a state
+                    </mat-error>
                   </div>
-                  <div class="mb-1"><label class="form-label" for="zip">Zip</label><input type="text" name="zip" class="form-control form-control-sm" id="zip" placeholder="Zip" value="model.zip"></div>
+                  <div class="mb-1">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput formControlName="zipCode" class="form-control form-control-sm">
+                  </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="mb-1"><label class="form-label" for="email">Email</label><input type="email" name="email" class="form-control form-control-sm" id="email" placeholder="John@xxxx.com" value="model."></div>
-                  <div class="mb-1"><label class="form-label" for="website">Website</label><input type="url" name="website" class="form-control form-control-sm" id="website" placeholder="http://abc.com" value=""></div>
+                  <div class="mb-1">
+                  </div>
+                  <div class="mb-1">
+                  </div>
                   <div class="mb-1"><label class="form-label" for="faxNumber">Fax Number</label><input type="text" name="faxNumber" class="form-control form-control-sm" id="faxNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="mobileNumber">Mobile Number</label><input type="text" name="mobileNumber" class="form-control form-control-sm" id="mobileNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="homeNumber">Home Number</label><input type="text" name="homeNumber" class="form-control form-control-sm" id="homeNumber" placeholder="xxxx..." value=""></div>
@@ -132,13 +156,40 @@
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-6">
-                  <div class="mb-1"><label class="form-label" for="startDate">Start Date</label><input type="date" name="startDate" class="form-control form-control-sm" id="startDate" value="model.startDate"></div>
-                  <div class="mb-1"><label class="form-label" for="endDate">End Date</label><input type="date" name="endDate" class="form-control form-control-sm" id="endDate" value="model.endDate"></div>
-                  <div class="mb-1"><label class="form-label">Tags</label><span><input type="text" class="form-control form-control-sm" placeholder="Add a tag" value=""></span></div>
+                  <div class="mb-1">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" class="form-control form-control-sm" required>
+                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                    <mat-error *ngIf="jobForm.get('startDate')?.touched && jobForm.get('startDate')?.invalid">Please select date</mat-error>
+                  </div>
+                  <div class="mb-1">
+                    <mat-label>End Date</mat-label>
+                    <input matInput
+                           formControlName="endDate"
+                           [matDatepicker]="picker"
+                           [value]="jobForm.get('endDate')?.value"
+                           class="form-control form-control-sm"
+                           required />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="jobForm.get('endDate')?.touched && jobForm.get('endDate')?.invalid">Please select date</mat-error>
+                  </div>
+                  <div class="mb-1">
+                  </div>
+                  <div class="mb-1">
+                    <label class="form-label">Tags</label>
+                    <tag-input formControlName="tags" class="form-control form-control-sm"></tag-input>
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <div class="mb-1"><label class="form-label" for="note">Note</label><input type="text" name="note" class="form-control form-control-sm" id="note" placeholder="Some note..." value=""></div>
-                  <div class="mb-1"><label class="form-label" for="description">Description</label><textarea name="description" class="form-control form-control-sm" id="description" placeholder="Description..."></textarea></div>
+                  <div class="mb-1">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="discription" class="form-control form-control-sm"></textarea>
+                  </div>
+                  <div class="mb-1">
+                  </div>
                 </div>
                 <div class="col-md-12">
                   <div class="divider divider-start"><div class="divider-text gray-2px"><h3>Additional Information</h3></div></div>
@@ -148,7 +199,7 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer"><button type="submit" class="btn btn-primary me-1" (click)="onSubmit()">Add Event</button></div>
+      <div class="modal-footer"><button type="submit" class="btn btn-primary me-1" (click)="onSubmit()">Add</button></div>
     </div>
   </form>
 </div>

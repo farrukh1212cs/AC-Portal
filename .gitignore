@@ -40,3 +40,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/.vs/PrimeAccuraCore/v16
+/.vs/PrimeAccuraCore/config
+/.vs/slnx.sqlite-journal
