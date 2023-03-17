@@ -50,21 +50,21 @@ export class JobService {
 
   //----------Add Jobs
   createJob(Jobs: CreateJobDto): Observable<any> {
-    const formData = new FormData();
-    formData.append('address1', Jobs?.address1?.toString() ?? "");
-    formData.append('address2', Jobs?.address2?.toString() ?? "");
-    formData.append('city', Jobs?.city?.toString() ?? "");
-    formData.append('zip', Jobs?.zip?.toString() ?? "");
-    formData.append('name', Jobs?.name?.toString() ?? "");
-    formData.append('startDate', Jobs?.startDate?.toISOString() ?? "");
-    formData.append('endDate', Jobs?.endDate?.toISOString() ?? "");
-    formData.append('description', Jobs?.description?.toString() ?? "");
-    formData.append('leadSource', Jobs?.leadSource?.toString() ?? "");
-    formData.append('state', Jobs?.state?.toString() ?? "");
-    formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
-    formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
-    formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    formData.append('jobStatus', Jobs?.jobStatus?.toString() ?? "");
-    return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", formData);
+    // const formData = new FormData();
+    // formData.append('address1', Jobs?.address1?.toString() ?? "");
+    // formData.append('address2', Jobs?.address2?.toString() ?? "");
+    // formData.append('city', Jobs?.city?.toString() ?? "");
+    // formData.append('zip', Jobs?.zip?.toString() ?? "");
+    // formData.append('name', Jobs?.name?.toString() ?? "");
+    // formData.append('startDate', Jobs?.startDate?.toISOString() ?? "");
+    // formData.append('endDate', Jobs?.endDate?.toISOString() ?? "");
+    // formData.append('description', Jobs?.description?.toString() ?? "");
+    // formData.append('leadSource', Jobs?.leadSource?.toString() ?? "");
+    // formData.append('state', Jobs?.state?.toString() ?? "");
+    // formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
+    // formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
+    // formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
+    // formData.append('jobStatus', Jobs?.jobStatus?.toString() ?? "");
+    return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", Jobs);
   }
 }
