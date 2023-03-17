@@ -50,8 +50,6 @@ export class JobService {
 
   //----------Add Jobs
   createJob(Jobs: CreateJobDto): Observable<any> {
-    debugger;
-    const url = `${this.baseUrl}/addJob`;
     const formData = new FormData();
     formData.append('address1', Jobs?.address1?.toString() ?? "");
     formData.append('address2', Jobs?.address2?.toString() ?? "");
@@ -67,6 +65,6 @@ export class JobService {
     formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
     formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
     formData.append('jobStatus', Jobs?.jobStatus?.toString() ?? "");
-    return this.http.post<any>(this.baseUrl + "/Jobs/addJob", formData);
+    return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", formData);
   }
 }
