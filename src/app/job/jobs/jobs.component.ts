@@ -41,7 +41,6 @@ export class JobsComponent {
   //}
 
   openAddJobsModal(data:any): void {
-    debugger;
     let dialogRef: any = {};
     if (data == null) {
       data = {};
@@ -61,8 +60,8 @@ export class JobsComponent {
       data.FormTitle = "Update Job";
       data.Request_Type = "Edit";
       dialogRef = this.dialog.open(AddJobsComponent, {
-        width: 'auto',
-        height: 'auto',
+        width: '80vw',
+        height: '80vh',
         data: data,
         disableClose: true
       });

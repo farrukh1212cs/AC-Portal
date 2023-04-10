@@ -326,7 +326,7 @@ getSubcontractors(){
   );
 }
 getRelatedcontacts(){
-  this.contactService.allRelatedContacts().subscribe(
+  this.contactService.getRelatedContactsDropDown().subscribe(
     res => {
       this.relatedcontacts = res.payload;
     },

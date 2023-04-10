@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CreateContactDto } from './CreateContactDto';
-import { CreatePhoneNumbersDto } from './CreatePhoneNumbersDto';
+import { addPhoneNumber, updatePhoneNumber, addRelatedContact, updateRelatedContact } from './CreatePhoneNumbersDto';
+import { customFieldDto } from './customFieldDto';
+import { createNoteDto, updateNoteDto } from './createNoteDto';
+import { WorkFlowDto } from './WorkFlowDto';
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +43,7 @@ export class ContactService {
   allSubcontractors(){
     return this.http.get<any>(this.baseUrl + "/SubContractor/getsubcontractors");
   }
-  allRelatedContacts(){
-    return this.http.get<any>(this.baseUrl + "/RelatedContact/getRelatedContactsDropDown");
-  }
+  
   ///TeamMember/getteammebers
   allTeamMembers(){
     return this.http.get<any>(this.baseUrl + "/TeamMember/getteammebers");
@@ -60,8 +61,6 @@ export class ContactService {
   //-----------
  //---------------------
  
-
-
 
 createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<any> {
   const formData = new FormData();
@@ -83,19 +82,18 @@ createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<a
   formData.append('displayName',contact?.displayName?.toString() ?? "");
 
   const startDate = contact?.startDate;
-      if (startDate !== undefined) {
-        const startDateObj = new Date(startDate);
-        startDateObj.setDate(startDateObj.getDate() + 1);
-        formData.append('startDate', startDateObj.toISOString());
+  if (startDate !== undefined) {
+    const startDateObj = new Date(startDate);
+    startDateObj.setDate(startDateObj.getDate() + 1);
+    formData.append('startDate', startDateObj.toISOString());
 
-      }
-      const endDate = contact?.endDate;
-      if (endDate !== undefined) {
-        const endDateObj = new Date(endDate);
-        endDateObj.setDate(endDateObj.getDate() + 1);
-        formData.append('endDate', endDateObj.toISOString());
-       
-      }
+  }
+  const endDate = contact?.endDate;
+  if (endDate !== undefined) {
+    const endDateObj = new Date(endDate);
+    endDateObj.setDate(endDateObj.getDate() + 1);
+    formData.append('endDate', endDateObj.toISOString());
+  }
 
   formData.append('discription', contact?.discription?.toString() ?? "");
   formData.append('sourceId', contact?.sourceId?.toString() ?? "");
@@ -107,7 +105,6 @@ createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<a
   formData.append('workFlowId', contact?.workFlowId?.toString() ?? "");
   formData.append('statusId', contact?.statusId?.toString() ?? "");
   contact?.relatedContacts?.forEach((id) => formData.append('relatedContacts[]', id.toString()));
-  debugger;
   phonesno?.forEach((phoneNumber : any, index : number) => {
     const keyPrefix = `phoneNumbers[${index}]`;  
     formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);
@@ -143,5 +140,348 @@ createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<a
   }
 
 }
-  //--------------
+
+  getContactById(id: number) {
+    return this.http.get<any>(this.baseUrl + "/Contact/getContactById?Id=" + id);
+  }
+
+  getPagedContacts (pageIndex: number, pageSize: number, sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/Contact/PagedContacts?PageIndex=" + pageIndex + "&PageSize=" + pageSize + "&Sort=" + sort + "&Search=" + search);
+  }
+
+  getAllContacts(sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/Contact/PagedContacts?Sort=" + sort + "&Search=" + search);
+  }
+
+  //Custom Fields
+
+  addCustomField (customField: customFieldDto): Observable<any> {
+    const formData = new FormData();
+    if(customField?.contactId?.toString())
+    {
+      formData.append('id', customField?.contactId?.toString() ?? "0");
+    }
+    formData.append('customFieldName', customField.customFieldName);
+    formData.append('value', customField.value);
+
+    if(customField?.contactId?.toString()) {  
+      return this.http.put<any>(this.baseUrl + "/CustomField/updateCustomField", formData);
+    }else {
+      return this.http.post<any>(this.baseUrl + "/CustomField/addCustomField", formData);
+    }
+  }
+
+  deleteCustomField (customField: customFieldDto): Observable<any> {
+    const formData = new FormData();
+    
+    formData.append('id', customField?.contactId?.toString() ?? "0");
+    formData.append('customFieldName', customField.customFieldName);
+    formData.append('value', customField.value);
+
+    return this.http.put<any>(this.baseUrl + "/CustomField/deleteCustomField", formData);
+  }
+
+  getCustomFieldById(id: number) {
+    return this.http.get<any>(this.baseUrl + "/CustomField/getCustomFieldById?Id=" + id);
+  }
+
+  getCustomFieldByContactId(id: number) {
+    return this.http.get<any>(this.baseUrl + "/CustomField/getCustomFieldByContactId?Id=" + id);
+  }
+
+  getPagedCustomFields (pageIndex: number, pageSize: number, ContactId: number, sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/CustomField/PagedCustomField?PageIndex=" + pageIndex + "&PageSize=" + pageSize + "&ContactId=" + ContactId + "&Sort=" + sort + "&Search=" + search);
+  }
+
+  getAllCustomFields(sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/CustomField/allCustomFields?Sort=" + sort + "&Search=" + search);
+  }
+
+  // Files
+
+  uploadMultipleFiles(Files: any, ContactId: number) {
+    const formData = new FormData();
+    
+    formData.append('Files', Files?.toString() ?? "0");
+    formData.append('ContactId', ContactId?.toString() ?? "0");
+    return this.http.get<any>(this.baseUrl + "/File/uploadFiles" + formData);
+  }
+
+  uploadFile(File: any, ContactId: number, IsProfile: boolean) {
+    const formData = new FormData();
+    
+    formData.append('File', File?.toString() ?? "0");
+    formData.append('ContactId', ContactId?.toString() ?? "0");
+    formData.append('IsProfile', IsProfile?.toString() ?? "0");
+    return this.http.get<any>(this.baseUrl + "/File/uploadFiles" + formData);
+  }
+
+  deleteFilesByMasterId(id: number): Observable<any> {
+    return this.http.put<any>(this.baseUrl + "/File/deleteFileByMasterId?Id=", id);
+  }
+
+  deleteFilesByDerivedId(id: number): Observable<any> {
+    return this.http.put<any>(this.baseUrl + "/File/deleteFileByDerivedId?Id=", id);
+  }
+
+  getAllFiles() {
+    return this.http.get<any>(this.baseUrl + "/File/allFiles");
+  }
+
+  //Notes
+
+  addNewNote(note: createNoteDto) {
+    const formData = new FormData();
+    
+    formData.append('note', note?.note?.toString() ?? "0");
+    formData.append('typeId', note?.typeId?.toString() ?? "0");
+    formData.append('contactId', note?.contactId?.toString() ?? "0");
+
+    return this.http.post<any>(this.baseUrl + "/Note/addNote", formData);
+  }
+
+  updateNote(note: updateNoteDto) {
+    const formData = new FormData();
+    
+    formData.append('note', note?.note?.toString() ?? "0");
+    formData.append('typeId', note?.typeId?.toString() ?? "0");
+    formData.append('contactId', note?.id?.toString() ?? "0");
+
+    return this.http.put<any>(this.baseUrl + "/Note/updateNote", formData);
+  }
+
+  deleteNote(id: number) {
+    return this.http.put<any>(this.baseUrl + "/Note/deleteNote?Id=", id);
+  }
+
+  getNoteById(id: number) {
+    return this.http.get<any>(this.baseUrl + "/Note/getNoteById?Id=" + id);
+  }
+
+  getNoteByContactId(id: number) {
+    return this.http.get<any>(this.baseUrl + "/Note/getNoteByContactId?Id=" + id);
+  }
+
+  getPagedNote (pageIndex: number, pageSize: number, ContactId: number, sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/Note/PagedNotes?PageIndex=" + pageIndex + "&PageSize=" + pageSize + "&ContactId=" + ContactId + "&Sort=" + sort + "&Search=" + search);
+  }
+
+  getAllNotes (sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/Note/allNotes?Sort=" + sort + "&Search=" + search);
+  }
+
+  // Phone Number
+
+  addPhoneNumber(phone: addPhoneNumber): Observable<any> {
+    const formData = new FormData();
+    if(phone?.contactId?.toString()) {
+      formData.append('contactId', phone?.contactId?.toString() ?? "0");
+    }
+
+    formData.append('phoneNumber', phone?.phoneNumber?.toString() ?? "0");
+    formData.append('typeId', phone?.typeId?.toString() ?? "0");
+
+    return this.http.post<any>(this.baseUrl + "/PhoneNumber/addPhoneNumber", formData);
+  }
+
+  updatePhoneNumber(phone: updatePhoneNumber): Observable<any> {
+    const formData = new FormData();
+    if(phone?.id?.toString()) {
+      formData.append('contactId', phone?.id?.toString() ?? "0");
+    }
+
+    formData.append('phoneNumber', phone?.phoneNumber?.toString() ?? "0");
+    formData.append('typeId', phone?.typeId?.toString() ?? "0");
+
+    return this.http.put<any>(this.baseUrl + "/PhoneNumber/updatePhoneNumber", formData);
+  }
+
+  deletePhoneNumber(id: number) {
+    const formData = new FormData();
+    formData.append('id', id?.toString() ?? "0");
+    return this.http.put<any>(this.baseUrl + "/PhoneNumber/deletePhoneNumber", formData);
+  }
+
+  getPhoneNumberById(id: number) {
+    return this.http.get<any>(this.baseUrl + "/PhoneNumber/getPhoneNumberById?Id=" + id);
+  }
+
+  getPhoneNumberByContactId(id: number) {
+    return this.http.get<any>(this.baseUrl + "/PhoneNumber/getPhoneNumbersByContactId?Id=" + id);
+  }
+
+  getPagedPhoneNumber (pageIndex: number, pageSize: number, ContactId: number, sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/PhoneNumber/PagedPhoneNumbers?PageIndex=" + pageIndex + "&PageSize=" + pageSize + "&ContactId=" + ContactId + "&Sort=" + sort + "&Search=" + search);
+  }
+
+  getAllPhoneNumbers (sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/PhoneNumber/allPhoneNumbers?Sort=" + sort + "&Search=" + search);
+  }
+
+  // Related Contacts
+
+  addRelatedContact(rContact: addRelatedContact): Observable<any> {
+    const formData = new FormData();
+    formData.append('contactId', rContact?.contactId?.toString() ?? "0");
+    formData.append('relatedContactIds', rContact?.relatedContactIds?.toString() ?? "0");
+
+    return this.http.post<any>(this.baseUrl + "/RelatedContact/addRelatedContact", formData);
+  }
+
+  updateRelatedContact(rContact: updateRelatedContact): Observable<any> {
+    const formData = new FormData();
+    formData.append('contactId', rContact?.contactId?.toString() ?? "0");
+    formData.append('relatedContactId', rContact?.relatedContactId?.toString() ?? "0");
+    formData.append('id', rContact?.id?.toString() ?? "0");
+
+    return this.http.put<any>(this.baseUrl + "/RelatedContact/updateRelatedContact", formData);
+  }
+
+  deleteRelatedContact(id: number) {
+    return this.http.put<any>(this.baseUrl + "/RelatedContact/deleteRelatedContact?Id=", id);
+  }
+
+  getRelatedContactsById(id: number) {
+    return this.http.get<any>(this.baseUrl + "/RelatedContact/getRelatedContactsById?Id=" + id);
+  }
+
+  getRelatedContactsByContactId(id: number) {
+    return this.http.get<any>(this.baseUrl + "/RelatedContact/getRelatedContactsByContactId?Id=" + id);
+  }
+
+  getPagedRelatedContacts (pageIndex: number, pageSize: number, ContactId: number, sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/RelatedContact/getPagedRelatedContacts?PageIndex=" + pageIndex + "&PageSize=" + pageSize + "&ContactId=" + ContactId + "&Sort=" + sort + "&Search=" + search);
+  }
+
+  getAllRelatedContacts (sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/RelatedContact/allRelatedContacts?Sort=" + sort + "&Search=" + search);
+  }
+
+  getRelatedContactsByCompanyId(id: number) {
+    return this.http.get<any>(this.baseUrl + "/RelatedContact/getRelatedContactsByCompanyId?Id=" + id);
+  }
+
+  getRelatedContactsDropDown(){
+    return this.http.get<any>(this.baseUrl + "/RelatedContact/getRelatedContactsDropDown");
+  }
+
+   // Status
+
+   addStatus(statusName: string, workFlowId:number) {
+    const formData = new FormData();
+
+    formData.append('statusName', statusName?.toString() ?? "");
+    formData.append('workFlowId', workFlowId?.toString() ?? "0");
+
+    return this.http.post<any>(this.baseUrl + "/Status/addStatus", formData);
+  }
+
+  updateStatus(statusName: string, workFlowId:number, id: number) {
+    const formData = new FormData();
+
+    formData.append('statusName', statusName?.toString() ?? "");
+    formData.append('workFlowId', workFlowId?.toString() ?? "0");
+    formData.append('id', id?.toString() ?? "0");
+
+    return this.http.post<any>(this.baseUrl + "/Status/updateStatus", formData);
+  }
+
+  deleteStatus(id: number) {
+    return this.http.put<any>(this.baseUrl + "/Status/deleteStatus?Id=", id);
+  }
+
+  getStatusById(id: number) {
+    return this.http.get<any>(this.baseUrl + "/Status/getStatusById?Id=" + id);
+  }
+
+  getStatusesByWorkFlowId(id: number) {
+    return this.http.get<any>(this.baseUrl + "/Status/getStatusesByWorkFlowId?Id=" + id);
+  }
+
+  getPagedStatuses (pageIndex: number, pageSize: number, WorkFlowId: number, sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/Status/PagedStatuses?PageIndex=" + pageIndex + "&PageSize=" + pageSize + "&WorkFlowId=" + WorkFlowId + "&Sort=" + sort + "&Search=" + search);
+  }
+
+  getAllStatuses (sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/Status/allStatuses?Sort=" + sort + "&Search=" + search);
+  }
+
+  // Tag
+
+  addTag(tag: string, contactId: number) {
+    const formData = new FormData();
+
+    formData.append('tag', tag?.toString() ?? "");
+    formData.append('contactId', contactId?.toString() ?? "0");
+    return this.http.post<any>(this.baseUrl + "/Tag/addTag", formData);
+  }
+
+  updateTag(tag: string, id: number) {
+    const formData = new FormData();
+
+    formData.append('tag', tag?.toString() ?? "");
+    formData.append('id', id?.toString() ?? "0");
+    return this.http.put<any>(this.baseUrl + "/Tag/updateTag", formData);
+  }
+
+  deleteTag(id: number) {
+    const formData = new FormData();
+    formData.append('id', id?.toString() ?? "0");
+    return this.http.put<any>(this.baseUrl + "/Tag/deleteTag", formData);
+  }
+
+  getTagById(id: number) {
+    return this.http.get<any>(this.baseUrl + "/Tag/getTagById?Id=" + id);
+  }
+
+  getTagsByContactId(id: number) {
+    return this.http.get<any>(this.baseUrl + "/Tag/getTagsByContactId?Id=" + id);
+  }
+
+  getPagedTags (pageIndex: number, pageSize: number, ContactId: number, sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/Status/PagedTags?PageIndex=" + pageIndex + "&PageSize=" + pageSize + "&ContactId=" + ContactId + "&Sort=" + sort + "&Search=" + search);
+  }
+
+  getAllTags (sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/Status/allTags?Sort=" + sort + "&Search=" + search);
+  }
+
+  // Workflow
+
+  addWorkFlow (workflow: WorkFlowDto): Observable<any> {
+    const formData = new FormData();
+    formData.append('workFlowName', workflow?.workFlowName?.toString() ?? "");
+    formData.append('isVisible', workflow?.isVisible?.toString() ?? "");
+    formData.append('isAccessable', workflow?.isAccessable?.toString() ?? "");
+
+    return this.http.post<any>(this.baseUrl + "/WorkFlow/addWorkFlow", formData);
+  }
+
+  updateWorkFlow (workflow: WorkFlowDto, id: number): Observable<any> {
+    const formData = new FormData();
+    formData.append('workFlowName', id?.toString() ?? "0");
+    formData.append('workFlowName', workflow?.workFlowName?.toString() ?? "");
+    formData.append('isVisible', workflow?.isVisible?.toString() ?? "");
+    formData.append('isAccessable', workflow?.isAccessable?.toString() ?? "");
+
+    return this.http.post<any>(this.baseUrl + "/WorkFlow/updateWorkFlow", formData);
+  }
+
+  deleteWorkFlow(id: number) {
+    const formData = new FormData();
+    formData.append('id', id?.toString() ?? "0");
+    return this.http.put<any>(this.baseUrl + "/WorkFlow/deleteWorkFlow", formData);
+  }
+
+  getWorkFlowById(id: number) {
+    return this.http.get<any>(this.baseUrl + "/WorkFlow/getWorkFlowById?Id=" + id);
+  }
+
+  getPagedWorkFlows (pageIndex: number, pageSize: number, WorkFlowId: number, sort: string, search: string) {
+    return this.http.get<any>(this.baseUrl + "/WorkFlow/PagedWorkFlows?PageIndex=" + pageIndex + "&PageSize=" + pageSize + "&WorkFlowId=" + WorkFlowId + "&Sort=" + sort + "&Search=" + search);
+  }
+
+  getAllWorkFlows (sort: string, search: string, WorkFlowId: number) {
+    return this.http.get<any>(this.baseUrl + "/WorkFlow/allWorkFlows?Sort=" + sort + "&Search=" + search + "&WorkFlowId=" + WorkFlowId);
+  }
 }

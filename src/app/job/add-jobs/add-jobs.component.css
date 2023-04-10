@@ -1,6 +1,6 @@
 .modal-dialog {
-  width: auto;
-  height: 700px;
+  width: 70vw;
+  height: 75vh;
 }
 
 .modal-header {
@@ -17,4 +17,8 @@
 .error-snackbar {
   background-color: red;
   color: white;
+}
+
+.close {
+  float: right;
 }
