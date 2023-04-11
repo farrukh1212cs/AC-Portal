@@ -22,7 +22,7 @@ export class JobsComponent {
 
   getAllJobs()
   {
-    this.jobService.allJobs().subscribe(
+    this.jobService.getAllJobsByCompanyID().subscribe(
       res => {
         debugger;
         this.Jobs = res;

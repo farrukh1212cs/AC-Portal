@@ -81,11 +81,11 @@ export class JobService {
     if (Jobs?.id?.toString()) {
       formData.append('id', Jobs?.id?.toString() ?? "0");
     }
-    formData.append('address1', Jobs?.address1?.toString() ?? "");
-    formData.append('address2', Jobs?.address2?.toString() ?? "");
+    formData.append('address1', Jobs?.addressLine1?.toString() ?? "");
+    formData.append('address2', Jobs?.addressLine2?.toString() ?? "");
     formData.append('city', Jobs?.city?.toString() ?? "");
-    formData.append('zip', Jobs?.zip?.toString() ?? "");
-    formData.append('name', Jobs?.name?.toString() ?? "");
+    formData.append('zip', Jobs?.zipCode?.toString() ?? "");
+    formData.append('name', Jobs?.jobName?.toString() ?? "");
     const startDate = Jobs?.startDate;
     if (startDate !== undefined) {
       const startDateObj = new Date(startDate);
@@ -98,13 +98,13 @@ export class JobService {
       endDateObj.setDate(endDateObj.getDate() + 1);
       formData.append('endDate', endDateObj.toISOString());
     }
-    formData.append('description', Jobs?.description?.toString() ?? "");
-    formData.append('leadSource', Jobs?.leadSource?.toString() ?? "");
-    formData.append('state', Jobs?.state?.toString() ?? "");
+    formData.append('description', Jobs?.discription?.toString() ?? "");
+    formData.append('leadSource', Jobs?.sourceId?.toString() ?? "");
     formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
     formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
     formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    formData.append('jobStatus', Jobs?.jobStatus?.toString() ?? "");
+    formData.append('jobStatus', Jobs?.statusId?.toString() ?? "");
+    formData.append('state', Jobs?.stateId?.toString() ?? "");
     
     phonesno?.forEach((phoneNumber: any, index: number) => {
       const keyPrefix = `phoneNumbers[${index}]`;
@@ -127,11 +127,11 @@ export class JobService {
     if (Jobs?.id?.toString()) {
       formData.append('id', Jobs?.id?.toString() ?? "0");
     }
-    formData.append('address1', Jobs?.address1?.toString() ?? "");
-    formData.append('address2', Jobs?.address2?.toString() ?? "");
+    formData.append('address1', Jobs?.addressLine1?.toString() ?? "");
+    formData.append('address2', Jobs?.addressLine2?.toString() ?? "");
     formData.append('city', Jobs?.city?.toString() ?? "");
-    formData.append('zip', Jobs?.zip?.toString() ?? "");
-    formData.append('name', Jobs?.name?.toString() ?? "");
+    formData.append('zip', Jobs?.zipCode?.toString() ?? "");
+    formData.append('name', Jobs?.jobName?.toString() ?? "");
     const startDate = Jobs?.startDate;
     if (startDate !== undefined) {
       const startDateObj = new Date(startDate);
@@ -144,14 +144,13 @@ export class JobService {
       endDateObj.setDate(endDateObj.getDate() + 1);
       formData.append('endDate', endDateObj.toISOString());
     }
-    formData.append('description', Jobs?.description?.toString() ?? "");
+    formData.append('description', Jobs?.discription?.toString() ?? "");
     formData.append('leadSource', Jobs?.leadSource?.toString() ?? "");
-    formData.append('state', Jobs?.state?.toString() ?? "");
+    formData.append('state', Jobs?.stateId?.toString() ?? "");
     formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
     formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
     formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    formData.append('jobStatus', Jobs?.jobStatus?.toString() ?? "");
-    debugger;
+    formData.append('jobStatus', Jobs?.statusId?.toString() ?? "");
     phonesno?.forEach((phoneNumber: any, index: number) => {
       const keyPrefix = `phoneNumbers[${index}]`;
       formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);

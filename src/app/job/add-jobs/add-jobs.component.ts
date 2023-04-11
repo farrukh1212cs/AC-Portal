@@ -62,6 +62,7 @@ export class AddJobsComponent implements OnInit {
     //---------
     this.jobForm = this.formBuilder.group({
       id: [''],
+      jobName: [''],
       addressLine1: [''],
       addressLine2: [''],
       city: [''],

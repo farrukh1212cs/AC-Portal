@@ -5,6 +5,8 @@ import { LocalStorageService } from 'angular-web-storage';
 
 import { AccountService } from '../account.service';
 
+import { RegisterDto } from '../AccountDto';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -37,6 +39,23 @@ export class LoginComponent {
       this.router.navigate(['./home']);
     } catch (err) {
       alert("UserName Or Password Is Invalid!");
+    }
+  }
+
+  async register() {
+    const register: RegisterDto = {
+      firstName: "Asad",
+      lastName: "Ali",
+      email: "asad@gmail.com",
+      companyName: "asadco",
+      password: "12345"
+    }
+    try { 
+      const res = await this.authService.register(register).toPromise();
+      alert("Registered Successfully!");
+      this.router.navigate(['./login']);
+    } catch(err) {
+      alert("Error registering this user!")
     }
   }
   
