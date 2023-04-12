@@ -5,7 +5,7 @@ import { JobService } from '../job.service';
 import { CreateJobDto } from '../CreateJobsDto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CreatePhoneNumbersDto } from '../../contact/CreatePhoneNumbersDto';
+import { createWorkflowDto } from '../createWorkflowDto';
 
 @Component({
   selector: 'app-add-workflow',
@@ -18,6 +18,7 @@ export class AddWorkflowComponent {
   updateData: any = {};
   Jobs: any[] = [];
   workFlowForm!: FormGroup;
+  workFlowDto?: createWorkflowDto;
 
   constructor(private dialogRef: MatDialogRef<AddWorkflowComponent>, private jobService: JobService, @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder, private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
@@ -62,7 +63,29 @@ export class AddWorkflowComponent {
     this.dialogRef.close();
   }
 
-  onSubmit() {
-    alert("Success!");
+  onSubmit(): void {
+    this.workFlowForm.markAllAsTouched();
+    if (this.workFlowForm.valid) {
+      this.workFlowDto = this.workFlowForm.value;
+      this.jobService.createWorkflow(this.workFlowForm.value).subscribe(
+        res => {
+          this.snackBar.open('Record inserted successfully', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.router.navigate(['/jobs']);
+          this.dialogRef.close();
+        },
+        err => {
+          console.log(err);
+          this.snackBar.open('Error', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
+        }
+      )
+    }
   }
 }

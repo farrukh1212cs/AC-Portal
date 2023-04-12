@@ -378,16 +378,16 @@ export class JobService {
   }
 
   createWorkflow(workFlow: createWorkflowDto): Observable<any> {
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    formData.append('name', workFlow?.name?.toString() ?? "");
-    formData.append('description', workFlow?.description?.toString() ?? "");
-    formData.append('jobId', workFlow?.jobId?.toString() ?? "");
+    // formData.append('name', workFlow?.name?.toString() ?? "");
+    // formData.append('description', workFlow?.description?.toString() ?? "");
+    // formData.append('jobId', workFlow?.jobId?.toString() ?? "");
 
     if (workFlow.jobId?.toString()) {
-      return this.http.put<any>(this.baseUrl + "/WorkFlow/CreateWorkFlow", formData);
+      return this.http.put<any>(this.baseUrl + "/WorkFlow/CreateWorkFlow", workFlow);
     } else {
-      return this.http.post<any>(this.baseUrl + "/WorkFlow/UpdateWorkFlow", formData);
+      return this.http.post<any>(this.baseUrl + "/WorkFlow/UpdateWorkFlow", workFlow);
     }
   }
 }
