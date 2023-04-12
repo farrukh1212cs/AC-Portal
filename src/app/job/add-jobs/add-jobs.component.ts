@@ -38,7 +38,6 @@ export class AddJobsComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<AddJobsComponent>, private jobService: JobService, @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder, private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
-    debugger;
     if (data) {
       this.modelMain = data;
       this.updateData = Object.assign({}, this.modelMain);
