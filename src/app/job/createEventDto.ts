@@ -10,4 +10,5 @@ export interface CreateEvetDto {
     tags?: string;
     lastStatusChangeDate?: Date;
     jobId?: number;
+    id?: number;
 }
