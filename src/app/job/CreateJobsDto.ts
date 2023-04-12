@@ -15,7 +15,7 @@ export interface CreateJobDto {
   zipCode?: number;
   statusId?: number;
   startDate?: Date;
-  endDate: Date;
+  endDate?: Date;
   discription?: string;
   leadSource?: string;
   sourceId?: number;
@@ -25,12 +25,15 @@ export interface CreateJobDto {
   officeLocationId?: number;
   workFlowId?: number;
   salesRepId?: number;
-  subContractorId: number;
+  subContractorId?: number;
   productioManagerId?: number;
   timelineId?: number;
   relatedJobs?: number[];
   tags?: string[];
   note?: CreateNotesDto;
+  teamMembers?: number[];
+  relatedContacts?: number[];
+  displayName?: string;
   phoneNumbers?: CreatePhoneNumbersDto[];
   customFields?: CreateCustomFieldsDto[];
   }

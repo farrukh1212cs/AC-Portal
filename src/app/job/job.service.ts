@@ -85,7 +85,7 @@ export class JobService {
     formData.append('address2', Jobs?.addressLine2?.toString() ?? "");
     formData.append('city', Jobs?.city?.toString() ?? "");
     formData.append('zip', Jobs?.zipCode?.toString() ?? "");
-    formData.append('name', Jobs?.jobName?.toString() ?? "");
+    formData.append('name', Jobs?.displayName?.toString() ?? "");
     const startDate = Jobs?.startDate;
     if (startDate !== undefined) {
       const startDateObj = new Date(startDate);
@@ -104,6 +104,7 @@ export class JobService {
     formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
     formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
     formData.append('jobStatus', Jobs?.statusId?.toString() ?? "");
+    formData.append('subContractorId', Jobs?.subContractorId?.toString() ?? "");
     formData.append('state', Jobs?.stateId?.toString() ?? "");
     
     phonesno?.forEach((phoneNumber: any, index: number) => {
@@ -115,10 +116,22 @@ export class JobService {
     if (Jobs.tags) {
       Jobs.tags.forEach((tag: any) => formData.append('tags[]', tag.value));
     }
+
+    var requestBody: any = {};
+    formData.forEach((value, key) => requestBody[key] = value);
+
+    if(Jobs.teamMembers) {
+      requestBody['TeamMememberId'] = Jobs.teamMembers;
+    }
+
+    if(Jobs.relatedContacts) {
+      requestBody['RelatedContactId'] = Jobs.relatedContacts;
+    }
+
     if (Jobs?.id?.toString()) {
-      return this.http.put<any>(this.baseUrl + "/Jobs/CreateJob", formData);
+      return this.http.put<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
     } else {
-      return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", formData);
+      return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
     }
   }
 
@@ -157,11 +170,23 @@ export class JobService {
       formData.append(`${keyPrefix}.typeId`, phoneNumber.typeId);
       formData.append(`${keyPrefix}.id`, phoneNumber.id ?? "0");
     });
+
     if (Jobs.tags) {
       Jobs.tags.forEach((tag: any) => formData.append('tags[]', tag.value));
     }
+
+    var requestBody: any = {};
+    formData.forEach((value, key) => requestBody[key] = value);
+
+    if(Jobs.teamMembers) {
+      requestBody['TeamMememberId'] = Jobs.teamMembers;
+    }
+
+    if(Jobs.relatedContacts) {
+      requestBody['RelatedContactId'] = Jobs.relatedContacts;
+    }
     
-    return this.http.put<any>(this.baseUrl + "/Jobs/CreateJob", formData);
+    return this.http.put<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
   }
 
   //Events Requests
@@ -207,7 +232,7 @@ export class JobService {
     }
 
     if (Event?.jobId?.toString()) {
-      return this.http.put<any>(this.baseUrl + "/Events/CreateEvent", formData);
+      return this.http.put<any>(this.baseUrl + "/Events/UpdateEvent", formData);
     } else {
       return this.http.post<any>(this.baseUrl + "/Events/CreateEvent", formData);
     }

@@ -191,7 +191,6 @@ export class AddJobsComponent implements OnInit {
   onSubmit(): void {
     this.jobForm.markAllAsTouched();
     if (this.jobForm.valid) {
-      debugger;
       this.JobDto = this.jobForm.value
       this.jobService.createJob(this.jobForm.value, this.phoneNumbers).subscribe(
         res => {
