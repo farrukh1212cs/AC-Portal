@@ -31,7 +31,7 @@ export class AddWorkflowComponent {
     this.workFlowForm = this.formBuilder.group({
       name: [''],
       description: [''],
-      jobId: ['']
+      job: ['']
     });
 
     Promise.all([
@@ -45,11 +45,11 @@ export class AddWorkflowComponent {
   {
     this.jobService.getAllJobsByCompanyID().subscribe(
       res => {
-        console.log("From workflow: ", res);
-        this.Jobs = res;
+        this.Jobs = res.map((job: { id: number, name: string }) => {
+          return {id: job.id, name: job.name}
+        })
       },
       err => {
-        console.log("From workflow: ", err);
         alert(err);
       },
       () => {

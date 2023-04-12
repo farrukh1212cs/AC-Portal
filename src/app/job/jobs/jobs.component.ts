@@ -78,8 +78,8 @@ export class JobsComponent {
       data.FormTitle = "Add Workflow";
       data.Request_Type = "Add";
       dialogRef = this.dialog.open(AddWorkflowComponent, {
-        width: '60VW',
-        height: '60VH',
+        width: '40vw',
+        height: '70vh',
         data: data,
         disableClose: true
       });
@@ -91,8 +91,8 @@ export class JobsComponent {
       data.FormTitle = "Update Job";
       data.Request_Type = "Edit";
       dialogRef = this.dialog.open(AddWorkflowComponent, {
-        width: '60vw',
-        height: '60vh',
+        width: '40vw',
+        height: '70vh',
         data: data,
         disableClose: true
       });
