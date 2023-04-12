@@ -16,6 +16,7 @@ export class AddWorkflowComponent {
   public model: any = {};
   public modelMain: any = {};
   updateData: any = {};
+  Jobs: any[] = [];
   workFlowForm!: FormGroup;
 
   constructor(private dialogRef: MatDialogRef<AddWorkflowComponent>, private jobService: JobService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -32,6 +33,29 @@ export class AddWorkflowComponent {
       description: [''],
       jobId: ['']
     });
+
+    Promise.all([
+      this.getAllJobs()
+    ]).then(() => {
+
+    })
+  }
+
+  getAllJobs()
+  {
+    this.jobService.getAllJobsByCompanyID().subscribe(
+      res => {
+        console.log("From workflow: ", res);
+        this.Jobs = res;
+      },
+      err => {
+        console.log("From workflow: ", err);
+        alert(err);
+      },
+      () => {
+       
+      }
+    );
   }
 
   closeAddJobsModal() {
