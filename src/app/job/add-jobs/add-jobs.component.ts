@@ -176,7 +176,6 @@ export class AddJobsComponent implements OnInit {
   getOfficeLocation() {
     this.jobService.allOfficeLocations().subscribe(
       res => {
-        debugger;
         this.officeLocationDropdownValues = res.payload;
       },
       err => {

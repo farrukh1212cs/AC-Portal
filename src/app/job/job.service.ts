@@ -200,41 +200,11 @@ export class JobService {
   }
 
   createEvent(Event: CreateEvetDto): Observable<any> {
-    const formData = new FormData();
     
-    formData.append('eventType', Event?.eventType?.toString() ?? "");
-    formData.append('eventPriority', Event?.eventPriority?.toString() ?? "");
-    formData.append('eventName', Event?.eventName?.toString() ?? "");
-    formData.append('eventStatus', Event?.eventStatus?.toString() ?? "");
-    formData.append('estimatedDuration', Event?.estimatedDuration?.toString() ?? "");
-    formData.append('description', Event?.description?.toString() ?? "");
-    formData.append('tags', Event?.tags?.toString() ?? "");
-    const startDate = Event?.startDate;
-    if (startDate !== undefined) {
-      const startDateObj = new Date(startDate);
-      startDateObj.setDate(startDateObj.getDate() + 1);
-      formData.append('startDate', startDateObj.toISOString());
-    }
-    const endDate = Event?.endDate;
-    if (endDate !== undefined) {
-      const endDateObj = new Date(endDate);
-      endDateObj.setDate(endDateObj.getDate() + 1);
-      formData.append('endDate', endDateObj.toISOString());
-    }
-    const lastStatusChangeDate = Event?.lastStatusChangeDate;
-    if (lastStatusChangeDate !== undefined) {
-      const lastStatusChangeDateObj = new Date(lastStatusChangeDate);
-      lastStatusChangeDateObj.setDate(lastStatusChangeDateObj.getDate() + 1);
-      formData.append('lastStatusChangeDate', lastStatusChangeDateObj.toISOString());
-    }
-    if (Event?.jobId?.toString()) {
-      formData.append('jobId', Event?.jobId?.toString() ?? "0");
-    }
-
-    if (Event?.jobId?.toString()) {
-      return this.http.put<any>(this.baseUrl + "/Events/UpdateEvent", formData);
+    if (Event?.id?.toString()) {
+      return this.http.put<any>(this.baseUrl + "/Events/UpdateEvent", Event);
     } else {
-      return this.http.post<any>(this.baseUrl + "/Events/CreateEvent", formData);
+      return this.http.post<any>(this.baseUrl + "/Events/CreateEvent", Event);
     }
   }
 
@@ -378,12 +348,6 @@ export class JobService {
   }
 
   createWorkflow(workFlow: createWorkflowDto): Observable<any> {
-    // const formData = new FormData();
-
-    // formData.append('name', workFlow?.name?.toString() ?? "");
-    // formData.append('description', workFlow?.description?.toString() ?? "");
-    // formData.append('jobId', workFlow?.jobId?.toString() ?? "");
-
     if (workFlow.jobId?.toString()) {
       return this.http.put<any>(this.baseUrl + "/WorkFlow/CreateWorkFlow", workFlow);
     } else {

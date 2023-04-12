@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AddJobEventComponent } from '../add-job-event/add-job-event.component';
 import { AddJobsComponent } from '../add-jobs/add-jobs.component';
 import { AddWorkflowComponent } from '../add-workflow/add-workflow.component';
 import { JobService } from '../job.service';
@@ -13,7 +14,6 @@ import { JobService } from '../job.service';
 export class JobsComponent {
   Jobs: any[] = [];
   constructor(private router: Router, private jobService: JobService,private dialog: MatDialog) {
-    debugger;
 
  }
   ngOnInit() {
@@ -25,7 +25,6 @@ export class JobsComponent {
   {
     this.jobService.getAllJobsByCompanyID().subscribe(
       res => {
-        debugger;
         this.Jobs = res;
       },
       err => {
@@ -88,9 +87,39 @@ export class JobsComponent {
     }
     else {
       data = data[0];
-      data.FormTitle = "Update Job";
+      data.FormTitle = "Update Workflow";
       data.Request_Type = "Edit";
       dialogRef = this.dialog.open(AddWorkflowComponent, {
+        width: '40vw',
+        height: '70vh',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result: any) => {
+      });
+    }
+  }
+
+  openEventModal(data: any): void {
+    let dialogRef: any = {};
+    if (data == null) {
+      data = {};
+      data.FormTitle = "Add Event";
+      data.Request_Type = "Add";
+      dialogRef = this.dialog.open(AddJobEventComponent, {
+        width: '40vw',
+        height: '70vh',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result:any) => {
+      });
+    }
+    else {
+      data = data[0];
+      data.FormTitle = "Update Event";
+      data.Request_Type = "Edit";
+      dialogRef = this.dialog.open(AddJobEventComponent, {
         width: '40vw',
         height: '70vh',
         data: data,
