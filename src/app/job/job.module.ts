@@ -16,11 +16,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { TagInputModule } from 'ngx-chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AddWorkflowComponent } from './add-workflow/add-workflow.component';
 
 @NgModule({
   declarations: [
     JobsComponent,
-    AddJobsComponent
+    AddJobsComponent,
+    AddWorkflowComponent
   ],
   imports: [
     CommonModule,

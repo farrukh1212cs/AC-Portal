@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AddJobsComponent } from '../add-jobs/add-jobs.component';
+import { AddWorkflowComponent } from '../add-workflow/add-workflow.component';
 import { JobService } from '../job.service';
 
 @Component({
@@ -47,8 +48,8 @@ export class JobsComponent {
       data.FormTitle = "Add Job";
       data.Request_Type = "Add";
       dialogRef = this.dialog.open(AddJobsComponent, {
-        width: 'auto',
-        height: 'auto',
+        width: '80vw',
+        height: '80vh',
         data: data,
         disableClose: true
       });
@@ -69,6 +70,37 @@ export class JobsComponent {
       });
     }
   }
+
+  openWorkflowModal(data:any): void {
+    let dialogRef: any = {};
+    if (data == null) {
+      data = {};
+      data.FormTitle = "Add Workflow";
+      data.Request_Type = "Add";
+      dialogRef = this.dialog.open(AddWorkflowComponent, {
+        width: '60VW',
+        height: '60VH',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result:any) => {
+      });
+    }
+    else {
+      data = data[0];
+      data.FormTitle = "Update Job";
+      data.Request_Type = "Edit";
+      dialogRef = this.dialog.open(AddWorkflowComponent, {
+        width: '60vw',
+        height: '60vh',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result: any) => {
+      });
+    }
+  }
+
 
   redirect(jobs:any){
      this.router.navigate(['/jobs', jobs.id], { state: { model: jobs }});
