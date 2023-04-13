@@ -99,14 +99,16 @@ export class JobService {
       formData.append('endDate', endDateObj.toISOString());
     }
     formData.append('description', Jobs?.discription?.toString() ?? "");
-    formData.append('leadSource', Jobs?.sourceId?.toString() ?? "");
-    formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
+    formData.append('leadSourceId', Jobs?.sourceId?.toString() ?? "");
+    formData.append('salesRepsentativeId', Jobs?.salesRepId?.toString() ?? "");
     formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
     formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    formData.append('jobStatus', Jobs?.statusId?.toString() ?? "");
+    formData.append('jobStatusId', Jobs?.statusId?.toString() ?? "");
     formData.append('subContractorId', Jobs?.subContractorId?.toString() ?? "");
-    formData.append('state', Jobs?.stateId?.toString() ?? "");
-    
+    formData.append('stateId', Jobs?.stateId?.toString() ?? "");
+    // formData.append('primaryContactId', Jobs?.mobileNumber?.toString() ?? "");
+    // formData.append('lastStatusChangeDate', Jobs?.lastStatusChangeDate?.toString() ?? "");
+      
     phonesno?.forEach((phoneNumber: any, index: number) => {
       const keyPrefix = `phoneNumbers[${index}]`;
       formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);
@@ -121,72 +123,111 @@ export class JobService {
     formData.forEach((value, key) => requestBody[key] = value);
 
     if(Jobs.teamMembers) {
-      requestBody['TeamMememberId'] = Jobs.teamMembers;
+      requestBody['teamMememberId'] = Jobs.teamMembers;
     }
 
     if(Jobs.relatedContacts) {
-      requestBody['RelatedContactId'] = Jobs.relatedContacts;
+      requestBody['relatedContactId'] = Jobs.relatedContacts;
     }
 
+    debugger;
+
     if (Jobs?.id?.toString()) {
-      return this.http.put<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
+      return this.http.put<any>(this.baseUrl + "/Jobs/UpdateJob", requestBody);
     } else {
       return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
     }
   }
 
-  deleteJob(Jobs: CreateJobDto, phonesno: any) {
-    const formData = new FormData();
-    if (Jobs?.id?.toString()) {
-      formData.append('id', Jobs?.id?.toString() ?? "0");
-    }
-    formData.append('address1', Jobs?.addressLine1?.toString() ?? "");
-    formData.append('address2', Jobs?.addressLine2?.toString() ?? "");
-    formData.append('city', Jobs?.city?.toString() ?? "");
-    formData.append('zip', Jobs?.zipCode?.toString() ?? "");
-    formData.append('name', Jobs?.jobName?.toString() ?? "");
-    const startDate = Jobs?.startDate;
-    if (startDate !== undefined) {
-      const startDateObj = new Date(startDate);
-      startDateObj.setDate(startDateObj.getDate() + 1);
-      formData.append('startDate', startDateObj.toISOString());
-    }
-    const endDate = Jobs?.endDate;
-    if (endDate !== undefined) {
-      const endDateObj = new Date(endDate);
-      endDateObj.setDate(endDateObj.getDate() + 1);
-      formData.append('endDate', endDateObj.toISOString());
-    }
-    formData.append('description', Jobs?.discription?.toString() ?? "");
-    formData.append('leadSource', Jobs?.leadSource?.toString() ?? "");
-    formData.append('state', Jobs?.stateId?.toString() ?? "");
-    formData.append('salesRepId', Jobs?.salesRepId?.toString() ?? "");
-    formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
-    formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    formData.append('jobStatus', Jobs?.statusId?.toString() ?? "");
-    phonesno?.forEach((phoneNumber: any, index: number) => {
-      const keyPrefix = `phoneNumbers[${index}]`;
-      formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);
-      formData.append(`${keyPrefix}.typeId`, phoneNumber.typeId);
-      formData.append(`${keyPrefix}.id`, phoneNumber.id ?? "0");
-    });
+  deleteJob(Jobs: any, phonesno: any) {
 
-    if (Jobs.tags) {
-      Jobs.tags.forEach((tag: any) => formData.append('tags[]', tag.value));
-    }
-
-    var requestBody: any = {};
-    formData.forEach((value, key) => requestBody[key] = value);
-
-    if(Jobs.teamMembers) {
-      requestBody['TeamMememberId'] = Jobs.teamMembers;
-    }
-
-    if(Jobs.relatedContacts) {
-      requestBody['RelatedContactId'] = Jobs.relatedContacts;
-    }
+    debugger;
+    console.log(Jobs);
     
-    return this.http.put<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
+    var requestBody: any = Jobs;
+    requestBody['id'] = Jobs.id ? Jobs.id : "";
+    requestBody['name'] = Jobs.name ? Jobs.name : "";
+    requestBody['address1'] = Jobs.address1 ? Jobs.address1 : "";
+    requestBody['address2'] = Jobs.address2 ? Jobs.address2 : "";
+    requestBody['city'] = Jobs.city ? Jobs.city : "";
+    requestBody['stateId'] = Jobs.stateId ? Jobs.stateId !== null ? Jobs.stateId : "" : "";
+    requestBody['zip'] = Jobs.zip ? Jobs.zip : "";
+    requestBody['jobStatusId'] = Jobs.jobStatusId ? Jobs.jobStatusId : "";
+    requestBody['startDate'] = Jobs.startDate ? Jobs.startDate : "";
+    requestBody['endDate'] = Jobs.endDate ? Jobs.endDate : "";
+    requestBody['description'] = Jobs.description ? Jobs.description : "";
+    requestBody['leadSourceId'] = Jobs.leadSourceId ? Jobs.leadSourceId : "";
+    requestBody['salesRepsentativeId'] = Jobs.salesRepsentativeId ? Jobs.salesRepsentativeId : "";
+    requestBody['lastStatusChangeDate'] = Jobs.lastStatusChangeDate ? Jobs.lastStatusChangeDate !== null ? Jobs.lastStatusChangeDate : "" : "";
+    requestBody['primaryContactId'] = Jobs.primaryContactId ? Jobs.primaryContactId !== null ? Jobs.primaryContactId : "" : "";
+    requestBody['officeLocationId'] = Jobs.officeLocationId ? Jobs.officeLocationId : "";
+    requestBody['workFlowId'] = Jobs.workFlowId ? Jobs.workFlowId : "";
+    requestBody['subContractorId'] = Jobs.subContractorId ? Jobs.subContractorId : "";
+    requestBody['relatedContactId'] = Jobs.relatedContactId ? Jobs.relatedContactId : [];
+    requestBody['teamMememberId'] = Jobs.teamMememberId ? Jobs.teamMememberId : [];
+   
+
+
+    // const formData = new FormData();
+    // if (Jobs?.id?.toString()) {
+    //   formData.append('id', Jobs?.id?.toString() ?? "0");
+    // }
+    // formData.append('address1', Jobs?.addressLine1?.toString() ?? "");
+    // formData.append('address2', Jobs?.addressLine2?.toString() ?? "");
+    // formData.append('city', Jobs?.city?.toString() ?? "");
+    // formData.append('zip', Jobs?.zipCode?.toString() ?? "");
+    // formData.append('name', Jobs?.displayName?.toString() ?? "");
+    // const startDate = Jobs?.startDate;
+    // if (startDate !== undefined) {
+    //   const startDateObj = new Date(startDate);
+    //   startDateObj.setDate(startDateObj.getDate() + 1);
+    //   formData.append('startDate', startDateObj.toISOString());
+    // }
+    // const endDate = Jobs?.endDate;
+    // if (endDate !== undefined) {
+    //   const endDateObj = new Date(endDate);
+    //   endDateObj.setDate(endDateObj.getDate() + 1);
+    //   formData.append('endDate', endDateObj.toISOString());
+    // }
+    // formData.append('description', Jobs?.discription?.toString() ?? "");
+    // formData.append('leadSourceId', Jobs?.sourceId?.toString() ?? "");
+    // formData.append('salesRepsentativeId', Jobs?.salesRepId?.toString() ?? "");
+    // formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
+    // formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
+    // formData.append('jobStatusId', Jobs?.statusId?.toString() ?? "");
+    // formData.append('subContractorId', Jobs?.subContractorId?.toString() ?? "");
+    // formData.append('stateId', Jobs?.stateId?.toString() ?? "");
+    // formData.append('primaryContactId', Jobs?.mobileNumber?.toString() ?? "");
+    // formData.append('lastStatusChangeDate', Jobs?.lastStatusChangeDate?.toString() ?? "");
+      
+    // phonesno?.forEach((phoneNumber: any, index: number) => {
+    //   const keyPrefix = `phoneNumbers[${index}]`;
+    //   formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);
+    //   formData.append(`${keyPrefix}.typeId`, phoneNumber.typeId);
+    //   formData.append(`${keyPrefix}.id`, phoneNumber.id ?? "0");
+    // });
+    // if (Jobs.tags) {
+    //   Jobs.tags.forEach((tag: any) => formData.append('tags[]', tag.value));
+    // }
+
+    // var requestBody: any = {};
+    // formData.forEach((value, key) => requestBody[key] = value);
+
+    // if(Jobs.teamMembers) {
+    //   requestBody['teamMememberId'] = Jobs.teamMembers;
+    // } else {
+    //   requestBody['teamMememberId'] = [];
+    // }
+
+    // if(Jobs.relatedContacts) {
+    //   requestBody['relatedContactId'] = Jobs.relatedContacts;
+    // } else {
+    //   requestBody['relatedContactId'] = [];
+    // }
+
+    console.log(requestBody);
+    
+    return this.http.put<any>(this.baseUrl + "/Jobs/DeleteJob", requestBody);
   }
 
   //Events Requests

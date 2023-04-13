@@ -61,7 +61,6 @@ export class AddJobsComponent implements OnInit {
     //---------
     this.jobForm = this.formBuilder.group({
       id: [''],
-      jobName: [''],
       addressLine1: [''],
       addressLine2: [''],
       city: [''],
@@ -104,34 +103,37 @@ export class AddJobsComponent implements OnInit {
       this.getPhoneTypes()
     ]).then(() => {
       // All asynchronous functions have completed
-      if (this.updateData.job?.firstName) {
+      if (this.updateData.id) {
         this.jobForm.patchValue({
-          id: this.updateData.job?.id,
-          address1: this.updateData.job?.address1,
-          address2: this.updateData.job?.address2,
-          city: this.updateData.job?.city,
-          zip: this.updateData.job?.zip,
-          jobStatus: this.updateData.job?.jobStatus,
-          name: this.updateData.job?.name,
-          startDate: this.updateData.job?.startDate,
-          endDate: this.updateData.job?.endDate,
-          description: this.updateData.job?.description,
-          leadSource: this.updateData.job?.leadSource?.id,
-          state: this.updateData.job?.state?.id,
-          salesRepId: this.updateData.job?.salesRep?.id,
-          subContractorId: this.updateData.job?.subContractor?.id,
-          teamMembers: this.updateData.job?.teamMembers?.map((job: any) => job.id),
-          officeLocationId: this.updateData.job?.officeLocation.id,
-          workFlowId: this.updateData.job?.workFlow?.id,
-          statusId: this.updateData.job?.statusId?.id,
-          relatedContacts: this.updateData.job?.relatedContacts?.map((job: any) => job.id),
-          tags: this.updateData?.job?.tags?.map((tagd: any) => ({
+          id: this.updateData.id,
+          addressLine1: this.updateData.address1 ? this.updateData?.address1 : "",
+          addressLine2: this.updateData.address2 ? this.updateData.address2 : "",
+          city: this.updateData.city ? this.updateData.city : "",
+          zipCode: this.updateData.zip ? this.updateData.zip : "",
+          faxNo: this.updateData.faxNumber ? this.updateData.faxNumber : "",
+          displayName: this.updateData.name ? this.updateData.name: "",
+          startDate: this.updateData.startDate ? this.updateData.startDate : "",
+          endDate: this.updateData.endDate ? this.updateData.endDate : "",
+          discription: this.updateData.description ? this.updateData.description : "",
+          sourceId: this.updateData.leadSourceId ? this.updateData.leadSourceId : "",
+          stateId: this.updateData.stateId ? this.updateData.stateId : "",
+          salesRepId: this.updateData.salesRepsentativeId ? this.updateData.salesRepsentativeId : "",
+          subContractorId: this.updateData.subContractorId ? this.updateData.subContractorId : "", 
+          teamMembers: this.updateData.teamMembers ? this.updateData.teamMembers.map((job: any) => job.id) : "",
+          officeLocationId: this.updateData.officeLocationId ? this.updateData.officeLocationId : "",
+          workFlowId: this.updateData.workFlowId ? this.updateData.workFlowId : "",
+          statusId: this.updateData.jobStatusId ? this.updateData.jobStatusId : "",
+          relatedContacts: this.updateData.relatedContacts?  this.updateData.relatedContacts.map((job: any) => job.id) : "",
+          tags: this.updateData.tags ? this.updateData.tags?.map((tagd: any) => ({
             display: tagd.tag,
             value: tagd.tag
-          })),
+          })) : "",
           note: {
-            text: this.updateData.job?.note?.text
+            text: this.updateData.text ? this.updateData.text : ""
           },
+          phoneNumbers: this.updateData.phoneNumbersForm ? this.updateData.phoneNumbersForm : "",
+          customFields: this.updateData.customFields ? this.updateData.customFields : "",
+          
         });
       }
     }).catch((error) => {
@@ -192,21 +194,23 @@ export class AddJobsComponent implements OnInit {
       this.JobDto = this.jobForm.value
       this.jobService.createJob(this.jobForm.value, this.phoneNumbers).subscribe(
         res => {
-          this.snackBar.open('Record inserted successfully', 'Close', {
-            duration: 3000,
-            verticalPosition: 'top',
-            panelClass: ['success-snackbar']
-          });
+          // this.snackBar.open('Record inserted successfully', 'Close', {
+          //   duration: 3000,
+          //   verticalPosition: 'top',
+          //   panelClass: ['success-snackbar']
+          // });
           this.router.navigate(['/jobs']);
           this.dialogRef.close();
         },
         err => {
           console.log(err)
-          this.snackBar.open('Error', 'Close', {
-            duration: 3000,
-            verticalPosition: 'top',
-            panelClass: ['error-snackbar']
-          });
+          // this.snackBar.open('Error', 'Close', {
+          //   duration: 3000,
+          //   verticalPosition: 'top',
+          //   panelClass: ['error-snackbar']
+          // });
+          this.router.navigate(['/jobs']);
+          this.dialogRef.close();
         },
         () => {
         }

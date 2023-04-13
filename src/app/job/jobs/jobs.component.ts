@@ -13,6 +13,7 @@ import { JobService } from '../job.service';
 })
 export class JobsComponent {
   Jobs: any[] = [];
+  phoneNumbers: { id: string, phoneNumber: string, typeId: string, typeName: string }[] = [];
   constructor(private router: Router, private jobService: JobService,private dialog: MatDialog) {
 
  }
@@ -41,6 +42,7 @@ export class JobsComponent {
   //}
 
   openAddJobsModal(data:any): void {
+    console.log(data);
     let dialogRef: any = {};
     if (data == null) {
       data = {};
@@ -56,9 +58,8 @@ export class JobsComponent {
       });
     }
     else {
-      data = data[0];
       data.FormTitle = "Update Job";
-      data.Request_Type = "Edit";
+      data.Request_Type = "Update";
       dialogRef = this.dialog.open(AddJobsComponent, {
         width: '80vw',
         height: '80vh',
@@ -88,7 +89,7 @@ export class JobsComponent {
     else {
       data = data[0];
       data.FormTitle = "Update Workflow";
-      data.Request_Type = "Edit";
+      data.Request_Type = "Update";
       dialogRef = this.dialog.open(AddWorkflowComponent, {
         width: '40vw',
         height: '70vh',
@@ -118,7 +119,7 @@ export class JobsComponent {
     else {
       data = data[0];
       data.FormTitle = "Update Event";
-      data.Request_Type = "Edit";
+      data.Request_Type = "Update";
       dialogRef = this.dialog.open(AddJobEventComponent, {
         width: '40vw',
         height: '70vh',
@@ -135,4 +136,30 @@ export class JobsComponent {
      this.router.navigate(['/jobs', jobs.id], { state: { model: jobs }});
   
   };
+
+  deleteJobClick(data: any) : void {
+    this.jobService.deleteJob(data, this.phoneNumbers).subscribe(
+      res => {
+        // this.snackBar.open('Record inserted successfully', 'Close', {
+        //   duration: 3000,
+        //   verticalPosition: 'top',
+        //   panelClass: ['success-snackbar']
+        // });
+        this.router.navigate(['/jobs']);
+        console.log("Record deleted Successfully...");
+      },
+      err => {
+        console.log(err)
+        // this.snackBar.open('Error', 'Close', {
+        //   duration: 3000,
+        //   verticalPosition: 'top',
+        //   panelClass: ['error-snackbar']
+        // });
+        this.router.navigate(['/jobs']);
+        console.log("error deleting Successfully...");
+      },
+      () => {
+      }
+    );
+  }
 }

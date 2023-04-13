@@ -36,6 +36,7 @@ export interface CreateJobDto {
   displayName?: string;
   phoneNumbers?: CreatePhoneNumbersDto[];
   customFields?: CreateCustomFieldsDto[];
+  mobileNumber: number;
   }
   
   export interface CreateNotesDto {

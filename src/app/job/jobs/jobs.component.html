@@ -65,11 +65,11 @@
                   </button>
 
                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <button class="btn btn-outline-primary btn-sm d-flex align-items-center" (click)="openAddJobsModal(Jobs)"
+                  <!-- <button class="btn btn-outline-primary btn-sm d-flex align-items-center" (click)="openAddJobsModal(Jobs)"
                           type="button" data-bs-toggle="dropdown" aria-haspopup="true"
                           aria-expanded="true">
                     <span>Edit</span>
-                  </button>
+                  </button> -->
                 </div>
               </div>
               <div class="card-body">
@@ -87,7 +87,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let Jobs of Jobs" (click)="redirect(Jobs)">
+                    <tr *ngFor="let Jobs of Jobs">
                       <td>
                         <div class="d-flex">{{Jobs.name}} </div>
                       </td>
@@ -126,7 +126,7 @@
                       </td>
                       <td>{{Jobs.address1 + ',' + Jobs.address2}}</td>
                       <td>
-                        <div class="dropdown">
+                        <!-- <div class="dropdown">
                           <button type="button"
                                   class="btn btn-sm dropdown-toggle hide-arrow"
                                   data-bs-toggle="dropdown">
@@ -142,7 +142,38 @@
                               <span>Delete</span>
                             </a>
                           </div>
+                        </div> -->
+                        <div class="dropdown">
+                          <button type="button"
+                                  class="btn btn-sm dropdown-toggle hide-arrow"
+                                  [matMenuTriggerFor]="menu">
+                                  <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
+                          </button>
+                          <div class="dropdown-menu">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" xPosition="before">
+                              <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                              <button mat-menu-item (click)="openAddJobsModal(Jobs)">
+                                <span>Update</span>
+                              </button>
+                              <button mat-menu-item (click)="deleteJobClick(Jobs)">
+                                <span>Delete</span>
+                              </button>
+                            </mat-menu>
+                          </div>
                         </div>
+                        <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item>
+                            <span>Update</span>
+                          </button>
+                          <button mat-menu-item>
+                            <span>Delete</span>
+                          </button>
+                        </mat-menu> -->
                       </td>
                     </tr>
                   </tbody>
