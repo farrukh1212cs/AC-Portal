@@ -77,16 +77,16 @@
                 <div class="col-md-3">
                   <div class="mb-1">
                     <mat-label>Related Contacts</mat-label>
-                    <mat-select formControlName="relatedContacts" class="form-control form-control-sm" placeholder="Choose a related contacts" multiple>
-                      <mat-option *ngFor="let rl of relatedcontacts" [value]="rl.id">
+                    <mat-select formControlName="RelatedContactId" class="form-control form-control-sm" placeholder="Choose a related contacts" multiple>
+                      <mat-option *ngFor="let rl of RelatedContactId" [value]="rl.id">
                         {{rl.name}}
                       </mat-option>
                     </mat-select>
                   </div>
                   <div class="mb-1">
                     <mat-label>Assigned Team Members</mat-label>
-                    <mat-select formControlName="teamMembers" class="form-control form-control-sm" placeholder="Choose a team members" multiple>
-                      <mat-option *ngFor="let tm of teamMembers" [value]="tm.id">
+                    <mat-select formControlName="TeamMememberId" class="form-control form-control-sm" placeholder="Choose a team members" multiple>
+                      <mat-option *ngFor="let tm of TeamMememberId" [value]="tm.id">
                         {{tm.name}}
                       </mat-option>
                     </mat-select>
@@ -109,7 +109,7 @@
                 <div class="col-md-6">
                   <div class="mb-1">
                     <mat-label>Display Name</mat-label>
-                    <input matInput formControlName="displayName" class="form-control form-control-sm">
+                    <input matInput formControlName="name" class="form-control form-control-sm">
                   </div>
                   <div class="mb-1">
                     <mat-label>Address Line 1</mat-label>
@@ -136,7 +136,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="mb-1"><label class="form-label" for="faxNumber">Fax Number</label><input type="text" name="faxNumber" class="form-control form-control-sm" id="faxNumber" placeholder="xxxx..." value=""></div>
+                  <div class="mb-1"><label class="form-label" for="faxNo">Fax Number</label><input type="text" name="faxNo" class="form-control form-control-sm" id="faxNo" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="mobileNumber">Mobile Number</label><input type="text" name="mobileNumber" class="form-control form-control-sm" id="mobileNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="homeNumber">Home Number</label><input type="text" name="homeNumber" class="form-control form-control-sm" id="homeNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="officeNumber">Office Number</label><input type="text" name="officeNumber" class="form-control form-control-sm" id="officeNumber" placeholder="xxxx..." value=""></div>
@@ -205,7 +205,7 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer"><button type="submit" class="btn btn-primary me-1" (click)="onSubmit()">{{this.updateData.Request_Type}}</button></div>
+      <div class="modal-footer"><button type="submit" class="btn btn-primary me-1" (click)="onSubmit(this.updateData.Request_Type)">{{this.updateData.Request_Type}}</button></div>
     </div>
   </form>
 </div>

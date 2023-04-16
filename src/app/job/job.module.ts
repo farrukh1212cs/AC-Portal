@@ -18,13 +18,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddWorkflowComponent } from './add-workflow/add-workflow.component';
 import { AddJobEventComponent } from './add-job-event/add-job-event.component';
+import { AddJobWorkOrderComponent } from './add-job-work-order/add-job-work-order.component';
 
 @NgModule({
   declarations: [
     JobsComponent,
     AddJobsComponent,
     AddWorkflowComponent,
-    AddJobEventComponent
+    AddJobEventComponent,
+    AddJobWorkOrderComponent
   ],
   imports: [
     CommonModule,

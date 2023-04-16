@@ -77,106 +77,92 @@ export class JobService {
 
   //----------Add Jobs
   createJob(Jobs: CreateJobDto, phonesno: any): Observable<any> {
-    const formData = new FormData();
-    if (Jobs?.id?.toString()) {
-      formData.append('id', Jobs?.id?.toString() ?? "0");
-    }
-    formData.append('address1', Jobs?.addressLine1?.toString() ?? "");
-    formData.append('address2', Jobs?.addressLine2?.toString() ?? "");
-    formData.append('city', Jobs?.city?.toString() ?? "");
-    formData.append('zip', Jobs?.zipCode?.toString() ?? "");
-    formData.append('name', Jobs?.displayName?.toString() ?? "");
-    const startDate = Jobs?.startDate;
-    if (startDate !== undefined) {
-      const startDateObj = new Date(startDate);
-      startDateObj.setDate(startDateObj.getDate() + 1);
-      formData.append('startDate', startDateObj.toISOString());
-    }
-    const endDate = Jobs?.endDate;
-    if (endDate !== undefined) {
-      const endDateObj = new Date(endDate);
-      endDateObj.setDate(endDateObj.getDate() + 1);
-      formData.append('endDate', endDateObj.toISOString());
-    }
-    formData.append('description', Jobs?.discription?.toString() ?? "");
-    formData.append('leadSourceId', Jobs?.sourceId?.toString() ?? "");
-    formData.append('salesRepsentativeId', Jobs?.salesRepId?.toString() ?? "");
-    formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
-    formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    formData.append('jobStatusId', Jobs?.statusId?.toString() ?? "");
-    formData.append('subContractorId', Jobs?.subContractorId?.toString() ?? "");
-    formData.append('stateId', Jobs?.stateId?.toString() ?? "");
-    // formData.append('primaryContactId', Jobs?.mobileNumber?.toString() ?? "");
-    // formData.append('lastStatusChangeDate', Jobs?.lastStatusChangeDate?.toString() ?? "");
-      
-    phonesno?.forEach((phoneNumber: any, index: number) => {
-      const keyPrefix = `phoneNumbers[${index}]`;
-      formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);
-      formData.append(`${keyPrefix}.typeId`, phoneNumber.typeId);
-      formData.append(`${keyPrefix}.id`, phoneNumber.id ?? "0");
-    });
-    if (Jobs.tags) {
-      Jobs.tags.forEach((tag: any) => formData.append('tags[]', tag.value));
-    }
-
     var requestBody: any = {};
-    formData.forEach((value, key) => requestBody[key] = value);
 
-    if(Jobs.teamMembers) {
-      requestBody['teamMememberId'] = Jobs.teamMembers;
-    }
+    requestBody['id'] = Jobs.id;
+    requestBody['address1'] = Jobs.addressLine1;
+    requestBody['address2'] = Jobs.addressLine2;
+    requestBody['city'] = Jobs.city;
+    requestBody['zip'] = Jobs.zipCode;
+    requestBody['faxNo'] = Jobs.faxNo;
+    requestBody['name'] = Jobs.name;
+    requestBody['stateId'] = Jobs.stateId;
+    requestBody['startDate'] = Jobs.startDate;
+    requestBody['endDate'] = Jobs.endDate;
+    requestBody['description'] = Jobs.discription;
+    requestBody['leadSourceId'] = Jobs.leadSource;
+    requestBody['salesRepsentativeId'] = Jobs.salesRepId;
+    requestBody['officeLocationId'] = Jobs.officeLocationId;
+    requestBody['workFlowId'] = Jobs.workFlowId;
+    requestBody['subContractorId'] = Jobs.subContractorId;
+    requestBody['teamMememberId'] = Jobs.TeamMememberId;
+    requestBody['relatedContactId'] = Jobs.RelatedContactId;
+    requestBody['lastStatusChangeDate'] = Jobs.lastStatusChangeDate;
+    requestBody['primaryContactId'] = Jobs.primaryContactId;
+    requestBody['jobStatusId'] = Jobs.statusId;
 
-    if(Jobs.relatedContacts) {
-      requestBody['relatedContactId'] = Jobs.relatedContacts;
-    }
+    return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
+  }
 
-    debugger;
+  updateJob(Jobs: CreateJobDto, phonesno: any): Observable<any> {
+    var requestBody: any = {};
 
-    if (Jobs?.id?.toString()) {
-      return this.http.put<any>(this.baseUrl + "/Jobs/UpdateJob", requestBody);
-    } else {
-      return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
-    }
+    requestBody['id'] = Jobs.id;
+    requestBody['name'] = Jobs.name;
+    requestBody['address1'] = Jobs.addressLine1;
+    requestBody['address2'] = Jobs.addressLine2;
+    requestBody['city'] = Jobs.city;
+    requestBody['stateId'] = Jobs.stateId;
+    requestBody['zip'] = Jobs.zipCode;
+    requestBody['jobStatusId'] = Jobs.statusId;
+    requestBody['startDate'] = Jobs.startDate;
+    requestBody['endDate'] = Jobs.endDate;
+    requestBody['description'] = Jobs.discription;
+    requestBody['leadSourceId'] = Jobs.leadSource;
+    requestBody['salesRepsentativeId'] = Jobs.salesRepId;
+    requestBody['primaryContactId'] = Jobs.primaryContactId;
+    requestBody['officeLocationId'] = Jobs.officeLocationId;
+    requestBody['workFlowId'] = Jobs.workFlowId;
+    requestBody['subContractorId'] = Jobs.subContractorId;
+    requestBody['relatedContactId'] = Jobs.RelatedContactId;
+    requestBody['teamMememberId'] = Jobs.TeamMememberId;
+
+    return this.http.post<any>(this.baseUrl + "/Jobs/UpdateJob", requestBody);
   }
 
   deleteJob(Jobs: any, phonesno: any) {
-
-    debugger;
-    console.log(Jobs);
-    
-    var requestBody: any = Jobs;
-    requestBody['id'] = Jobs.id ? Jobs.id : "";
-    requestBody['name'] = Jobs.name ? Jobs.name : "";
-    requestBody['address1'] = Jobs.address1 ? Jobs.address1 : "";
-    requestBody['address2'] = Jobs.address2 ? Jobs.address2 : "";
-    requestBody['city'] = Jobs.city ? Jobs.city : "";
-    requestBody['stateId'] = Jobs.stateId ? Jobs.stateId !== null ? Jobs.stateId : "" : "";
-    requestBody['zip'] = Jobs.zip ? Jobs.zip : "";
-    requestBody['jobStatusId'] = Jobs.jobStatusId ? Jobs.jobStatusId : "";
-    requestBody['startDate'] = Jobs.startDate ? Jobs.startDate : "";
-    requestBody['endDate'] = Jobs.endDate ? Jobs.endDate : "";
-    requestBody['description'] = Jobs.description ? Jobs.description : "";
-    requestBody['leadSourceId'] = Jobs.leadSourceId ? Jobs.leadSourceId : "";
-    requestBody['salesRepsentativeId'] = Jobs.salesRepsentativeId ? Jobs.salesRepsentativeId : "";
-    requestBody['lastStatusChangeDate'] = Jobs.lastStatusChangeDate ? Jobs.lastStatusChangeDate !== null ? Jobs.lastStatusChangeDate : "" : "";
-    requestBody['primaryContactId'] = Jobs.primaryContactId ? Jobs.primaryContactId !== null ? Jobs.primaryContactId : "" : "";
-    requestBody['officeLocationId'] = Jobs.officeLocationId ? Jobs.officeLocationId : "";
-    requestBody['workFlowId'] = Jobs.workFlowId ? Jobs.workFlowId : "";
-    requestBody['subContractorId'] = Jobs.subContractorId ? Jobs.subContractorId : "";
-    requestBody['relatedContactId'] = Jobs.relatedContactId ? Jobs.relatedContactId : [];
-    requestBody['teamMememberId'] = Jobs.teamMememberId ? Jobs.teamMememberId : [];
-   
-
+    var requestBody: any = {};
+    requestBody['id'] = Jobs.id;
+    requestBody['name'] = Jobs.name;
+    requestBody['address1'] = Jobs.address1;
+    requestBody['address2'] = Jobs.address2;
+    requestBody['city'] = Jobs.city;
+    requestBody['stateId'] = Jobs.stateId;
+    requestBody['zip'] = Jobs.zip;
+    requestBody['jobStatusId'] = Jobs.jobStatusId;
+    requestBody['startDate'] = Jobs.startDate;
+    requestBody['endDate'] = Jobs.endDate;
+    requestBody['description'] = Jobs.description;
+    requestBody['leadSourceId'] = Jobs.leadSourceId;
+    requestBody['salesRepsentativeId'] = Jobs.salesRepsentativeId;
+    requestBody['lastStatusChangeDate'] = Jobs.lastStatusChangeDate;
+    requestBody['primaryContactId'] = Jobs.primaryContactId;
+    requestBody['officeLocationId'] = Jobs.officeLocationId;
+    requestBody['workFlowId'] = Jobs.workFlowId;
+    requestBody['subContractorId'] = Jobs.subContractorId;
+    requestBody['relatedContactId'] = Jobs.relatedContactId;
+    requestBody['teamMememberId'] = Jobs.teamMememberId;
 
     // const formData = new FormData();
-    // if (Jobs?.id?.toString()) {
-    //   formData.append('id', Jobs?.id?.toString() ?? "0");
-    // }
-    // formData.append('address1', Jobs?.addressLine1?.toString() ?? "");
-    // formData.append('address2', Jobs?.addressLine2?.toString() ?? "");
+    
+    // formData.append('id', Jobs?.id?.toString() ?? "0");
+    // formData.append('address1', Jobs?.address1?.toString() ?? "");
+    // formData.append('address2', Jobs?.address2?.toString() ?? "");
     // formData.append('city', Jobs?.city?.toString() ?? "");
-    // formData.append('zip', Jobs?.zipCode?.toString() ?? "");
-    // formData.append('name', Jobs?.displayName?.toString() ?? "");
+    // formData.append('stateId', Jobs?.stateId?.toString() ?? "");
+    // formData.append('zip', Jobs?.zip?.toString() ?? "");
+    // formData.append('jobStatusId', Jobs?.jobStatusId?.toString() ?? "");
+    // formData.append('name', Jobs?.name?.toString() ?? "");
     // const startDate = Jobs?.startDate;
     // if (startDate !== undefined) {
     //   const startDateObj = new Date(startDate);
@@ -188,46 +174,19 @@ export class JobService {
     //   const endDateObj = new Date(endDate);
     //   endDateObj.setDate(endDateObj.getDate() + 1);
     //   formData.append('endDate', endDateObj.toISOString());
-    // }
-    // formData.append('description', Jobs?.discription?.toString() ?? "");
-    // formData.append('leadSourceId', Jobs?.sourceId?.toString() ?? "");
-    // formData.append('salesRepsentativeId', Jobs?.salesRepId?.toString() ?? "");
+    // } 
+    // formData.append('description', Jobs?.description?.toString() ?? "");
+    // formData.append('leadSourceId', Jobs?.leadSourceId?.toString() ?? "");
+    // formData.append('salesRepsentativeId', Jobs?.salesRepsentativeId?.toString() ?? "");
     // formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
     // formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    // formData.append('jobStatusId', Jobs?.statusId?.toString() ?? "");
     // formData.append('subContractorId', Jobs?.subContractorId?.toString() ?? "");
-    // formData.append('stateId', Jobs?.stateId?.toString() ?? "");
-    // formData.append('primaryContactId', Jobs?.mobileNumber?.toString() ?? "");
+    // formData.append('primaryContactId', Jobs?.primaryContactId?.toString() ?? "");
     // formData.append('lastStatusChangeDate', Jobs?.lastStatusChangeDate?.toString() ?? "");
-      
-    // phonesno?.forEach((phoneNumber: any, index: number) => {
-    //   const keyPrefix = `phoneNumbers[${index}]`;
-    //   formData.append(`${keyPrefix}.phoneNumber`, phoneNumber.phoneNumber);
-    //   formData.append(`${keyPrefix}.typeId`, phoneNumber.typeId);
-    //   formData.append(`${keyPrefix}.id`, phoneNumber.id ?? "0");
-    // });
-    // if (Jobs.tags) {
-    //   Jobs.tags.forEach((tag: any) => formData.append('tags[]', tag.value));
-    // }
-
-    // var requestBody: any = {};
-    // formData.forEach((value, key) => requestBody[key] = value);
-
-    // if(Jobs.teamMembers) {
-    //   requestBody['teamMememberId'] = Jobs.teamMembers;
-    // } else {
-    //   requestBody['teamMememberId'] = [];
-    // }
-
-    // if(Jobs.relatedContacts) {
-    //   requestBody['relatedContactId'] = Jobs.relatedContacts;
-    // } else {
-    //   requestBody['relatedContactId'] = [];
-    // }
-
-    console.log(requestBody);
+    // formData.append('relatedContactId', Jobs?.relatedContactId?.toString() ?? "");
+    // formData.append('teamMememberId', Jobs?.teamMememberId?.toString() ?? "");
     
-    return this.http.put<any>(this.baseUrl + "/Jobs/DeleteJob", requestBody);
+    return this.http.delete<any>(this.baseUrl + "/Jobs/DeleteJob", requestBody);
   }
 
   //Events Requests
@@ -343,39 +302,17 @@ export class JobService {
   }
 
   createWorkOrder(workOrder: createWorkOrderDto) : Observable<any> {
-    const formData = new FormData();
-
-    formData.append('workOrderPriority', workOrder?.workOrderPriority?.toString() ?? "");
-    formData.append('name', workOrder?.name?.toString() ?? "");
-    formData.append('workOrderStatus', workOrder?.workOrderStatus?.toString() ?? "");
-    formData.append('notes', workOrder?.notes?.toString() ?? "");
-    formData.append('contactId', workOrder?.contactId?.toString() ?? "");
-    formData.append('jobId', workOrder?.jobId?.toString() ?? "");
-
-    const startDate = workOrder?.startDate;
-    if (startDate !== undefined) {
-      const startDateObj = new Date(startDate);
-      startDateObj.setDate(startDateObj.getDate() + 1);
-      formData.append('startDate', startDateObj.toISOString());
-    }
-    const dueDate = workOrder?.dueDate;
-    if (dueDate !== undefined) {
-      const dueDateObj = new Date(dueDate);
-      dueDateObj.setDate(dueDateObj.getDate() + 1);
-      formData.append('endDate', dueDateObj.toISOString());
-    }
-    const lastStatusChangeDate = workOrder?.lastStatusChangeDate;
-    if (lastStatusChangeDate !== undefined) {
-      const lastStatusChangeDateObj = new Date(lastStatusChangeDate);
-      lastStatusChangeDateObj.setDate(lastStatusChangeDateObj.getDate() + 1);
-      formData.append('endDate', lastStatusChangeDateObj.toISOString());
-    }
+    workOrder.lastStatusChangeDate = new Date();
+    workOrder.contactId = 4;
     
-    if (workOrder?.jobId?.toString()) {
-      return this.http.put<any>(this.baseUrl + "/WorkOrder/CreateWorkOrder", formData);
-    } else {
-      return this.http.post<any>(this.baseUrl + "/WorkOrder/UpdateWorkOrder", formData);
-    }
+    // if (workOrder?.jobId?.toString()) {
+    //   return this.http.post<any>(this.baseUrl + "/WorkOrder/CreateWorkOrder", workOrder);
+    // } else {
+    //   return this.http.post<any>(this.baseUrl + "/WorkOrder/UpdateWorkOrder", workOrder);
+    // }
+    console.log(workOrder);
+
+    return this.http.post<any>(this.baseUrl + "/WordOrder/CreateWorkOrder", workOrder);
   }
 
   //WorkFlow

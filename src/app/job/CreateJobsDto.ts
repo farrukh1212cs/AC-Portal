@@ -31,13 +31,14 @@ export interface CreateJobDto {
   relatedJobs?: number[];
   tags?: string[];
   note?: CreateNotesDto;
-  teamMembers?: number[];
-  relatedContacts?: number[];
-  displayName?: string;
+  TeamMememberId?: number[];
+  RelatedContactId?: number[];
+  name?: string;
   phoneNumbers?: CreatePhoneNumbersDto[];
   customFields?: CreateCustomFieldsDto[];
   mobileNumber: number;
-  }
+  faxNo: number;
+}
   
   export interface CreateNotesDto {
     text: string;

@@ -1,0 +1,77 @@
+<div class="modal-dialog modal-xl modal-Scroll">
+    <form [formGroup]="workOrderForm">
+        <div class="modal-content">
+            <button type="button" class="btn-close close modal-default-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeAddWorkOrderModal()"></button>
+            <div class="modal-header heading">
+                <h4 class="modal-title" id="myModalLabel17" class="title">Add Work Order</h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div class="row">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-1">
+                                        <mat-label>WorkOrder Name</mat-label>
+                                        <input matInput formControlName="name" class="form-control form-control-sm">
+                                    </div> 
+                                </div>
+                                <div class="col">
+                                    <div class="mb-1">
+                                        <mat-label>WorkOrder Status</mat-label>
+                                        <input matInput formControlName="workOrderStatus" class="form-control form-control-sm">
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-1">
+                                        <mat-label>WorkOrder Priority</mat-label>
+                                        <input matInput formControlName="workOrderPriority" class="form-control form-control-sm">
+                                    </div> 
+                                </div>
+                                <div class="col">
+                                    <div class="mb-1">
+                                        <mat-label>Select Job</mat-label>
+                                        <mat-select class="form-control form-control-sm" formControlName="jobId" required placeholder="Choose a Job">
+                                            <mat-option *ngFor="let job of Jobs" [value]="job.id">
+                                              {{job.name}}
+                                            </mat-option>
+                                          </mat-select>
+                                          <mat-error *ngIf="workOrderForm.get('job')?.touched && workOrderForm.get('job')?.value === ''">
+                                            Please select a Job
+                                          </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-1">
+                                        <mat-label>Start Date</mat-label>
+                                        <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" class="form-control form-control-sm" required>
+                                        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #startDatePicker></mat-datepicker>
+                                        <mat-error *ngIf="workOrderForm.get('startDate')?.touched && workOrderForm.get('startDate')?.invalid">Please select date</mat-error>
+                                      </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-1">
+                                        <mat-label>Due Date</mat-label>
+                                        <input matInput
+                                               formControlName="dueDate"
+                                               [matDatepicker]="picker"
+                                               [value]="workOrderForm.get('dueDate')?.value"
+                                               class="form-control form-control-sm"
+                                               required />
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-error *ngIf="workOrderForm.get('dueDate')?.touched && workOrderForm.get('dueDate')?.invalid">Please select date</mat-error>
+                                      </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer"><button type="submit" class="btn btn-primary me-1" (click)="onSubmit()">Add</button></div>
+            </div>
+        </div>
+    </form>
+</div>

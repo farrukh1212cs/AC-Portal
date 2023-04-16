@@ -49,6 +49,8 @@ export class ContactComponent {
   editContact(contact:any){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = { contact };
+    dialogConfig.width = '80vw',
+      dialogConfig.height = '75vh',
     this.dialog.open(AddcontactComponent, dialogConfig);
   }
 }

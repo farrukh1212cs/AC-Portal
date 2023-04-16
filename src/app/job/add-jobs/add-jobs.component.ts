@@ -30,8 +30,8 @@ export class AddJobsComponent implements OnInit {
   workflows: any;
   statuses: any;
   subcontractors: any;
-  relatedcontacts: any;
-  teamMembers: any;
+  RelatedContactId: any;
+  TeamMememberId: any;
   sources: any;
   states: any;
   @ViewChild('fileInput') fileInput: any;
@@ -66,7 +66,7 @@ export class AddJobsComponent implements OnInit {
       city: [''],
       zipCode: [''],
       faxNo: [''],
-      displayName: [''],
+      name: [''],
       startDate: [''],
       endDate: [''],
       discription: [''],
@@ -74,11 +74,11 @@ export class AddJobsComponent implements OnInit {
       stateId: [''],
       salesRepId: ['', Validators.required],
       subContractorId: [],
-      teamMembers: [[]],
+      TeamMememberId: [[]],
       officeLocationId: ['', Validators.required],
       workFlowId: ['', Validators.required],
       statusId: ['', Validators.required],
-      relatedContacts: [[]],
+      RelatedContactId: [[]],
       tags: [[]],
       note: this.formBuilder.group({
         text: ['']
@@ -188,33 +188,62 @@ export class AddJobsComponent implements OnInit {
     );
   }
 
-  onSubmit(): void {
+  onSubmit(requestType: string): void {
     this.jobForm.markAllAsTouched();
     if (this.jobForm.valid) {
-      this.JobDto = this.jobForm.value
-      this.jobService.createJob(this.jobForm.value, this.phoneNumbers).subscribe(
-        res => {
-          // this.snackBar.open('Record inserted successfully', 'Close', {
-          //   duration: 3000,
-          //   verticalPosition: 'top',
-          //   panelClass: ['success-snackbar']
-          // });
-          this.router.navigate(['/jobs']);
-          this.dialogRef.close();
-        },
-        err => {
-          console.log(err)
-          // this.snackBar.open('Error', 'Close', {
-          //   duration: 3000,
-          //   verticalPosition: 'top',
-          //   panelClass: ['error-snackbar']
-          // });
-          this.router.navigate(['/jobs']);
-          this.dialogRef.close();
-        },
-        () => {
-        }
-      );
+      this.JobDto = this.jobForm.value;
+
+      if(requestType === "Add") {
+        this.jobService.createJob(this.jobForm.value, this.phoneNumbers).subscribe(
+          res => {
+            // this.snackBar.open('Record inserted successfully', 'Close', {
+            //   duration: 3000,
+            //   verticalPosition: 'top',
+            //   panelClass: ['success-snackbar']
+            // });
+            this.router.navigate(['/jobs']);
+            this.dialogRef.close();
+          },
+          err => {
+            console.log(err)
+            // this.snackBar.open('Error', 'Close', {
+            //   duration: 3000,
+            //   verticalPosition: 'top',
+            //   panelClass: ['error-snackbar']
+            // });
+            this.router.navigate(['/jobs']);
+            this.dialogRef.close();
+          },
+          () => {
+          }
+        );
+      } else {
+        this.jobService.updateJob(this.jobForm.value, this.phoneNumbers).subscribe(
+          res => {
+            // this.snackBar.open('Record inserted successfully', 'Close', {
+            //   duration: 3000,
+            //   verticalPosition: 'top',
+            //   panelClass: ['success-snackbar']
+            // });
+            this.router.navigate(['/jobs']);
+            this.dialogRef.close();
+          },
+          err => {
+            console.log(err)
+            // this.snackBar.open('Error', 'Close', {
+            //   duration: 3000,
+            //   verticalPosition: 'top',
+            //   panelClass: ['error-snackbar']
+            // });
+            this.router.navigate(['/jobs']);
+            this.dialogRef.close();
+          },
+          () => {
+          }
+        );
+      }
+
+      
     }
     // Call your service to save the job data
   }//==================================================================
@@ -277,7 +306,7 @@ export class AddJobsComponent implements OnInit {
   getRelatedcontacts() {
     this.jobService.allRelatedContacts().subscribe(
       res => {
-        this.relatedcontacts = res.payload;
+        this.RelatedContactId = res.payload;
       },
       err => {
         alert(err);
@@ -290,7 +319,7 @@ export class AddJobsComponent implements OnInit {
   getTeamMembers() {
     this.jobService.allTeamMembers().subscribe(
       res => {
-        this.teamMembers = res.payload;
+        this.TeamMememberId = res.payload;
       },
       err => {
         alert(err);
