@@ -103,36 +103,51 @@ export class AddJobsComponent implements OnInit {
       this.getPhoneTypes()
     ]).then(() => {
       // All asynchronous functions have completed
+      debugger;
+      console.log(this.officeLocationDropdownValues);
+      console.log(this.salesReps);
+      console.log(this.workflows);
+      console.log(this.statuses);
+      console.log(this.subcontractors);
+      console.log(this.RelatedContactId);
+      console.log(this.TeamMememberId);
+      console.log(this.sources);
+      console.log(this.states);
+      console.log(this.phoneTypes);
       if (this.updateData.id) {
+        debugger;
         this.jobForm.patchValue({
           id: this.updateData.id,
-          addressLine1: this.updateData.address1 ? this.updateData?.address1 : "",
-          addressLine2: this.updateData.address2 ? this.updateData.address2 : "",
-          city: this.updateData.city ? this.updateData.city : "",
-          zipCode: this.updateData.zip ? this.updateData.zip : "",
-          faxNo: this.updateData.faxNumber ? this.updateData.faxNumber : "",
-          displayName: this.updateData.name ? this.updateData.name: "",
-          startDate: this.updateData.startDate ? this.updateData.startDate : "",
-          endDate: this.updateData.endDate ? this.updateData.endDate : "",
-          discription: this.updateData.description ? this.updateData.description : "",
-          sourceId: this.updateData.leadSourceId ? this.updateData.leadSourceId : "",
-          stateId: this.updateData.stateId ? this.updateData.stateId : "",
-          salesRepId: this.updateData.salesRepsentativeId ? this.updateData.salesRepsentativeId : "",
-          subContractorId: this.updateData.subContractorId ? this.updateData.subContractorId : "", 
-          teamMembers: this.updateData.teamMembers ? this.updateData.teamMembers.map((job: any) => job.id) : "",
-          officeLocationId: this.updateData.officeLocationId ? this.updateData.officeLocationId : "",
-          workFlowId: this.updateData.workFlowId ? this.updateData.workFlowId : "",
-          statusId: this.updateData.jobStatusId ? this.updateData.jobStatusId : "",
-          relatedContacts: this.updateData.relatedContacts?  this.updateData.relatedContacts.map((job: any) => job.id) : "",
-          tags: this.updateData.tags ? this.updateData.tags?.map((tagd: any) => ({
-            display: tagd.tag,
-            value: tagd.tag
-          })) : "",
-          note: {
-            text: this.updateData.text ? this.updateData.text : ""
-          },
-          phoneNumbers: this.updateData.phoneNumbersForm ? this.updateData.phoneNumbersForm : "",
-          customFields: this.updateData.customFields ? this.updateData.customFields : "",
+          addressLine1: this.updateData.address1,
+          addressLine2: this.updateData.address2,
+          city: this.updateData.city,
+          zipCode: this.updateData.zip,
+          name: this.updateData.name,
+          startDate: this.updateData.startDate,
+          endDate: this.updateData.endDate,
+          discription: this.updateData.description,
+          sourceId: this.updateData.leadSourceId,
+          stateId: this.updateData.stateId,
+          salesRepId: this.updateData.salesRepsentativeId,
+          subContractorId: this.updateData.subContractorId,
+          officeLocationId: this.updateData.officeLocationId,
+          workFlowId: this.updateData.workFlowId,
+          statusId: this.updateData.jobStatusId,
+
+          
+          // TeamMememberId: this.updateData.id,
+          // RelatedContactId: [[]],
+          // tags: [[]],
+          // faxNo: this.updateData.id,
+          // note: this.formBuilder.group({
+          //   text: ['']
+          // }),
+          // phoneNumbers: this.formBuilder.array([
+          //   this.createPhoneNumberFormGroup()
+          // ]),
+          // customFields: this.formBuilder.array([
+          //   //this.createCustomFieldFormGroup()
+          // ])
           
         });
       }
