@@ -157,6 +157,8 @@ export class JobService {
     requestBody['relatedContactId'] = Jobs.relatedContactId;
     requestBody['teamMememberId'] = Jobs.teamMememberId;
 
+    console.log(requestBody);
+
     // const formData = new FormData();
     
     // formData.append('id', Jobs?.id?.toString() ?? "0");
