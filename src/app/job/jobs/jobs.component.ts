@@ -174,8 +174,8 @@ export class JobsComponent {
     data.FormTitle = "Confirm Delete";
       data.Request_Type = "Delete";
       dialogRef = this.dialog.open(ConfirmationComponent, {
-        width: '60vw',
-        height: '30vh',
+        width: '30vw',
+        height: '27vh',
         data: data,
         disableClose: true
       });

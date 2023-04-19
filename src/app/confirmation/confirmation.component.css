@@ -1,10 +1,11 @@
 .modal-dialog {
-    width: 40vw;
-    height: 70vh;
+    width: 25vw;
+    height: 20vh;
 }
   
 .modal-content {
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-default-close {
@@ -40,7 +41,6 @@
 }
 
 .modal-header {
-  padding: 16px 16px;
   color: #FFF;
 }
 
@@ -50,7 +50,7 @@
 
 .heading {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .heading .title {
