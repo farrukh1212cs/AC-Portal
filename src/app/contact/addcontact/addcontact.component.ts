@@ -265,7 +265,7 @@ getOfficeLocation(){
       this.officeLocations = res.payload;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -278,7 +278,7 @@ getSalesRep(){
       this.salesReps = res.payload;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -291,7 +291,7 @@ getWorkflows(){
       this.workflows = res.payload;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -304,7 +304,7 @@ getStatuses(){
       this.statuses = res.payload;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -318,7 +318,7 @@ getSubcontractors(){
       this.subcontractors = res.payload;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -331,7 +331,7 @@ getRelatedcontacts(){
       this.relatedcontacts = res.payload;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -344,7 +344,7 @@ getTeamMembers(){
       this.teamMembers = res.payload;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -359,7 +359,7 @@ getSources(){
       this.sources = sourceTypeDropdown.dropDownValues;;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -373,7 +373,7 @@ getPhoneTypes(){
       this.phoneTypes = sourcePhoneTypes.dropDownValues;;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 
@@ -386,7 +386,7 @@ getState(){
       this.states = res.payload;
     },
     err => {
-      alert(err);
+      console.log(err);
     },
     () => {
 

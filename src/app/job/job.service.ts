@@ -85,6 +85,9 @@ export class JobService {
     requestBody['city'] = Jobs.city;
     requestBody['zip'] = Jobs.zipCode;
     requestBody['faxNo'] = Jobs.faxNo;
+    requestBody['mobileNo'] = Jobs.mobileNumber;
+    requestBody['officeNo'] = Jobs.officeNumber;
+    requestBody['homeNo'] = Jobs.homeNumber;
     requestBody['name'] = Jobs.name;
     requestBody['stateId'] = Jobs.stateId;
     requestBody['startDate'] = Jobs.startDate;
@@ -101,6 +104,7 @@ export class JobService {
     requestBody['primaryContactId'] = Jobs.primaryContactId;
     requestBody['jobStatusId'] = Jobs.statusId;
 
+    console.log(requestBody);
     return this.http.post<any>(this.baseUrl + "/Jobs/CreateJob", requestBody);
   }
 

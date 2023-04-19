@@ -136,10 +136,29 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="mb-1"><label class="form-label" for="faxNo">Fax Number</label><input type="text" name="faxNo" class="form-control form-control-sm" id="faxNo" placeholder="xxxx..." value=""></div>
+                  <!-- <div class="mb-1"><label class="form-label" for="faxNo">Fax Number</label><input type="text" name="faxNo" class="form-control form-control-sm" id="faxNo" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="mobileNumber">Mobile Number</label><input type="text" name="mobileNumber" class="form-control form-control-sm" id="mobileNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="homeNumber">Home Number</label><input type="text" name="homeNumber" class="form-control form-control-sm" id="homeNumber" placeholder="xxxx..." value=""></div>
                   <div class="mb-1"><label class="form-label" for="officeNumber">Office Number</label><input type="text" name="officeNumber" class="form-control form-control-sm" id="officeNumber" placeholder="xxxx..." value=""></div>
+                   -->
+                  <div class="mb-1">
+                    <mat-label>Fax Number</mat-label>
+                    <input matInput formControlName="faxNo" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-1">
+                    <mat-label>Mobile Number</mat-label>
+                    <input matInput formControlName="mobileNumber" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-1">
+                    <mat-label>Home Number</mat-label>
+                    <input matInput formControlName="homeNumber" class="form-control form-control-sm">
+                  </div>
+                  <div class="mb-1">
+                    <mat-label>Office Number</mat-label>
+                    <input matInput formControlName="officeNumber" class="form-control form-control-sm">
+                  </div>
+                  
+                  
                   <div class="mb-1">
                     <mat-label>Zip Code</mat-label>
                     <input matInput formControlName="zipCode" class="form-control form-control-sm">

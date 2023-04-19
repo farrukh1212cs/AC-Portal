@@ -38,6 +38,8 @@ export interface CreateJobDto {
   customFields?: CreateCustomFieldsDto[];
   mobileNumber: number;
   faxNo: number;
+  officeNumber: number;
+  homeNumber: number;
 }
   
   export interface CreateNotesDto {

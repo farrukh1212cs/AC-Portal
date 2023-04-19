@@ -66,6 +66,9 @@ export class AddJobsComponent implements OnInit {
       city: [''],
       zipCode: [''],
       faxNo: [''],
+      officeNumber: [''],
+      homeNumber: [''],
+      mobileNumber: [''],
       name: [''],
       startDate: [''],
       endDate: [''],
@@ -103,7 +106,6 @@ export class AddJobsComponent implements OnInit {
       this.getPhoneTypes()
     ]).then(() => {
       // All asynchronous functions have completed
-      debugger;
       console.log(this.officeLocationDropdownValues);
       console.log(this.salesReps);
       console.log(this.workflows);
@@ -115,7 +117,7 @@ export class AddJobsComponent implements OnInit {
       console.log(this.states);
       console.log(this.phoneTypes);
       if (this.updateData.id) {
-        debugger;
+        console.log(this.updateData);
         this.jobForm.patchValue({
           id: this.updateData.id,
           addressLine1: this.updateData.address1,
@@ -133,7 +135,10 @@ export class AddJobsComponent implements OnInit {
           officeLocationId: this.updateData.officeLocationId,
           workFlowId: this.updateData.workFlowId,
           statusId: this.updateData.jobStatusId,
-
+          faxNo: this.updateData.faxNo,
+          officeNumber: this.updateData.officeNo,
+          homeNumber: this.updateData.homeNo,
+          mobileNumber: this.updateData.mobileNo,
           
           // TeamMememberId: this.updateData.id,
           // RelatedContactId: [[]],

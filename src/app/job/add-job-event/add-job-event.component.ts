@@ -59,7 +59,7 @@ export class AddJobEventComponent {
         })
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
        
