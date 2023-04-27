@@ -29,13 +29,13 @@
                                 <div class="mb-1">
                                     <label class="form-label" for="register-password">Password</label>
                                     <div class="input-group input-group-merge form-password-toggle">
-                                        <input type="password" formControlName="password" class="form-control form-control-merge"
+                                        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control form-control-merge"
                                             id="login-password" tabindex="2"
                                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                             aria-describedby="login-password" />
 
                                         <span class="input-group-text cursor-pointer">
-                                            <i class="material-symbols-outlined">visibility</i>
+                                            <i class="material-symbols-outlined" (click)="toggleShowPassword()"> {{showPassword ? 'visibility' : 'visibility_off' }} </i>
                                         </span>
                                         <div class="invalid-feedback"></div>
                                     </div>

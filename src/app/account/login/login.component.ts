@@ -15,6 +15,7 @@ import { RegisterDto } from '../AccountDto';
 export class LoginComponent {
 
   userLoginForm!: FormGroup;
+  showPassword: boolean = false;
 
   constructor(private fb: FormBuilder,
     private authService: AccountService,
@@ -58,5 +59,8 @@ export class LoginComponent {
       alert("Error registering this user!")
     }
   }
-  
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
 }
