@@ -3,7 +3,7 @@
    <form [formGroup]="contactForm" >
     <div class="modal-content">
                   <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel17">Add Contact</h4>
+                        <h4 class="modal-title" id="myModalLabel17">{{ this.updateData.FormTitle }}</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeDailog()"></button>
                   </div>
                   <div class="modal-body">
@@ -287,7 +287,7 @@
 
                      </div>
                   </div>
-                  <div class="modal-footer"><button type="submit" class="btn btn-primary me-1" (click)="onSubmit()">Add</button></div>
+                  <div class="modal-footer"><button type="submit" class="btn btn-primary me-1" (click)="onSubmit()">{{ this.updateData.Request_Type }}</button></div>
       </div>
    </form>
 </div>

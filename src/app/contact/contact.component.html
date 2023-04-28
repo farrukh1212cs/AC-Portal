@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="actions d-flex">
 
-                                        <button class="btn btn-primary btn-sm" (click)="openAddContactsModal()">
+                                        <button class="btn btn-primary btn-sm" (click)="openAddContactModal(null)">
                                             <div class="d-flex align-items-center">
                                               <i class="material-symbols-outlined ">add</i>
                                               <span>Add Contacts</span>
@@ -139,7 +139,7 @@
                                                 <td  (click)="redirect(contact)" style="cursor: pointer;">{{contact.addressLine1 + ',' + contact.city}}</td>
                                                 <td>
                                                     <mat-menu #menu="matMenu"  class="dropdown" >
-                                                        <button mat-menu-item (click)="editContact(contact)">
+                                                        <button mat-menu-item (click)="openAddContactModal(contact)">
                                                           <mat-icon  class="material-symbols-outlined">border_color</mat-icon>
                                                           <span>Edit</span>
                                                         </button>

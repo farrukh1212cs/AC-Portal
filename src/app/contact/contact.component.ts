@@ -37,20 +37,37 @@ export class ContactComponent {
     );
   }
 
-  openAddContactsModal() {
-    this.dialog.open(AddcontactComponent);
-    
-  }
-   redirect(contact:any){
+
+  redirect(contact:any){
     this.router.navigate(['/contact', contact.id], { state: { model: contact }});
-  
   };
 
-  editContact(contact:any){
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = { contact };
-    dialogConfig.width = '80vw',
-      dialogConfig.height = '75vh',
-    this.dialog.open(AddcontactComponent, dialogConfig);
+  openAddContactModal(data:any): void {
+    let dialogRef: any = {};
+    if (data == null) {
+      data = {};
+      data.FormTitle = "Add Contact";
+      data.Request_Type = "Add";
+      dialogRef = this.dialog.open(AddcontactComponent, {
+        width: '80vw',
+        height: '80vh',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result:any) => {
+      });
+    }
+    else {
+      data.FormTitle = "Edit Contact";
+      data.Request_Type = "Save";
+      dialogRef = this.dialog.open(AddcontactComponent, {
+        width: '80vw',
+        height: '80vh',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result: any) => {
+      });
+    }
   }
 }
