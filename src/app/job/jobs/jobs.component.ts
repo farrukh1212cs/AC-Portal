@@ -60,8 +60,8 @@ export class JobsComponent {
       });
     }
     else {
-      data.FormTitle = "Update Job";
-      data.Request_Type = "Update";
+      data.FormTitle = "Edit Job";
+      data.Request_Type = "Save";
       dialogRef = this.dialog.open(AddJobsComponent, {
         width: '80vw',
         height: '80vh',
