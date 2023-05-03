@@ -57,11 +57,11 @@ function collapseSideBar() {
         let body = document.getElementsByTagName("body")[0];
         body.classList.remove("menu-expanded");
         body.classList.add("menu-collapsed");
-        document.getElementById('menuFixingIcon').innerHTML = 'radio_button_unchecked';
+        document.getElementById('menuFixingIcon').innerHTML = 'lock_open';
     } else {
         body.classList.remove("menu-collapsed");
         body.classList.add("menu-expanded");
-        document.getElementById('menuFixingIcon').innerHTML = 'radio_button_checked';
+        document.getElementById('menuFixingIcon').innerHTML = 'lock';
     }
 }
 function toggleSidebar() {
