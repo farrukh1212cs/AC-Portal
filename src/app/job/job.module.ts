@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddWorkflowComponent } from './add-workflow/add-workflow.component';
 import { AddJobEventComponent } from './add-job-event/add-job-event.component';
 import { AddJobWorkOrderComponent } from './add-job-work-order/add-job-work-order.component';
+import { JobDetailsClmponentComponent } from './job-details-clmponent/job-details-clmponent.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AddJobWorkOrderComponent } from './add-job-work-order/add-job-work-orde
     AddJobsComponent,
     AddWorkflowComponent,
     AddJobEventComponent,
-    AddJobWorkOrderComponent
+    AddJobWorkOrderComponent,
+    JobDetailsClmponentComponent
   ],
   imports: [
     CommonModule,
