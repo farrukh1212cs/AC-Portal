@@ -67,7 +67,7 @@ export class AddJobWorkOrderComponent {
         })
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
        

@@ -29,7 +29,7 @@ export class ContactComponent {
         this.contacts = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
        

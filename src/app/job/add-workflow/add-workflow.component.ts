@@ -51,7 +51,7 @@ export class AddWorkflowComponent {
         })
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
        
