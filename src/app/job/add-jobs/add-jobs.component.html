@@ -198,11 +198,17 @@
                   <div class="mb-1" [formGroup]="phoneNumbersForm">
                     <mat-label>Phone Number</mat-label>
                     <input matInput class="form-control form-control-sm" formControlName="phoneNumber" type="number" placeholder="Enter phone number">
-                    <mat-label>Type</mat-label>
-                    <mat-select formControlName="typeId" placeholder="Select type" class="form-control form-control-sm">
-                      <mat-option *ngFor="let type of phoneTypes" [value]="type.id">{{ type.value }}</mat-option>
-                    </mat-select>
-                    <button mat-raised-button (click)="addPhoneNumber(phoneTypes)" class="form-control form-control-sm">Add</button>
+                    <div class="mt-2">
+                      <mat-label>Type</mat-label>
+                      <div class="d-flex">
+                        <div style="width: 80%;">
+                          <mat-select formControlName="typeId" placeholder="Select type" class="form-control form-control-sm">
+                            <mat-option *ngFor="let type of phoneTypes" [value]="type.id">{{ type.value }}</mat-option>
+                          </mat-select>
+                        </div>
+                        <button mat-raised-button (click)="addPhoneNumber(phoneTypes)" class="form-control form-control-sm" style="width: 20%;">Add</button>
+                      </div>
+                    </div>
                     <div *ngIf="phoneNumbers.length > 0">
                       <p *ngFor="let phoneNumber of phoneNumbers">
                         {{ phoneNumber.phoneNumber }} ({{ phoneNumber.typeName }})
@@ -221,9 +227,9 @@
                     <tag-input formControlName="tags" class="form-control form-control-sm"></tag-input>
                   </div>
                 </div>
-                <div class="col-md-12">
+                <!-- <div class="col-md-12">
                   <div class="divider divider-start"><div class="divider-text gray-2px"><h3>Additional Information</h3></div></div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
