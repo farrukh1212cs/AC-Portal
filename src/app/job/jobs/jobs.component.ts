@@ -31,7 +31,7 @@ export class JobsComponent {
         this.Jobs = res;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
        

@@ -201,7 +201,7 @@ export class AddJobsComponent implements OnInit {
         this.officeLocationDropdownValues = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
       }
@@ -275,7 +275,7 @@ export class AddJobsComponent implements OnInit {
         this.salesReps = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
@@ -288,7 +288,7 @@ export class AddJobsComponent implements OnInit {
         this.workflows = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
@@ -301,7 +301,7 @@ export class AddJobsComponent implements OnInit {
         this.statuses = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
@@ -315,7 +315,7 @@ export class AddJobsComponent implements OnInit {
         this.subcontractors = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
@@ -329,7 +329,7 @@ export class AddJobsComponent implements OnInit {
         this.RelatedContactId = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
@@ -342,7 +342,7 @@ export class AddJobsComponent implements OnInit {
         this.TeamMememberId = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
@@ -356,7 +356,7 @@ export class AddJobsComponent implements OnInit {
         this.phoneTypes = sourcePhoneTypes.dropDownValues;;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
@@ -371,7 +371,7 @@ export class AddJobsComponent implements OnInit {
         this.sources = sourceTypeDropdown.dropDownValues;;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
@@ -384,7 +384,7 @@ export class AddJobsComponent implements OnInit {
         this.states = res.payload;
       },
       err => {
-        alert(err);
+        console.log(err);
       },
       () => {
 
