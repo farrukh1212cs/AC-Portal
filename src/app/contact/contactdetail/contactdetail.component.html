@@ -100,7 +100,17 @@
                                                 <small class="text-capitalize">Waitinf for payment (9 days in status)</small>
                                             </td>
                                             <td class="py-0">
-                                                <small>{{contact.salesRep}}</small>
+                                                <ng-container>
+                                                    <div class="avatar-group">
+                                                        <div data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                            data-bs-placement="top" class="avatar pull-up my-0" title=""
+                                                            data-bs-original-title="Lilian Nenez">
+                                                            <img src="../../../assets/images/sm-5.jpeg" alt="Avatar" height="26"
+                                                                width="26">
+                                                        </div>
+                                                        <small>{{contact.salesRep}}</small>
+                                                    </div>
+                                                </ng-container>
                                                 <h6 class="d-flex text-primary text-uppercase mt-1">assigned to</h6>
                                                 <small class="text-capitalize">john aston, michael scott, anna bernard, jacob winchester</small>
                                             </td>
