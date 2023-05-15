@@ -174,9 +174,11 @@
                   <div class="mb-1">
                     <mat-label>Start Date</mat-label>
                     <div class="d-flex">
-                      <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" class="form-control form-control-sm" required>
-                      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                      <mat-datepicker #startDatePicker></mat-datepicker>
+                      <input matInput type="datetime" [matDatepicker]="startDatePicker" formControlName="startDate" class="form-control form-control-sm" required>
+                      <div class="date-picker">
+                        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startDatePicker></mat-datepicker>
+                      </div>
                       <mat-error *ngIf="jobForm.get('startDate')?.touched && jobForm.get('startDate')?.invalid">Please select date</mat-error>
                     </div>
                     
@@ -185,13 +187,16 @@
                     <mat-label>End Date</mat-label>
                     <div class="d-flex">
                     <input matInput
-                           formControlName="endDate"
-                           [matDatepicker]="picker"
-                           [value]="jobForm.get('endDate')?.value"
-                           class="form-control form-control-sm"
-                           required />
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                      formControlName="endDate"
+                      [matDatepicker]="picker"
+                      [value]="jobForm.get('endDate')?.value"
+                      class="form-control form-control-sm"
+                      type="datetime"
+                      required />
+                     <div class="date-picker">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </div>
                     <mat-error *ngIf="jobForm.get('endDate')?.touched && jobForm.get('endDate')?.invalid">Please select date</mat-error>
                   </div>
                   </div>
