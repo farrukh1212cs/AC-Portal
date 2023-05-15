@@ -39,9 +39,9 @@ export class JobsComponent {
     );
   }
 
-  //openAddJobsModal() {
+  // openAddJobsModal() {
   //  this.dialog.open(AddJobsComponent);
-  //}
+  // }
 
   openAddJobsModal(data:any): void {
     console.log(data);
@@ -73,100 +73,8 @@ export class JobsComponent {
     }
   }
 
-  openWorkflowModal(data:any): void {
-    let dialogRef: any = {};
-    if (data == null) {
-      data = {};
-      data.FormTitle = "Add Workflow";
-      data.Request_Type = "Add";
-      dialogRef = this.dialog.open(AddWorkflowComponent, {
-        width: '40vw',
-        height: '70vh',
-        data: data,
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe((result:any) => {
-      });
-    }
-    else {
-      data = data[0];
-      data.FormTitle = "Update Workflow";
-      data.Request_Type = "Update";
-      dialogRef = this.dialog.open(AddWorkflowComponent, {
-        width: '40vw',
-        height: '70vh',
-        data: data,
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe((result: any) => {
-      });
-    }
-  }
-
-  openEventModal(data: any): void {
-    let dialogRef: any = {};
-    if (data == null) {
-      data = {};
-      data.FormTitle = "Add Event";
-      data.Request_Type = "Add";
-      dialogRef = this.dialog.open(AddJobEventComponent, {
-        width: '40vw',
-        height: '70vh',
-        data: data,
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe((result:any) => {
-      });
-    }
-    else {
-      data = data[0];
-      data.FormTitle = "Update Event";
-      data.Request_Type = "Update";
-      dialogRef = this.dialog.open(AddJobEventComponent, {
-        width: '40vw',
-        height: '70vh',
-        data: data,
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe((result: any) => {
-      });
-    }
-  }
-
-  openWorkOrderModal(data: any): void {
-    let dialogRef: any = {};
-    if (data == null) {
-      data = {};
-      data.FormTitle = "Add WorkOrder";
-      data.Request_Type = "Add";
-      dialogRef = this.dialog.open(AddJobWorkOrderComponent, {
-        width: '70vw',
-        height: '70vh',
-        data: data,
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe((result:any) => {
-      });
-    }
-    else {
-      data = data[0];
-      data.FormTitle = "Update Workorder";
-      data.Request_Type = "Update";
-      dialogRef = this.dialog.open(AddJobWorkOrderComponent, {
-        width: '70vw',
-        height: '70vh',
-        data: data,
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe((result: any) => {
-      });
-    }
-  }
-
-
   redirect(jobs:any){
      this.router.navigate(['/jobs', jobs.id], { state: { model: jobs }});
-  
   };
 
   deleteJobClick(data: any) : void { 

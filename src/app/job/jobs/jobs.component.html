@@ -37,27 +37,6 @@
                   Your Jobs
                 </div>
                 <div class="actions d-flex">
-                  <button class="btn btn-primary btn-sm" (click)="openWorkOrderModal(null)">
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-outlined ">add</i>
-                      <span>Add Work Order</span>
-                    </div>
-                  </button>
-                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <button class="btn btn-primary btn-sm" (click)="openEventModal(null)">
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-outlined ">add</i>
-                      <span>Add Event</span>
-                    </div>
-                  </button>
-                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <button class="btn btn-primary btn-sm" (click)="openWorkflowModal(null)">
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-outlined ">add</i>
-                      <span>Add Workflow</span>
-                    </div>
-                  </button>
-                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   <button class="btn btn-primary btn-sm" (click)="openAddJobsModal(null)">
                     <div class="d-flex align-items-center">
                       <i class="material-symbols-outlined ">add</i>
@@ -95,12 +74,12 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let Jobs of Jobs">
-                      <td>
+                      <td (click)="redirect(Jobs)" style="cursor: pointer;">
                         <div class="d-flex">{{Jobs.name}} </div>
                       </td>
-                      <td>{{Jobs.primaryContactId}}</td>
-                      <td>{{Jobs.workFlowId}}</td>
-                      <td>
+                      <td (click)="redirect(Jobs)" style="cursor: pointer;">{{Jobs.primaryContactId}}</td>
+                      <td (click)="redirect(Jobs)" style="cursor: pointer;">{{Jobs.workFlowId}}</td>
+                      <td (click)="redirect(Jobs)" style="cursor: pointer;">
                         <div class="d-flex">
                           <i class="material-symbols-outlined text-success icon-size-dot">
                             radio_button_checked
@@ -108,8 +87,8 @@
                           &nbsp; {{Jobs.jobStatus}}
                         </div>
                       </td>
-                      <td>{{Jobs?.salesRepId}}</td>
-                      <td>
+                      <td (click)="redirect(Jobs)" style="cursor: pointer;">{{Jobs?.salesRepId}}</td>
+                      <td (click)="redirect(Jobs)" style="cursor: pointer;">
                         <div class="avatar-group">
                           <div data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                data-bs-placement="top" class="avatar pull-up my-0" title=""
@@ -131,25 +110,8 @@
                           </div>
                         </div>
                       </td>
-                      <td>{{Jobs.address1 + ',' + Jobs.address2}}</td>
+                      <td (click)="redirect(Jobs)" style="cursor: pointer;">{{Jobs.address1 + ',' + Jobs.address2}}</td>
                       <td>
-                        <!-- <div class="dropdown">
-                          <button type="button"
-                                  class="btn btn-sm dropdown-toggle hide-arrow"
-                                  data-bs-toggle="dropdown">
-                            <i class="material-symbols-outlined">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item d-flex align-items-center">
-                              <i class="material-symbols-outlined me-50 fs-15px">border_color</i>
-                              <span>Edit</span>
-                            </a>
-                            <a href="#" class="dropdown-item d-flex align-items-center">
-                              <i class="material-symbols-outlined me-50 fs-15px">delete</i>
-                              <span>Delete</span>
-                            </a>
-                          </div>
-                        </div> -->
                         <div class="dropdown">
                           <button type="button"
                                   class="btn btn-sm dropdown-toggle hide-arrow"
@@ -224,7 +186,7 @@
   </div>
 </div>
 <div class="sidenav-overlay"></div>
-<div class="modal fade text-start" id="JobsAddModal" tabindex="-1" aria-labelledby="myModalLabel17"
+<div class="modal fade text-start" id="JobsAddModal" tabindex="-1" aria-labelledby="myModalLabel16"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content">
