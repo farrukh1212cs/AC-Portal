@@ -57,8 +57,8 @@ export class JobDetailsComponentComponent {
         data.FormTitle = "Add Event";
         data.Request_Type = "Add";
         dialogRef = this.dialog.open(AddJobEventComponent, {
-          width: '40vw',
-          height: '70vh',
+          width: '50vw',
+          height: '85vh',
           data: data,
           disableClose: true
         });
@@ -70,8 +70,8 @@ export class JobDetailsComponentComponent {
         data.FormTitle = "Update Event";
         data.Request_Type = "Update";
         dialogRef = this.dialog.open(AddJobEventComponent, {
-          width: '40vw',
-          height: '70vh',
+          width: '50vw',
+          height: '85vh',
           data: data,
           disableClose: true
         });

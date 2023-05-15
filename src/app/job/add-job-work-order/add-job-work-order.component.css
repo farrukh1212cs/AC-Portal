@@ -1,6 +1,5 @@
 .modal-dialog {
-    width: 70vw;
-    height: 70vh;
+    
 }
   
 .modal-content {
@@ -11,9 +10,9 @@
   margin: 0;
 
   position: absolute;
-  width: 25px;
-  height: 25px;
-  border-radius: 50px;
+  width: 40px;
+  height: 30px;
+  border-radius: 0px 0px 0px 10px;
   background-color: #7367f0 !important;
   color: #ffffff;
   font-size: 40px;
@@ -24,7 +23,6 @@
   justify-content: center;
   align-items: center;
 
-  top: 0;
   left: 100%;
   transform: translate(-50%, -50%);
 
