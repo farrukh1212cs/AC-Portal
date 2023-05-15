@@ -17,12 +17,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { TagInputModule } from 'ngx-chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RelatedContactDetailsComponent } from './related-contact-details/related-contact-details.component';
 
 @NgModule({
   declarations: [
     ContactComponent,
     AddcontactComponent,
-    ContactdetailComponent
+    ContactdetailComponent,
+    RelatedContactDetailsComponent
   ],
   imports: [
     CommonModule,

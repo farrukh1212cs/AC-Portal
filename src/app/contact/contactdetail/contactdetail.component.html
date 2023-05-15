@@ -46,10 +46,36 @@
                                 </div>
                             </div>
                             <div class="card-header p-0">
-                                <table class="table mt-5">
+                                <div>
+                                    <h6 class="d-flex text-primary text-uppercase mt-5 px-2 fw-bold">{{contact.firstName + " " + contact.lastName}}</h6>
+                                    <div class="px-2">
+                                        {{contact.company}}
+                                        <div class="d-flex">
+                                            <i class="material-symbols-outlined iconSize">
+                                                call
+                                            </i>
+                                            <small>&nbsp;{{contact.phoneNumbers[0].phoneNumber }}</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <i class="material-symbols-outlined iconSize">
+                                                mail
+                                            </i>
+                                            <small>&nbsp;{{contact.email}}</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <i class="material-symbols-outlined iconSize">
+                                                view_quilt
+                                            </i>
+                                            <small>&nbsp;{{contact.website}}</small>
+                                        </div>
+                                        <div>
+                                            <small>"{{contact.discription}}"</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table mt-1">
                                     <tbody>
                                         <tr>
-                                            <td class="py-0 border-0"><h6 class="d-flex text-primary text-uppercase mt-1">{{contact.firstName + " " + contact.lastName}}</h6></td>
                                             <td class="py-0 border-0"><h6 class="d-flex text-primary text-uppercase mt-1">address</h6></td>
                                             <td class="py-0 border-0"><h6 class="d-flex text-primary text-uppercase mt-1">start date</h6></td>
                                             <td class="py-0 border-0"><h6 class="d-flex text-primary text-uppercase mt-1">project</h6></td>
@@ -58,34 +84,10 @@
                                             <td class="py-0 border-0"><h6 class="d-flex text-primary text-uppercase mt-1">Subcontractor</h6></td>
                                         </tr>
                                         <tr>
-                                            <td class="fw-bold py-0">
-                                                {{contact.company}}
-                                                <div class="d-flex">
-                                                    <i class="material-symbols-outlined iconSize">
-                                                        call
-                                                    </i>
-                                                    <small>&nbsp;{{contact.phoneNumbers[0].phoneNumber }}</small>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <i class="material-symbols-outlined iconSize">
-                                                        mail
-                                                    </i>
-                                                    <small>&nbsp;Testmail123@gmail.com</small>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <i class="material-symbols-outlined iconSize">
-                                                        view_quilt
-                                                    </i>
-                                                    <small>&nbsp;Cleanersets.com</small>
-                                                </div>
-                                                <div>
-                                                    <small>Created By: Ana Kendrick on 11/30/2021 7:38 AM</small>
-                                                </div>
-                                            </td>
                                             <td class="text-capitalize py-0">
-                                                <small>{{contact.addressLine1 + " " + contact.addressLine2 + ", " + contact.city}}</small>
+                                                <small>{{contact.addressLine1 + " " + contact.addressLine2 + " " + contact.city}}</small>
                                                 <h6 class="d-flex text-primary text-uppercase mt-1">Office</h6>
-                                                <small class="text-capitalize">Chicago, IL</small>
+                                                <small class="text-capitalize">{{contact.officeLocation.name}}</small>
                                             </td>
                                             <td class="py-0">
                                                 <small>{{contact.startDate | date:'dd/MM/yyyy h:mm a'}}</small>
@@ -98,19 +100,25 @@
                                                 <small class="text-capitalize">Waitinf for payment (9 days in status)</small>
                                             </td>
                                             <td class="py-0">
-                                                <small>{{contact.salesRep.name}}</small>
+                                                <small>{{contact.salesRep}}</small>
                                                 <h6 class="d-flex text-primary text-uppercase mt-1">assigned to</h6>
                                                 <small class="text-capitalize">john aston, michael scott, anna bernard, jacob winchester</small>
                                             </td>
                                             <td class="py-0">
                                                 <small>John Aston</small>
                                                 <h6 class="d-flex text-primary text-uppercase mt-1">tags</h6>
-                                                <small class="text-capitalize">High priority, near water</small>
+                                                <ng-container *ngFor="let t of contact.tags; let last=last">
+                                                    <small *ngIf="!last" class="text-capitalize">{{ t.tag }}, </small>
+                                                    <small *ngIf="last" class="text-capitalize">{{ t.tag }}</small>
+                                                </ng-container>
                                             </td>
                                             <td class="py-0">
-                                                <small>Sam William</small>
+                                                <small>{{ contact.subContractor }}</small>
                                                 <h6 class="d-flex text-primary text-uppercase mt-1">Related contacts</h6>
-                                                <small class="text-capitalize">jake chowder, kyle willhelm</small>
+                                                <ng-container *ngFor="let c of contact.relatedContacts; let last=last">
+                                                    <a *ngIf="!last" class="text-capitalize" (click)="openRelatedContactModal(c)"><u>{{ c.firstName }}</u>, </a>
+                                                    <a *ngIf="last" class="text-capitalize" (click)="openRelatedContactModal(c)"><u>{{ c.firstName }}</u></a>
+                                                </ng-container>
                                             </td>
                                         </tr>
                                     </tbody>
