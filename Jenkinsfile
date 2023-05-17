@@ -8,7 +8,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'docker build -t primeaccuracore/ui -f Dockerfile .'
+                sh 'docker build --no-cache -t primeaccuracore/ui -f Dockerfile .'
             }
         }
         stage('Push and Deploy') {
