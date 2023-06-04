@@ -8,6 +8,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContactModule } from './contact/contact.module';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     AppRoutingModule,
     DashboardModule,
     BrowserAnimationsModule,
-    ContactModule
+    ContactModule,
+    NgbModule
     
   ],
   providers: [],
