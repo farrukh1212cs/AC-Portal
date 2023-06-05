@@ -4,21 +4,29 @@ import { AuthGuradService } from './core/rootservices/AuthGuradService';
 import { HomeComponent } from './dashboard/home/home.component';
 
 const routes: Routes = [
- 
-  {path: '', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
-  {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
-  {path: 'contact', canActivate: [AuthGuradService],
-   loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule)},
-   
-   {path: 'jobs', canActivate: [AuthGuradService],
-   loadChildren: () => import('./job/job.module').then(m => m.JobModule)},
-  {path: 'home'
-  , canActivate: [AuthGuradService]
-  , component: HomeComponent},
+  
   {
-    path: '**'
-    , loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
-  }
+    path: '',
+    loadChildren: () => import('src/app/modules/layout/layout.module').then(m => m.LayoutModule),
+  },
+  // {
+  //   path: 'auth',
+  //   loadChildren: () => import('src/app/modules/auth/auth.module').then(m => m.AuthModule)
+  // }
+  // {path: '', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
+  // {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
+  // {path: 'contact', canActivate: [AuthGuradService],
+  //  loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule)},
+   
+  //  {path: 'jobs', canActivate: [AuthGuradService],
+  //  loadChildren: () => import('./job/job.module').then(m => m.JobModule)},
+  // {path: 'home'
+  // , canActivate: [AuthGuradService]
+  // , component: HomeComponent},
+  // {
+  //   path: '**'
+  //   , loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
+  // }
 ];
 
 @NgModule({
