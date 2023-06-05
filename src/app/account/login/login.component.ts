@@ -23,9 +23,9 @@ export class LoginComponent {
     private localStorage: LocalStorageService
   ) { }
   ngOnInit() {
-    // if (this.localStorage.get("Obj")) {
-    //   this.router.navigate(['./home']);
-    // }
+    if (this.localStorage.get("Obj")) {
+      this.router.navigate(['./dashboard']);
+    }
 
     this.userLoginForm = this.fb.group({
       userName: ['', [Validators.required]],
@@ -35,9 +35,9 @@ export class LoginComponent {
   async login() {
     try {
       const res = await this.authService.login(this.userLoginForm.value).toPromise();
-      this.localStorage.set("Obj", res.payload);
+      // this.localStorage.set("Obj", res.payload);
       alert("Logged in successfully");
-      // this.router.navigate(['./home']);
+      this.router.navigate(['./dashboard']);
     } catch (err) {
       alert("UserName Or Password Is Invalid!");
     }
