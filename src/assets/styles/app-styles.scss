@@ -1,6 +1,6 @@
 @import 'variables';
 html ,body{
-    font-family: $inter-r;
+    // font-family: $inter-r;
     height: 100%;
     margin: 0;
 }
@@ -10,7 +10,7 @@ html{
 body{
 
 }
-
+/*******************************/
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
@@ -58,19 +58,15 @@ body{
         border-radius: 8px;
     }
 }
+/*******************************/
 .component-header{
     margin-bottom: 30px;
 }
-/*******************************/
-.badge{
-    background: #F0F3F9;
-    border-radius: 6px;
-    padding: 8px 8px;
-    color: #5E718D;
-    font-family: $inter-r;
-    font-size: 12px;
+.section-padding{
+    padding: 50px 0;
 }
 /*******************************/
+
 .data-view{
     .item{
         .data-title{
