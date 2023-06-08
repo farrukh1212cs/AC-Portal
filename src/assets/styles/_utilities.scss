@@ -3,7 +3,7 @@
 .title{
     margin: 0;
     font-size: 18px;
-    font-family: $inter-sb;
+    font-family: $gotham-b;
     color: $text-dark;
     &.sm{
         font-size: 16px;
@@ -18,7 +18,7 @@
 .text{
     margin: 0;
     font-size: 14px;
-    font-family: $inter-r;
+    font-family: $gotham-r;
     color: $text;
     
 }
@@ -60,4 +60,9 @@
 }
 .border-right-2{
     border-right: 2px solid #EEF2F8;
+}
+@media (min-width: 1400px){
+    .container {
+        max-width: 1500px;
+    }
 }

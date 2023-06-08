@@ -4,7 +4,7 @@
     label{
         font-size: 14px;
         color:  #3D4A5C;
-        font-family: $inter-m;
+        font-family: $gotham-m;
         margin-bottom: 5px;
     }
     .form-control{
@@ -14,7 +14,7 @@
         background: #fff;
         &::placeholder{
             color: #667085;
-            font-family: $inter-r;
+            font-family: $gotham-r;
             font-size: 13.6669px;
         }
         &:focus{

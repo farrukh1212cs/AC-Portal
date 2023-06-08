@@ -1,6 +1,6 @@
 @import 'variables';
 html ,body{
-    // font-family: $inter-r;
+    font-family: $gotham-m;
     height: 100%;
     margin: 0;
 }
@@ -45,8 +45,8 @@ body{
         border-radius: 10px 10px 0 0;
         .card-title{
             color: #455468;
-            font-size: 18.79px;
-            font-family: $inter-sb;
+            font-size: 20px;
+            font-family: $gotham-m;
             margin: 0;
         }
     }
@@ -61,6 +61,9 @@ body{
 /*******************************/
 .component-header{
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .section-padding{
     padding: 50px 0;
@@ -71,12 +74,12 @@ body{
     .item{
         .data-title{
             font-size: 14px;
-            font-family: $inter-m;
+            font-family: $gotham-m;
             color: #45496A;
         }
         .data-value{
             font-size: 14px;
-            font-family: $inter-r;
+            font-family: $gotham-r;
             color: #686C87;
         }
     }
@@ -86,12 +89,12 @@ body{
     &_item{
        &_title{
             font-size: 14px;
-            font-family: $inter-m;
+            font-family: $gotham-m;
             color: #45496A;
         }
         &_value{
             font-size: 14px;
-            font-family: $inter-r;
+            font-family: $gotham-r;
             color: #686C87;
         }
     }

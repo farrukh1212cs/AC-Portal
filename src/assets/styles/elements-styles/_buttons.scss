@@ -3,75 +3,75 @@
 .btn{
     height: $h-md;
     border-radius: 5px;
-    font-size: 15px;
-    font-family: $inter-m;
-    padding: 5px 15px;
+    font-size: 16px;
+    font-family: $gotham-m;
+    padding: 5px 10px;
     white-space: nowrap;
-    min-width: 140px;
-    i{
-        font-size: 14px;
-        margin-right: 8px;
-    }
+    // min-width: 140px;
+    // i{
+    //     font-size: 14px;
+    //     margin-right: 8px;
+    // }
 }
 
-.btn-icon{
-    min-width: auto;
-    width: $h-md;
-    padding: 5px;
-    i{
-        margin: 0;
-    }
-}
+// .btn-icon{
+//     min-width: auto;
+//     width: $h-md;
+//     padding: 5px;
+//     i{
+//         margin: 0;
+//     }
+// }
 
-.btn-sm{
-    height: $h-sm;
-    &.btn-icon{
-        width: $h-sm;
-    }
-}
+// .btn-sm{
+//     height: $h-sm;
+//     &.btn-icon{
+//         width: $h-sm;
+//     }
+// }
 /**************************************/
-.btn-primary{
-    background: $primary;
-    border-color: $primary;
-    color: #fff;
-    &:hover{
-        background: $primary;
-        border-color: $primary;
-        color: #fff;
-    }
-    &[disabled], &.disabled{
-        background: #414042;
-        border-color: #414042;
-        opacity: 1;
-    }
-}
+// .btn-primary{
+//     background: $primary;
+//     border-color: $primary;
+//     color: #fff;
+//     &:hover{
+//         background: $primary;
+//         border-color: $primary;
+//         color: #fff;
+//     }
+//     &[disabled], &.disabled{
+//         background: #414042;
+//         border-color: #414042;
+//         opacity: 1;
+//     }
+// }
 
-.btn-secondary{
-    background: $secondary;
-    border-color: $secondary;
-    color: #fff;
-    &:hover{
-        background: $secondary;
-        border-color: $secondary;
-        color: #fff;
-    }
-}
+// .btn-secondary{
+//     background: $secondary;
+//     border-color: $secondary;
+//     color: #fff;
+//     &:hover{
+//         background: $secondary;
+//         border-color: $secondary;
+//         color: #fff;
+//     }
+// }
 
-.btn-outline-white{
-    background: #fff;
-    border-color: #D7DFE9;
-    color: #5E718D;
-    &:hover{
-        background: #fff;
-        border-color: #D7DFE9;
-        color: #5E718D;
-    }
-}
+// .btn-outline-white{
+//     background: #fff;
+//     border-color: #D7DFE9;
+//     color: #5E718D;
+//     &:hover{
+//         background: #fff;
+//         border-color: #D7DFE9;
+//         color: #5E718D;
+//     }
+// }
 
 /**************************************/
 
 .btns-group{
     > .btn:not(:first-of-type){
-        margin-left: 20px;
+        margin-left: 15px;
     }
 }

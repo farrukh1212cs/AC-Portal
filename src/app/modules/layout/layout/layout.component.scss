@@ -17,13 +17,86 @@
                 display: flex;
                 justify-content: space-between;
                 .sidebar-toggler{
-
+                    background: transparent;
+                    border: none;
+                }
+            }
+            .menu-container{
+                height: calc(100% - 4.45rem) !important;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                overflow: hidden;
+                overflow: overlay;
+                .menu-items {
+                  margin: 0;
+                  padding: 0;
+                  list-style: none;
+                  position: relative;
+                  .menu-item {
+                    padding: 5px 15px;
+                    white-space: nowrap;
+                    .menu-link {
+                      padding: 8px 10px;
+                      display: block;
+                      font-size: 15px;
+                      text-decoration: none;
+                    //   font-family: $font-r;
+                      border-radius: 8px;
+                      display: flex;
+                      align-items: center;
+                      cursor: pointer;
+                      // border-left: 3px solid transparent;
+                      i{
+                        margin-right: 10px ;
+                        font-size: 18px;
+                        line-height: 1;
+                      }
+                      &.active{
+                        background: #F6F9FC;
+                      }
+                    }
+                  }
                 }
             }
         }
         .header{
             height: $header-height;
             background: #1C1D21;
+            overflow: hidden;
+            .header-container{
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 100%;
+                .header-menu-list{
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    > div{
+                        cursor: pointer;
+                        i{
+                            color: #fff;
+                        }
+                    }
+                    .user-avatar{
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        img{
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50px;
+                            overflow: hidden;
+                            overflow: hidden;
+                        }
+                        span{
+                            color: #fff;
+                        }
+                    }
+                }
+            }
         }
         .app-container{
             transition: all 0.3s;
@@ -48,8 +121,35 @@
         &.sidebar-slim{
             .sidebar{
                 width: $slim;
+                .menu-container{
+                    .menu-items{
+                        .menu-item{
+                            .menu-link{
+                                justify-content: center;
+                                // i{
+                                //     margin-right: 0 !important;
+                                // }
+                                span{
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
                 &:hover{
                     width: $expanded;
+                    .menu-container{
+                        .menu-items{
+                            .menu-item{
+                                .menu-link{
+                                    justify-content: start;
+                                    span{
+                                        display: block;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             .app-container{
@@ -60,6 +160,17 @@
         &.sidebar-expanded{
             .sidebar{
                 width: $expanded;
+                .menu-container{
+                    .menu-items{
+                        .menu-item{
+                            .menu-link{
+                                span{
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             .app-container{
                 margin-left: $expanded;
