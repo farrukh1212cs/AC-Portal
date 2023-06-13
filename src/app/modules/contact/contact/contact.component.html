@@ -19,14 +19,14 @@
                         </div>
                     </button>
                     <button class="btn btn-outline-primary">Import Contacts</button>
-                    <button class="btn btn-outline-primary-none text-primary">Edit</button>
-                    <button class="btn btn-outline-primary-none text-primary">
+                    <button class="btn btn-outline-primary-none">Edit</button>
+                    <button class="btn btn-outline-primary-none">
                         <i class="material-symbols-outlined">unfold_more</i>
                     </button>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body px-0">
+                <table class="table striped-td">
                     <thead>
                         <tr>
                             <th>Contact Name</th>
@@ -44,7 +44,7 @@
                         <!--  -->
                         <tr *ngFor="let contact of contacts">
                             <td (click)="redirect(contact)" style="cursor: pointer;">
-                                <div class="d-flex">{{contact.firstName + ' ' + contact.lastName}}</div>
+                                {{contact.firstName + ' ' + contact.lastName}}
                                 <!-- <div class="d-flex text-muted">Mon Nov 8, 1:00PM - 2:30PM
                                     </div> -->
                             </td>

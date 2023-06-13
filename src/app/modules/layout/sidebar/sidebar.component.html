@@ -1,13 +1,12 @@
 
 <!-- Sidebar -->
-<div class="sidebar">
+<div class="sidebar" >
     <div class="sidebar-header">
+        <img class="logo" src="../../../../assets/images/logo.png" alt="">
         <button class="sidebar-toggler" (click)="toggleSidebar()">
-            <i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary material-symbols-outlined"
-            id="menuFixingIcon" onclick="collapseSideBar()">lock_open</i>
-
-        <i class="d-block d-xl-none text-primary toggle-icon font-medium-4 material-symbols-outlined"
-            onclick="toggleSidebar()">close</i>
+            <span class="material-symbols-outlined" *ngIf="!sidebarexpandedicon">lock_open</span>
+            <span class="material-symbols-outlined" *ngIf="sidebarexpandedicon">lock</span>
+            
         </button>
     </div>
     <div class="menu-container">

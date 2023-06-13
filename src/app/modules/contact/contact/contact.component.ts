@@ -51,8 +51,7 @@ export class ContactComponent {
       data.FormTitle = "Add Contact";
       data.Request_Type = "Add";
       dialogRef = this.dialog.open(AddcontactComponent, {
-        width: '80vw',
-        height: '80vh',
+        width: '75vw',
         data: data,
         disableClose: true
       });

@@ -1,6 +1,14 @@
 .search-input-header{
+    width: 25%;
+    i{
+        font-size: 24px;
+        left: 25px;
+        
+    }
     input{
         height: 50px;
         border-radius: 50px;
+        border: none;
+        padding-left: 50px;
     }
 }
