@@ -17,6 +17,7 @@ export class JobDetailsComponentComponent {
     this.route.paramMap.subscribe(params => {
       const jobId =  params.get('id');
       this.job = history.state.model;
+      console.log(this.job, history)
     });
   }
 

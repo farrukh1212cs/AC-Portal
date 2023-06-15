@@ -7,24 +7,12 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AcinterceptorService } from './rootservices/acinterceptor.service';
 
-
-
 @NgModule({
-  declarations: [
-    NavBarComponent,
-    SideBarComponent,
-    FooterComponent
-
+  declarations: [NavBarComponent, SideBarComponent, FooterComponent],
+  imports: [CommonModule, RouterModule],
+  exports: [NavBarComponent, SideBarComponent, FooterComponent],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AcinterceptorService, multi: true },
   ],
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  exports : [
-    NavBarComponent,
-    SideBarComponent,
-    FooterComponent
-  ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AcinterceptorService, multi: true }],
 })
-export class CoreModule { }
+export class CoreModule {}

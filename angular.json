@@ -5,7 +5,11 @@
   "projects": {
     "Prime": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -26,7 +30,8 @@
             ],
             "styles": [
               "./src/index.css",
-              "@angular/material/prebuilt-themes/deeppurple-amber.css"
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "node_modules/ngx-toastr/toastr.css"
              
             ],
             "scripts": 

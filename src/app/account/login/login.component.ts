@@ -1,66 +1,93 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-web-storage';
 
-import { AccountService } from '../account.service';
-
-import { RegisterDto } from '../AccountDto';
+import { AccountService } from '../../core/services/account.service';
+import { Subscription } from 'rxjs';
+import { LoginDto, RegisterDto } from 'src/app/core/interfaces';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
   userLoginForm!: FormGroup;
   showPassword: boolean = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private toastr: ToastrService,
+    private fb: FormBuilder,
     private authService: AccountService,
     private router: Router,
     private localStorage: LocalStorageService
-  ) { }
+  ) {}
   ngOnInit() {
-    if (this.localStorage.get("Obj")) {
+    if (this.localStorage.get('Obj')) {
       this.router.navigate(['./home']);
     }
 
     this.userLoginForm = this.fb.group({
       userName: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     });
   }
-  async login() {
-    try {
-      const res = await this.authService.login(this.userLoginForm.value).toPromise();
-      this.localStorage.set("Obj", res.payload);
-      alert("Logged in successfully");
-      this.router.navigate(['./home']);
-    } catch (err) {
-      alert("UserName Or Password Is Invalid!");
-    }
+
+  // Declare a subscription property
+  private subscription: Subscription;
+
+  login() {
+    const data: LoginDto = {
+      userName: this.userLoginForm.value.userName,
+      password: this.userLoginForm.value.password,
+    };
+    this.subscription = this.authService.login(data).subscribe({
+      next: (response) => {
+        this.localStorage.set('Obj', response.payload);
+        this.toastr.success('Success!', 'Logged in successfully!');
+        this.router.navigate(['./home']);
+      },
+      error: (error) => {
+        this.toastr.error('Error!', 'Invalid UserName Or Password!');
+      },
+    });
   }
 
-  async register() {
+  register() {
     const register: RegisterDto = {
-      firstName: "Asad",
-      lastName: "Ali",
-      email: "asad@gmail.com",
-      companyName: "asadco",
-      password: "12345"
-    }
-    try { 
-      const res = await this.authService.register(register).toPromise();
-      alert("Registered Successfully!");
-      this.router.navigate(['./login']);
-    } catch(err) {
-      alert("Error registering this user!")
-    }
+      firstName: 'Asad',
+      lastName: 'Ali',
+      email: 'asad@gmail.com',
+      companyName: 'asadco',
+      password: '12345',
+    };
+
+    this.subscription = this.authService.register(register).subscribe({
+      next: (res) => {
+        this.toastr.success('Success!', 'Registered successfully!');
+        this.router.navigate(['./login']);
+      },
+      error: (err) => {
+        this.toastr.error('Error!', 'Error registering this user!');
+      },
+    });
   }
 
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
+  }
+
+  // Unsubscribe from the subscription when the component is destroyed
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

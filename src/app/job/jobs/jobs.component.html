@@ -73,22 +73,22 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let Jobs of Jobs">
-                      <td (click)="redirect(Jobs)" style="cursor: pointer;">
-                        <div class="d-flex">{{Jobs.name}} </div>
+                    <tr *ngFor="let Job of Jobs">
+                      <td (click)="redirect(Job)" style="cursor: pointer;">
+                        <div class="d-flex">{{Job.name}} </div>
                       </td>
-                      <td (click)="redirect(Jobs)" style="cursor: pointer;">{{Jobs.primaryContactId}}</td>
-                      <td (click)="redirect(Jobs)" style="cursor: pointer;">{{Jobs.workFlowId}}</td>
-                      <td (click)="redirect(Jobs)" style="cursor: pointer;">
+                      <td (click)="redirect(Job)" style="cursor: pointer;">{{Job.primaryContactId}}</td>
+                      <td (click)="redirect(Job)" style="cursor: pointer;">{{Job.workFlowId}}</td>
+                      <td (click)="redirect(Job)" style="cursor: pointer;">
                         <div class="d-flex">
                           <i class="material-symbols-outlined text-success icon-size-dot">
                             radio_button_checked
                           </i>
-                          &nbsp; {{Jobs.jobStatus}}
+                          &nbsp; {{Job.jobStatus}}
                         </div>
                       </td>
-                      <td (click)="redirect(Jobs)" style="cursor: pointer;">{{Jobs?.salesRepId}}</td>
-                      <td (click)="redirect(Jobs)" style="cursor: pointer;">
+                      <td (click)="redirect(Job)" style="cursor: pointer;">{{Job?.salesRepId}}</td>
+                      <td (click)="redirect(Job)" style="cursor: pointer;">
                         <div class="avatar-group">
                           <div data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                data-bs-placement="top" class="avatar pull-up my-0" title=""
@@ -110,7 +110,7 @@
                           </div>
                         </div>
                       </td>
-                      <td (click)="redirect(Jobs)" style="cursor: pointer;">{{Jobs.address1 + ',' + Jobs.address2}}</td>
+                      <td (click)="redirect(Job)" style="cursor: pointer;">{{Job.address1 + ',' + Job.address2}}</td>
                       <td>
                         <div class="dropdown">
                           <button type="button"
@@ -123,11 +123,11 @@
                               <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="openAddJobsModal(Jobs)">
+                              <button mat-menu-item (click)="openAddJobsModal(Job)">
                                 <mat-icon  class="material-symbols-outlined">border_color</mat-icon>
                                 <span>Edit</span>
                               </button>
-                              <button mat-menu-item (click)="deleteJobClick(Jobs)">
+                              <button mat-menu-item (click)="deleteJobClick(Job)">
                                 <mat-icon >delete</mat-icon>
                                 <span>Delete</span>
                               </button>

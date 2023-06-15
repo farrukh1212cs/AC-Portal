@@ -12,3 +12,19 @@ export interface CreateEvetDto {
     jobId?: number;
     id?: number;
 }
+
+export interface EventDTO {
+    eventType: string;
+    eventPriority: string;
+    eventName: string;
+    eventStatus: string;
+    startDate: string;
+    endDate: string;
+    estimatedDuration: string;
+    description: string;
+    tags: string;
+    lastStatusChangeDate: string;
+    jobId: number;
+    id?: any
+  }
+  

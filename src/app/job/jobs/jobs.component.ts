@@ -6,36 +6,42 @@ import { AddJobEventComponent } from '../add-job-event/add-job-event.component';
 import { AddJobWorkOrderComponent } from '../add-job-work-order/add-job-work-order.component';
 import { AddJobsComponent } from '../add-jobs/add-jobs.component';
 import { AddWorkflowComponent } from '../add-workflow/add-workflow.component';
-import { JobService } from '../job.service';
+import { JobService } from '../../core/services/job.service';
+import { JobDTO } from 'src/app/core/interfaces';
 
 @Component({
   selector: 'app-jobs',
   templateUrl: './jobs.component.html',
-  styleUrls: ['./jobs.component.css']
+  styleUrls: ['./jobs.component.css'],
 })
 export class JobsComponent {
-  Jobs: any[] = [];
-  phoneNumbers: { id: string, phoneNumber: string, typeId: string, typeName: string }[] = [];
-  constructor(private router: Router, private jobService: JobService,private dialog: MatDialog) {
+  Jobs: JobDTO[] = [];
+  phoneNumbers: {
+    id: string;
+    phoneNumber: string;
+    typeId: string;
+    typeName: string;
+  }[] = [];
 
- }
+  constructor(
+    private router: Router,
+    private jobService: JobService,
+    private dialog: MatDialog
+  ) {}
   ngOnInit() {
-   this.getAllJobs();
+    this.getAllJobs();
   }
 
-
-  getAllJobs()
-  {
-    this.jobService.getAllJobsByCompanyID().subscribe(
-      res => {
+  getAllJobs(pagenumber = 1, pagesize = 25) {
+    this.jobService.getAllJobsWithPagination(pagenumber,pagesize).subscribe(
+      (res:JobDTO[]) => {
+        this.Jobs = []
         this.Jobs = res;
       },
-      err => {
+      (err) => {
         console.log(err);
       },
-      () => {
-       
-      }
+      () => {}
     );
   }
 
@@ -43,51 +49,48 @@ export class JobsComponent {
   //  this.dialog.open(AddJobsComponent);
   // }
 
-  openAddJobsModal(data:any): void {
+  openAddJobsModal(data: any): void {
     console.log(data);
     let dialogRef: any = {};
     if (data == null) {
       data = {};
-      data.FormTitle = "Add Job";
-      data.Request_Type = "Add";
+      data.FormTitle = 'Add Job';
+      data.Request_Type = 'Add';
       dialogRef = this.dialog.open(AddJobsComponent, {
         width: '80vw',
         height: '80vh',
         data: data,
-        disableClose: true
+        disableClose: true,
       });
-      dialogRef.afterClosed().subscribe((result:any) => {
-      });
-    }
-    else {
-      data.FormTitle = "Edit Job";
-      data.Request_Type = "Save";
+      dialogRef.afterClosed().subscribe((result: any) => {});
+    } else {
+      data.FormTitle = 'Edit Job';
+      data.Request_Type = 'Save';
       dialogRef = this.dialog.open(AddJobsComponent, {
         width: '80vw',
         height: '80vh',
         data: data,
-        disableClose: true
+        disableClose: true,
       });
-      dialogRef.afterClosed().subscribe((result: any) => {
-      });
+      dialogRef.afterClosed().subscribe((result: any) => {});
     }
   }
 
-  redirect(jobs:any){
-     this.router.navigate(['/jobs', jobs.id], { state: { model: jobs }});
-  };
+  redirect(jobs: any) {
+    debugger
+    this.router.navigate(['/jobs', jobs.id], { state: { model: jobs } });
+  }
 
-  deleteJobClick(data: any) : void { 
+  deleteJobClick(data: any): void {
     let dialogRef: any = {};
-    data.FormTitle = "Confirm Delete";
-      data.Request_Type = "Delete";
-      dialogRef = this.dialog.open(ConfirmationComponent, {
-        width: '30vw',
-        height: '27vh',
-        data: data,
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe((result:any) => {
-      });
+    data.FormTitle = 'Confirm Delete';
+    data.Request_Type = 'Delete';
+    dialogRef = this.dialog.open(ConfirmationComponent, {
+      width: '30vw',
+      height: '27vh',
+      data: data,
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 }

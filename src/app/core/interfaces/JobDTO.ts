@@ -1,0 +1,37 @@
+export interface JobDTO {
+  name: string;
+  address1: string;
+  address2: string;
+  city: string;
+  faxNo: string | null;
+  mobileNo: string | null;
+  homeNo: string | null;
+  officeNo: string | null;
+  phoneNo: string | null;
+  jobType: string | null;
+  note: string | null;
+  zip: number;
+  startDate: string;
+  endDate: string;
+  description: string;
+  stateId: number | null;
+  salesRepsentativeId: number;
+  lastStatusChangeDate: string | null;
+  primaryContactId: number | null;
+  officeLocationId: number;
+  workFlowId: number;
+  subContractorId: number;
+  timelineId: number;
+  jobStatusId: number;
+  leadSourceId: number;
+  id: number;
+  userId: number | null;
+  createdBy: number;
+  modifiedBy: number;
+  companyId: number;
+  createdDate: string;
+  modifiedDate: string;
+  isDeleted: boolean | null;
+  jobStatus: any;
+  salesRepId: any;
+}

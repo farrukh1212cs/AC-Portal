@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AddcontactComponent } from './addcontact/addcontact.component';
-import { ContactService } from './contact.service';
+import { ContactService } from '../core/services/contact.service';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit , ViewChild } from '@angular/core';
 import { FormArray, FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContactService } from '../contact.service';
+import { ContactService } from '../../core/services/contact.service';
 import { CreateContactDto } from '../CreateContactDto';
 import { CreatePhoneNumbersDto } from '../CreatePhoneNumbersDto';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

@@ -8,22 +8,20 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContactModule } from './contact/contact.module';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ConfirmationComponent
-  ],
+  declarations: [AppComponent, ConfirmationComponent],
   imports: [
     BrowserModule,
     AccountModule,
     AppRoutingModule,
     DashboardModule,
     BrowserAnimationsModule,
-    ContactModule
-    
+    ContactModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
