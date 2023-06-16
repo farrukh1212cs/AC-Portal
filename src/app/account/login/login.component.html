@@ -19,18 +19,18 @@
                     </div>
                     <div class="d-flex col-lg-6 align-items-center auth-bg px-2 p-lg-5">
                         <div
-                            class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto right-auth-box sm-content-center">
+                            class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto  sm-content-center">
                             <!-- sm-content-center is not common making issues in register bcz of many fields -->
                             <h2 class="card-title fw-bold mb-1">Login to Dashboard</h2>
                             <form [formGroup]="userLoginForm" (ngSubmit)="login()" novalidate class="auth-register-form mt-2" >
 
-                                <div class="mb-1">
+                                <div class="input">
                                     <label class="form-label" for="register-email">Email Address</label>
                                     <input formControlName="userName" class="form-control" id="register-email" type="text"
                                         name="register-email" placeholder="john@example.com"
                                         aria-describedby="register-email" tabindex="2" />
                                 </div>
-                                <div class="mb-1">
+                                <div class="input">
                                     <label class="form-label" for="register-password">Password</label>
                                     <div class="input-group input-group-merge form-password-toggle">
                                         <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control form-control-merge"
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-1">
+                                <div class="input">
                                     <div class="form-check">
                                         <input class="form-check-input" id="register-privacy-policy" type="checkbox"
                                             tabindex="4" />
