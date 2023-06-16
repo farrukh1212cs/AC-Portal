@@ -1,0 +1,56 @@
+/* .modal-dialog {
+ 
+          width: auto;
+          height: 700px;
+ 
+        }
+ 
+.modal-header { 
+    padding:16px 16px;
+ 
+    color:#FFF;
+
+ 
+ } */
+
+
+.success-snackbar {
+  background-color: green;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: red;
+  color: white;
+}
+
+::ng-deep {
+  tag-input.app-tag-input {
+    .ng2-tag-input {
+      min-height: auto;
+      border: none;
+      padding: 0;
+
+      .ng2-tags-container {
+        >tag {
+          opacity: 1;
+          height: 28px;
+          margin: 0 10px 0 0;
+        }
+
+        tag-input-form {
+
+          .tag-input-form {
+            form {
+              .ng2-tag-input__text-input {
+                height: auto;
+                background: transparent;
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}

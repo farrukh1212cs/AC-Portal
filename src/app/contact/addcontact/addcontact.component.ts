@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-addcontact',
   templateUrl: './addcontact.component.html',
-  styleUrls: ['./addcontact.component.css']
+  styleUrls: ['./addcontact.component.scss']
 })
 export class AddcontactComponent  implements OnInit {
   contactForm!: FormGroup;
