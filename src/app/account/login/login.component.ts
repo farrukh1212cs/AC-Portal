@@ -31,7 +31,7 @@ export class LoginComponent {
   ) {}
   ngOnInit() {
     if (this.localStorage.get('Obj')) {
-      this.router.navigate(['./dashboard']);
+      this.router.navigate(['./home']);
     }
 
     this.userLoginForm = this.fb.group({

@@ -29,10 +29,10 @@
               "src/assets"
             ],
             "styles": [
+              "./src/index.css",
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "node_modules/ngx-toastr/toastr.css",
-              "src/index.css",
-              "src/styles.scss"
+              "node_modules/ngx-toastr/toastr.css"
+             
             ],
             "scripts": 
             [
