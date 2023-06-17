@@ -6,10 +6,11 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AcinterceptorService } from './rootservices/acinterceptor.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [NavBarComponent, SideBarComponent, FooterComponent],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatSnackBarModule],
   exports: [NavBarComponent, SideBarComponent, FooterComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AcinterceptorService, multi: true },

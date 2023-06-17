@@ -16,6 +16,8 @@ export interface CreateContactDto {
     startDate?: Date;
     endDate?: Date;
     discription?: string;
+    officeNumber?: string;
+    homeNumber?: string;
     file?: any;
     sourceId?: number;
     stateId?: number;

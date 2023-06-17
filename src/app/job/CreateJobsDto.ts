@@ -36,22 +36,22 @@ export interface CreateJobDto {
   name?: string;
   phoneNumbers?: CreatePhoneNumbersDto[];
   customFields?: CreateCustomFieldsDto[];
-  mobileNumber: number;
-  faxNo: number;
-  officeNumber: number;
-  homeNumber: number;
+  mobileNumber: string;
+  faxNo: number | string;
+  officeNumber: string;
+  homeNumber: string;
 }
-  
-  export interface CreateNotesDto {
-    text: string;
-  }
-  
-  export interface CreatePhoneNumbersDto {
-    type: string;
-    number: string;
-  }
-  
-  export interface CreateCustomFieldsDto {
-    name: string;
-    value: string;
-  }
+
+export interface CreateNotesDto {
+  text: string;
+}
+
+export interface CreatePhoneNumbersDto {
+  type: string;
+  number: string;
+}
+
+export interface CreateCustomFieldsDto {
+  name: string;
+  value: string;
+}

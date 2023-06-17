@@ -1,18 +1,28 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JobService } from '../../core/services/job.service';
 import { CreateJobDto } from '../CreateJobsDto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreatePhoneNumbersDto } from '../../contact/CreatePhoneNumbersDto';
+import { JobDTO } from 'src/app/core/interfaces';
+import { UtilityService } from 'src/app/core/services/shared/UtilityService';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-jobs',
   templateUrl: './add-jobs.component.html',
-  styleUrls: ['./add-jobs.component.css']
+  styleUrls: ['./add-jobs.component.css'],
 })
 export class AddJobsComponent implements OnInit {
+  private subscriptions: Subscription = new Subscription();
   officeLocationDropdownValues: any = [];
   public model: any = {};
   public modelMain: any = {};
@@ -20,7 +30,12 @@ export class AddJobsComponent implements OnInit {
   phoneNumbersForm!: FormGroup;
   JobDto?: CreateJobDto;
   phoneTypes: any[] = [];
-  phoneNumbers: { id: string, phoneNumber: string, typeId: string, typeName: string }[] = [];
+  phoneNumbers: {
+    id: string;
+    phoneNumber: string;
+    typeId: string;
+    typeName: string;
+  }[] = [];
   ph: CreatePhoneNumbersDto[] = [];
   //-----------DropDowns
   updateData: any = {};
@@ -36,62 +51,67 @@ export class AddJobsComponent implements OnInit {
   states: any;
   @ViewChild('fileInput') fileInput: any;
 
-  constructor(private dialogRef: MatDialogRef<AddJobsComponent>, private jobService: JobService, @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder, private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private dialogRef: MatDialogRef<AddJobsComponent>,
+    private jobService: JobService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private formBuilder: FormBuilder,
+    private utilityService: UtilityService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     if (data) {
       this.modelMain = data;
       this.updateData = Object.assign({}, this.modelMain);
     }
   }
+
   get ssForm() {
     return this.jobForm.controls;
   }
+
   closeAddJobsModal() {
     this.dialogRef.close();
   }
 
   ngOnInit(): void {
-    //----------PH
-    this.phoneNumbersForm = this.formBuilder.group({
-      phoneNumber: ['', Validators.required],
-      type: ['', Validators.required],
-      typeId: ['', Validators.required]
+    this.phoneNumbersForm = new FormGroup({
+      phoneNumber: new FormControl('', Validators.required),
+      type: new FormControl('', Validators.required),
+      typeId: new FormControl('', Validators.required),
     });
 
-    //---------
-    this.jobForm = this.formBuilder.group({
-      id: [''],
-      addressLine1: [''],
-      addressLine2: [''],
-      city: [''],
-      zipCode: [''],
-      faxNo: [''],
-      officeNumber: [''],
-      homeNumber: [''],
-      mobileNumber: [''],
-      name: [''],
-      startDate: [''],
-      endDate: [''],
-      discription: [''],
-      sourceId: [''],
-      stateId: [''],
-      salesRepId: ['', Validators.required],
-      subContractorId: [],
-      TeamMememberId: [[]],
-      officeLocationId: ['', Validators.required],
-      workFlowId: ['', Validators.required],
-      statusId: ['', Validators.required],
-      RelatedContactId: [[]],
-      tags: [[]],
-      note: this.formBuilder.group({
-        text: ['']
+    this.jobForm = new FormGroup({
+      id: new FormControl(0),
+      addressLine1: new FormControl(''),
+      addressLine2: new FormControl(''),
+      city: new FormControl(''),
+      zipCode: new FormControl(''),
+      faxNo: new FormControl(''),
+      officeNumber: new FormControl(''),
+      homeNumber: new FormControl(''),
+      mobileNumber: new FormControl(''),
+      name: new FormControl(''),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+      discription: new FormControl(''),
+      sourceId: new FormControl(''),
+      stateId: new FormControl(''),
+      salesRepId: new FormControl('', Validators.required),
+      subContractorId: new FormControl(''),
+      TeamMememberId: new FormControl([]),
+      officeLocationId: new FormControl('', Validators.required),
+      workFlowId: new FormControl('', Validators.required),
+      statusId: new FormControl('', Validators.required),
+      RelatedContactId: new FormControl([]),
+      tags: new FormControl([]),
+      note: new FormGroup({
+        text: new FormControl(''),
       }),
-      phoneNumbers: this.formBuilder.array([
-        this.createPhoneNumberFormGroup()
-      ]),
+      phoneNumbers: this.formBuilder.array([this.createPhoneNumberFormGroup()]),
       customFields: this.formBuilder.array([
         //this.createCustomFieldFormGroup()
-      ])
+      ]),
     });
     Promise.all([
       this.getOfficeLocation(),
@@ -103,108 +123,89 @@ export class AddJobsComponent implements OnInit {
       this.getTeamMembers(),
       this.getSources(),
       this.getState(),
-      this.getPhoneTypes()
-    ]).then(() => {
-      // All asynchronous functions have completed
-      console.log(this.officeLocationDropdownValues);
-      console.log(this.salesReps);
-      console.log(this.workflows);
-      console.log(this.statuses);
-      console.log(this.subcontractors);
-      console.log(this.RelatedContactId);
-      console.log(this.TeamMememberId);
-      console.log(this.sources);
-      console.log(this.states);
-      console.log(this.phoneTypes);
-      if (this.updateData.id) {
-        console.log(this.updateData);
-        this.jobForm.patchValue({
-          id: this.updateData.id,
-          addressLine1: this.updateData.address1,
-          addressLine2: this.updateData.address2,
-          city: this.updateData.city,
-          zipCode: this.updateData.zip,
-          name: this.updateData.name,
-          startDate: this.updateData.startDate,
-          endDate: this.updateData.endDate,
-          discription: this.updateData.description,
-          sourceId: this.updateData.leadSourceId,
-          stateId: this.updateData.stateId,
-          salesRepId: this.updateData.salesRepsentativeId,
-          subContractorId: this.updateData.subContractorId,
-          officeLocationId: this.updateData.officeLocationId,
-          workFlowId: this.updateData.workFlowId,
-          statusId: this.updateData.jobStatusId,
-          faxNo: this.updateData.faxNo,
-          officeNumber: this.updateData.officeNo,
-          homeNumber: this.updateData.homeNo,
-          mobileNumber: this.updateData.mobileNo,
-          
-          // TeamMememberId: this.updateData.id,
-          // RelatedContactId: [[]],
-          // tags: [[]],
-          // faxNo: this.updateData.id,
-          // note: this.formBuilder.group({
-          //   text: ['']
-          // }),
-          // phoneNumbers: this.formBuilder.array([
-          //   this.createPhoneNumberFormGroup()
-          // ]),
-          // customFields: this.formBuilder.array([
-          //   //this.createCustomFieldFormGroup()
-          // ])
-          
-        });
-      }
-    }).catch((error) => {
-      console.error('An error occurred while fetching data:', error);
-    });
+      this.getPhoneTypes(),
+    ])
+      .then(() => {
+        if (this.updateData.id) {
+          console.log('Update Data: ', this.jobForm, this.updateData);
+          this.jobForm.patchValue({
+            id: this.updateData.id,
+            addressLine1: this.updateData.address1,
+            addressLine2: this.updateData.address2,
+            city: this.updateData.city,
+            zipCode: this.updateData.zip,
+            name: this.updateData.name,
+            startDate: this.updateData.startDate,
+            endDate: this.updateData.endDate,
+            discription: this.updateData.description,
+            sourceId: this.updateData.leadSourceId,
+            stateId: this.updateData.stateId,
+            salesRepId: this.updateData.salesRepsentativeId,
+            subContractorId: this.updateData.subContractorId,
+            officeLocationId: this.updateData.officeLocationId,
+            workFlowId: this.updateData.workFlowId,
+            statusId: this.updateData.jobStatusId,
+            faxNo: this.updateData.faxNo,
+            officeNumber: this.updateData.officeNo,
+            homeNumber: this.updateData.homeNo,
+            mobileNumber: this.updateData.mobileNo,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('An error occurred while fetching data:', error);
+      });
   }
 
-  //---------
   createPhoneNumberFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      typeId: [''],
-      phoneNumber: [''],
-      typeName: ['']
+    return new FormGroup({
+      typeId: new FormControl(''),
+      phoneNumber: new FormControl(''),
+      typeName: new FormControl(''),
     });
   }
 
-  //----------
   addPhoneNumber(types: any): void {
-    const phoneNumber = this.phoneNumbersForm.value.phoneNumber.trim();
+    const phoneNumber = this.phoneNumbersForm.value.phoneNumber
+      .toString()
+      .trim();
     const typeId = this.phoneNumbersForm.value.typeId;
     const id = this.phoneNumbersForm.value.id;
-    const typeName = types.find((x: any) => x.id === typeId).value;
-    if (this.phoneNumbers.find(pn => pn.phoneNumber === phoneNumber)) {
-      const index = this.phoneNumbers.findIndex(pn => pn.phoneNumber === phoneNumber);
-      if (index >= 0) {
-        this.phoneNumbers.splice(index, 1);
-      }
+    const typeName = types.find((x: any) => x.id === typeId)?.value;
+    if (!phoneNumber || !typeId) {
+      return;
     }
-    if (phoneNumber && typeId && !this.phoneNumbers.find(pn => pn.phoneNumber === phoneNumber)) {
-      this.phoneNumbers.push({ phoneNumber, typeId, typeName, id });
-      this.phoneNumbersForm.reset();
+    // Check if the phoneNumber already exists in the phoneNumbers array and remove it
+    const existingPhoneNumberIndex = this.phoneNumbers.findIndex(
+      (pn) => pn.phoneNumber === phoneNumber
+    );
+    if (existingPhoneNumberIndex >= 0) {
+      this.phoneNumbers.splice(existingPhoneNumberIndex, 1);
     }
+    // Add the new phoneNumber to the phoneNumbers array
+    this.phoneNumbers.push({ phoneNumber, typeId, typeName, id });
+    this.phoneNumbersForm.reset();
   }
+
   removePhoneNumber(phoneNumber: string): void {
-    const index = this.phoneNumbers.findIndex(pn => pn.phoneNumber === phoneNumber);
+    const index = this.phoneNumbers.findIndex(
+      (pn) => pn.phoneNumber === phoneNumber
+    );
     if (index >= 0) {
       this.phoneNumbers.splice(index, 1);
     }
   }
 
-  //------------------
   getOfficeLocation() {
-    this.jobService.allOfficeLocations().subscribe(
-      res => {
-        this.officeLocationDropdownValues = res.payload;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-      }
+    this.subscriptions.add(
+      this.jobService.allOfficeLocations().subscribe(
+        (res) => {
+          this.officeLocationDropdownValues = res.payload;
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
     );
   }
 
@@ -212,184 +213,209 @@ export class AddJobsComponent implements OnInit {
     this.jobForm.markAllAsTouched();
     if (this.jobForm.valid) {
       this.JobDto = this.jobForm.value;
-
-      if(requestType === "Add") {
-        this.jobService.createJob(this.jobForm.value, this.phoneNumbers).subscribe(
-          res => {
-            // this.snackBar.open('Record inserted successfully', 'Close', {
-            //   duration: 3000,
-            //   verticalPosition: 'top',
-            //   panelClass: ['success-snackbar']
-            // });
-            this.router.navigate(['/jobs']);
-            this.dialogRef.close();
-          },
-          err => {
-            console.log(err)
-            // this.snackBar.open('Error', 'Close', {
-            //   duration: 3000,
-            //   verticalPosition: 'top',
-            //   panelClass: ['error-snackbar']
-            // });
-            this.router.navigate(['/jobs']);
-            this.dialogRef.close();
-          },
-          () => {
-          }
+      const requestBody: JobDTO = {
+        id: this.JobDto.id,
+        address1: this.JobDto.addressLine1,
+        address2: this.JobDto.addressLine2,
+        city: this.JobDto.city,
+        zip: this.JobDto.zipCode,
+        faxNo: this.JobDto.faxNo.toString(),
+        mobileNo: this.JobDto.mobileNumber.toString(),
+        officeNo: this.JobDto.officeNumber.toString(),
+        homeNo: this.JobDto.homeNumber.toString(),
+        name: this.JobDto.name,
+        stateId: this.JobDto.stateId,
+        startDate: this.JobDto.startDate,
+        endDate: this.JobDto.endDate,
+        description: this.JobDto.discription,
+        leadSourceId: this.JobDto.leadSource,
+        salesRepsentativeId: this.JobDto.salesRepId,
+        officeLocationId: this.JobDto.officeLocationId,
+        workFlowId: this.JobDto.workFlowId,
+        subContractorId: this.JobDto.subContractorId,
+        teamMememberId: this.JobDto.TeamMememberId,
+        relatedContactId: this.JobDto.RelatedContactId,
+        lastStatusChangeDate: this.JobDto.lastStatusChangeDate,
+        primaryContactId: this.JobDto.primaryContactId,
+        jobStatusId: this.JobDto.statusId,
+        phoneNo: '',
+        jobType: '',
+        note: '',
+        timelineId: 0,
+        userId: 0,
+        createdBy: 0,
+        modifiedBy: 0,
+        companyId: 0,
+        createdDate: '',
+        modifiedDate: '',
+        isDeleted: false,
+        jobStatus: undefined,
+        salesRepId: undefined,
+      };
+      if (requestType === 'Add') {
+        this.subscriptions.add(
+          this.jobService.createJob(requestBody, this.phoneNumbers).subscribe({
+            next: (res) => {
+              this.utilityService.showSuccessSnackBar(
+                'Record inserted successfully'
+              );
+              this.router.navigate(['/jobs']);
+              this.dialogRef.close();
+            },
+            error: (err) => {
+              console.log(err);
+              this.utilityService.showErrorSnackBar(
+                'Error occured while adding job.'
+              );
+              this.router.navigate(['/jobs']);
+              this.dialogRef.close();
+            },
+          })
         );
       } else {
-        this.jobService.updateJob(this.jobForm.value, this.phoneNumbers).subscribe(
-          res => {
-            // this.snackBar.open('Record inserted successfully', 'Close', {
-            //   duration: 3000,
-            //   verticalPosition: 'top',
-            //   panelClass: ['success-snackbar']
-            // });
-            this.router.navigate(['/jobs']);
-            this.dialogRef.close();
-          },
-          err => {
-            console.log(err)
-            // this.snackBar.open('Error', 'Close', {
-            //   duration: 3000,
-            //   verticalPosition: 'top',
-            //   panelClass: ['error-snackbar']
-            // });
-            this.router.navigate(['/jobs']);
-            this.dialogRef.close();
-          },
-          () => {
-          }
+        this.subscriptions.add(
+          this.jobService.updateJob(requestBody, this.phoneNumbers).subscribe({
+            next: (res) => {
+              this.utilityService.showSuccessSnackBar(
+                'Record updated successfully.'
+              );
+              this.router.navigate(['/jobs']);
+              this.dialogRef.close();
+            },
+            error: (err) => {
+              console.log(err);
+              this.utilityService.showErrorSnackBar(
+                'Error occured while updating record.'
+              );
+              this.router.navigate(['/jobs']);
+              this.dialogRef.close();
+            },
+          })
         );
       }
-
-      
     }
-    // Call your service to save the job data
-  }//==================================================================
+  }
 
-  //-------------Callings
   getSalesRep() {
-    this.jobService.allSalesRep().subscribe(
-      res => {
-        this.salesReps = res.payload;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-
-      }
+    this.subscriptions.add(
+      this.jobService.allSalesRep().subscribe({
+        next: (res) => {
+          this.salesReps = res.payload;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
-  getWorkflows() {
-    this.jobService.allWorkFlows().subscribe(
-      res => {
-        this.workflows = res.payload;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
 
-      }
+  getWorkflows() {
+    this.subscriptions.add(
+      this.jobService.allWorkFlows().subscribe({
+        next: (res) => {
+          this.workflows = res.payload;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
   getStatuses() {
-    this.jobService.allStatus().subscribe(
-      res => {
-        this.statuses = res.payload;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-
-      }
+    this.subscriptions.add(
+      this.jobService.allStatus().subscribe({
+        next: (res) => {
+          this.statuses = res.payload;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
-  //subcontractors
   getSubcontractors() {
-    this.jobService.allSubcontractors().subscribe(
-      res => {
-        this.subcontractors = res.payload;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-
-      }
+    this.subscriptions.add(
+      this.jobService.allSubcontractors().subscribe({
+        next: (res) => {
+          this.subcontractors = res.payload;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
-  //relatedcontacts
   getRelatedcontacts() {
-    this.jobService.allRelatedContacts().subscribe(
-      res => {
-        this.RelatedContactId = res.payload;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-
-      }
+    this.subscriptions.add(
+      this.jobService.allRelatedContacts().subscribe({
+        next: (res) => {
+          this.RelatedContactId = res.payload;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
+
   getTeamMembers() {
-    this.jobService.allTeamMembers().subscribe(
-      res => {
-        this.TeamMememberId = res.payload;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-
-      }
+    this.subscriptions.add(
+      this.jobService.allTeamMembers().subscribe({
+        next: (res) => {
+          this.TeamMememberId = res.payload;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
-  getPhoneTypes() {
-    this.jobService.allphoneTypes().subscribe(
-      res => {
-        const sourcePhoneTypes = res.payload[0].dropDown.find((dropdown: any) => dropdown.dropDownName === "MobileType");
-        this.phoneTypes = sourcePhoneTypes.dropDownValues;;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
 
-      }
+  getPhoneTypes() {
+    this.subscriptions.add(
+      this.jobService.allphoneTypes().subscribe({
+        next: (res) => {
+          const sourcePhoneTypes = res.payload[0].dropDown.find(
+            (dropdown: any) => dropdown.dropDownName === 'MobileType'
+          );
+          this.phoneTypes = sourcePhoneTypes.dropDownValues;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
 
   getSources() {
-    this.jobService.allSource().subscribe(
-      res => {
-        const sourceTypeDropdown = res.payload[0].dropDown.find((dropdown: any) => dropdown.dropDownName === "SourceType");
-        this.sources = sourceTypeDropdown.dropDownValues;;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-
-      }
+    this.subscriptions.add(
+      this.jobService.allSource().subscribe({
+        next: (res) => {
+          const sourceTypeDropdown = res.payload[0].dropDown.find(
+            (dropdown: any) => dropdown.dropDownName === 'SourceType'
+          );
+          this.sources = sourceTypeDropdown.dropDownValues;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
   getState() {
-    this.jobService.allState().subscribe(
-      res => {
-        this.states = res.payload;
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-
-      }
+    this.subscriptions.add(
+      this.jobService.allState().subscribe({
+        next: (res) => {
+          this.states = res.payload;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
     );
   }
-//============================================
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 }

@@ -63,7 +63,7 @@ export class JobService {
   }
   allSource() {
     return this.utilityService.get<any>(
-      this.baseUrl + config.DropDown.allDropDownsList + '?PageName=addcontact'
+      config.DropDown.allDropDownsList + '?PageName=addcontact'
     );
   }
   allState() {
@@ -95,33 +95,7 @@ export class JobService {
   }
 
   //----------Add Jobs
-  createJob(Jobs: CreateJobDto, phonesno: any): Observable<any> {
-    var requestBody: any = {};
-    requestBody['id'] = Jobs.id;
-    requestBody['address1'] = Jobs.addressLine1;
-    requestBody['address2'] = Jobs.addressLine2;
-    requestBody['city'] = Jobs.city;
-    requestBody['zip'] = Jobs.zipCode;
-    requestBody['faxNo'] = Jobs.faxNo;
-    requestBody['mobileNo'] = Jobs.mobileNumber;
-    requestBody['officeNo'] = Jobs.officeNumber;
-    requestBody['homeNo'] = Jobs.homeNumber;
-    requestBody['name'] = Jobs.name;
-    requestBody['stateId'] = Jobs.stateId;
-    requestBody['startDate'] = Jobs.startDate;
-    requestBody['endDate'] = Jobs.endDate;
-    requestBody['description'] = Jobs.discription;
-    requestBody['leadSourceId'] = Jobs.leadSource;
-    requestBody['salesRepsentativeId'] = Jobs.salesRepId;
-    requestBody['officeLocationId'] = Jobs.officeLocationId;
-    requestBody['workFlowId'] = Jobs.workFlowId;
-    requestBody['subContractorId'] = Jobs.subContractorId;
-    requestBody['teamMememberId'] = Jobs.TeamMememberId;
-    requestBody['relatedContactId'] = Jobs.RelatedContactId;
-    requestBody['lastStatusChangeDate'] = Jobs.lastStatusChangeDate;
-    requestBody['primaryContactId'] = Jobs.primaryContactId;
-    requestBody['jobStatusId'] = Jobs.statusId;
-
+  createJob(requestBody: JobDTO, phonesno: any): Observable<any> {
     console.log(requestBody);
     return this.utilityService.post<any>(
       config.Jobs.CreateJob,
@@ -130,34 +104,12 @@ export class JobService {
     );
   }
 
-  updateJob(Jobs: CreateJobDto, phonesno: any): Observable<any> {
-    var requestBody: any = {};
-
-    requestBody['id'] = Jobs.id;
-    requestBody['name'] = Jobs.name;
-    requestBody['address1'] = Jobs.addressLine1;
-    requestBody['address2'] = Jobs.addressLine2;
-    requestBody['city'] = Jobs.city;
-    requestBody['stateId'] = Jobs.stateId;
-    requestBody['zip'] = Jobs.zipCode;
-    requestBody['jobStatusId'] = Jobs.statusId;
-    requestBody['startDate'] = Jobs.startDate;
-    requestBody['endDate'] = Jobs.endDate;
-    requestBody['description'] = Jobs.discription;
-    requestBody['leadSourceId'] = Jobs.leadSource;
-    requestBody['salesRepsentativeId'] = Jobs.salesRepId;
-    requestBody['primaryContactId'] = Jobs.primaryContactId;
-    requestBody['officeLocationId'] = Jobs.officeLocationId;
-    requestBody['workFlowId'] = Jobs.workFlowId;
-    requestBody['subContractorId'] = Jobs.subContractorId;
-    requestBody['relatedContactId'] = Jobs.RelatedContactId;
-    requestBody['teamMememberId'] = Jobs.TeamMememberId;
-
+  updateJob(requestBody: JobDTO, phonesno: any): Observable<any> {
     return this.utilityService.post<any>(
       config.Jobs.UpdateJob,
       requestBody,
-      Jobs.id.toString(),
-      { id: Jobs.id }
+      requestBody.id.toString(),
+      { id: requestBody.id }
     );
   }
 

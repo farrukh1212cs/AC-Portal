@@ -28,29 +28,32 @@ export class ContactService {
     return this.http.get<any>(this.baseUrl + '/Contact/allContacts');
   }
 
-  //===================================================================
   //-----------officeLocations
+
   allOfficeLocations() {
     return this.http.get<any>(
-      this.baseUrl + '/OfficeLocation/officelocationsdropdown'
+      config.OfficeLocation.officelocationsdropdown
     );
   }
 
   //-----------officeLocations
   allSalesRep() {
     return this.http.get<any>(
-      this.baseUrl + '/SalesRepresentative/getsalesrepresentative'
+      config.SalesRepresentative.getsalesrepresentative
     );
   }
+
   allWorkFlows() {
-    return this.http.get<any>(this.baseUrl + '/WorkFlow/allWorkFlows');
+    return this.http.get<any>(config.WorkFlow.allWorkFlows);
   }
+
   allStatus() {
-    return this.http.get<any>(this.baseUrl + '/Status/allStatuses');
+    return this.http.get<any>(config.status.allStatuses);
   }
+
   allSubcontractors() {
     return this.http.get<any>(
-      this.baseUrl + '/SubContractor/getsubcontractors'
+      config.SubContractor.getsubcontractors
     );
   }
 
@@ -80,6 +83,7 @@ export class ContactService {
     img: any,
     phonesno: any
   ): Observable<any> {
+    debugger
     const formData = new FormData();
     if (contact?.id?.toString()) {
       formData.append('id', contact?.id?.toString() ?? '0');
@@ -87,6 +91,8 @@ export class ContactService {
 
     formData.append('firstName', contact.firstName);
     formData.append('lastName', contact.lastName);
+    formData.append('officeNumber', contact.officeNumber);
+    formData.append('homeNumber', contact.homeNumber);
     formData.append('company', contact.company);
     formData.append('addressLine1', contact?.addressLine1?.toString() ?? '');
     formData.append('addressLine2', contact?.addressLine2?.toString() ?? '');
@@ -139,17 +145,6 @@ export class ContactService {
     if (contact.tags) {
       contact.tags.forEach((tag: any) => formData.append('tags[]', tag.value));
     }
-    // if (contact.note) {
-    //   formData.append('note.title', contact.note.title);
-    //   formData.append('note.text', contact.note.text);
-    // }
-
-    // if (contact.customFields) {
-    //   contact.customFields.forEach((field) => {
-    //     formData.append(`customFields[${field.fieldName}].fieldValue`, field.fieldValue);
-    //     formData.append(`customFields[${field.fieldName}].fieldType`, field.fieldType.toString());
-    //   });
-    // }
     if (img != null) {
       formData.append('file', img, img.name);
     }
@@ -194,6 +189,12 @@ export class ContactService {
   getAllContacts(sort: string, search: string) {
     return this.http.get<any>(
       this.baseUrl + '/Contact/PagedContacts?Sort=' + sort + '&Search=' + search
+    );
+  }
+
+  deleteContact(id: any) {
+    return this.http.put<any>(
+      this.baseUrl + '/Contact/deleteContact?id='+id , {}
     );
   }
 

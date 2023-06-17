@@ -63,12 +63,12 @@
                   <thead>
                     <tr>
                       <th>JOB NAME</th>
-                      <th>PRIMARY Jobs FLOW</th>
+                      <th>PRIMARY CONTACT</th>
                       <th>WORKFLOW</th>
                       <th>Status</th>
-                      <th>Sales</th>
+                      <th>Sales Rep</th>
                       <th>Assign To</th>
-                      <th>Address & Info</th>
+                      <th>Address</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -78,7 +78,7 @@
                         <div class="d-flex">{{Job.name}} </div>
                       </td>
                       <td (click)="redirect(Job)" style="cursor: pointer;">{{Job.primaryContactId}}</td>
-                      <td (click)="redirect(Job)" style="cursor: pointer;">{{Job.workFlowId}}</td>
+                      <td (click)="redirect(Job)" style="cursor: pointer;">{{Job.workFlow}}</td>
                       <td (click)="redirect(Job)" style="cursor: pointer;">
                         <div class="d-flex">
                           <i class="material-symbols-outlined text-success icon-size-dot">
@@ -87,7 +87,7 @@
                           &nbsp; {{Job.jobStatus}}
                         </div>
                       </td>
-                      <td (click)="redirect(Job)" style="cursor: pointer;">{{Job?.salesRepId}}</td>
+                      <td (click)="redirect(Job)" style="cursor: pointer;">{{Job?.salesRepName}}</td>
                       <td (click)="redirect(Job)" style="cursor: pointer;">
                         <div class="avatar-group">
                           <div data-bs-toggle="tooltip" data-popup="tooltip-custom"

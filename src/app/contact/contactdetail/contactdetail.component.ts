@@ -15,6 +15,8 @@ export class ContactdetailComponent {
     this.route.paramMap.subscribe(params => {
       const contactId =  params.get('id');
       this.contact = history.state.model;
+      this.contact.startDate = new Date(this.contact?.startDate)
+      console.log(this.contact)
     });
   }
 

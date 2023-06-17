@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { BaseResponse } from '../../interfaces/BaseResponse';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface QueryParams {
   [key: string]: string | number;
@@ -17,7 +18,7 @@ interface QueryParams {
   providedIn: 'root',
 })
 export class UtilityService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   delete<T>(
     id: number | null,
@@ -83,5 +84,29 @@ export class UtilityService {
 
   private isHttpResponse<T>(event: HttpEvent<T>): event is HttpResponse<T> {
     return event.type === HttpEventType.Response;
+  }
+
+  showSuccessSnackBar(
+    message: string,
+    actionBtnTxt: string = 'Close',
+    verticalPosition: any = 'top'
+  ) {
+    this.snackBar.open(message, actionBtnTxt, {
+      duration: 3000,
+      verticalPosition: verticalPosition,
+      panelClass: ['success-snackbar'],
+    });
+  }
+
+  showErrorSnackBar(
+    message: string,
+    actionBtnTxt: string = 'Close',
+    verticalPosition: any = 'top'
+  ) {
+    this.snackBar.open(message, actionBtnTxt, {
+      duration: 3000,
+      verticalPosition: verticalPosition,
+      panelClass: ['error-snackbar'],
+    });
   }
 }

@@ -15,7 +15,7 @@
                     <mat-label>Office Location</mat-label>
                     <mat-select class="form-control form-control-sm" formControlName="officeLocationId" required placeholder="Choose an office">
                       <mat-option *ngFor="let ofc of officeLocationDropdownValues" [value]="ofc.id">
-                        {{ofc.name}}
+                        {{ofc.officeLocationName}}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="jobForm.get('officeLocationId')?.touched && jobForm.get('officeLocationId')?.value === ''">
@@ -202,7 +202,7 @@
                   </div>
                   <div class="mb-1" [formGroup]="phoneNumbersForm">
                     <mat-label>Phone Number</mat-label>
-                    <input matInput class="form-control form-control-sm" formControlName="phoneNumber" type="number" placeholder="Enter phone number">
+                    <input matInput class="form-control form-control-sm" formControlName="phoneNumber" type="text" placeholder="Enter phone number">
                     <div class="mt-2">
                       <mat-label>Type</mat-label>
                       <div class="d-flex">

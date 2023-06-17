@@ -14,7 +14,7 @@ export const config = {
     getsubcontractors: `${API_URL}/SubContractor/getsubcontractors`,
   },
   RelatedContact: {
-    getRelatedContactsDropDown: `${API_URL}/SubContractor/getRelatedContactsDropDown`,
+    getRelatedContactsDropDown: `${API_URL}/RelatedContact/getRelatedContactsDropDown`,
   },
   BussinessHours: {
     Add: `${API_URL}/BussinessHours/Add`,
