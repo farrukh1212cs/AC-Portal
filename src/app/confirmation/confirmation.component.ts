@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { JobService } from '../job/job.service';
+import { JobService } from '../core/services/job.service';
 
 @Component({
   selector: 'app-confirmation',

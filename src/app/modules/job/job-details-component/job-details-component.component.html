@@ -1,0 +1,136 @@
+<section class="section-padding">
+  <div class="container">
+    <div class="component-header">
+      <p class="title lg text-white">Job</p>
+      <i class="material-symbols-outlined text-white">person</i>
+      <span>&nbsp;{{ job.name }}</span>
+      <!-- <ol class="breadcrumb px-2">
+              <li class="breadcrumb-item"><a class="text-light" href="index.html">Contacts</a></li>
+              <li class="breadcrumb-item"><a class="text-light" href="#">Dashboard</a></li>
+          </ol> -->
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row match-height">
+          <div class="col-col-12">
+            <div class="card position-relative">
+              <div class="card-header p-0">
+                <table class="table mt-1">
+                  <tbody>
+                    <tr>
+                      <td class="py-0 border-0">
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          address
+                        </h6>
+                      </td>
+                      <td class="py-0 border-0">
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          start date
+                        </h6>
+                      </td>
+                      <td class="py-0 border-0">
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          Mobile Number
+                        </h6>
+                      </td>
+                      <td class="py-0 border-0">
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          Home Number
+                        </h6>
+                      </td>
+                      <td class="py-0 border-0">
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          Zip
+                        </h6>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-capitalize py-0">
+                        <small>{{ job.address1 + " " + job.address2 }}</small>
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          City
+                        </h6>
+                        <small class="text-capitalize">{{ job.city }}</small>
+                      </td>
+                      <td class="py-0">
+                        <small>{{
+                          job.startDate | date : "dd/MM/yyyy h:mm a"
+                        }}</small>
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          end date
+                        </h6>
+                        <small class="text-capitalize">{{
+                          job.endDate | date : "dd/MM/yyyy h:mm a"
+                        }}</small>
+                      </td>
+                      <td class="py-0">
+                        <small>{{ job.mobileNo }}</small>
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          Office Number
+                        </h6>
+                        <small class="text-capitalize">{{
+                          job.officeNo
+                        }}</small>
+                      </td>
+                      <td class="py-0">
+                        <small>{{ job.homeNo }}</small>
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          Office Number
+                        </h6>
+                        <small class="text-capitalize">{{ job.phoneNo }}</small>
+                      </td>
+                      <td class="py-0">
+                        <small>{{ job.zip }}</small>
+                        <h6 class="d-flex text-primary text-uppercase mt-1">
+                          Fax Number
+                        </h6>
+                        <small class="text-capitalize">{{ job.faxNo }}</small>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card-title mt-3">
+                  <div class="text-white">spacing</div>
+                </div>
+                <div class="actions d-flex">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="openWorkOrderModal(null)"
+                  >
+                    <div class="d-flex align-items-center">
+                      <i class="material-symbols-outlined">add</i>
+                      <span>Add Work Order</span>
+                    </div>
+                  </button>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="openEventModal(null)"
+                  >
+                    <div class="d-flex align-items-center">
+                      <i class="material-symbols-outlined">add</i>
+                      <span>Add Event</span>
+                    </div>
+                  </button>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <!-- <button class="btn btn-primary btn-sm" (click)="openWorkflowModal(null)">
+                    <div class="d-flex align-items-center">
+                      <i class="material-symbols-outlined ">add</i>
+                      <span>Add Workflow</span>
+                    </div>
+                  </button>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sidenav-overlay"></div>
+
+<!-- / Content -->

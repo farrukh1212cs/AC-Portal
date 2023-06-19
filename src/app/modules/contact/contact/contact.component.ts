@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 ;
 import { ContactService } from '../contact.service';
-import { AddcontactComponent } from 'src/app/contact/addcontact/addcontact.component';
+import { AddcontactComponent } from 'src/app/modules/contact/addcontact/addcontact.component';
 
 
 

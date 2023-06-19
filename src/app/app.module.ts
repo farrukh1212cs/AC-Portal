@@ -4,10 +4,12 @@ import { AccountModule } from './account/account.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ContactModule } from './contact/contact.module';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ContactModule } from './modules/contact/contact.module';
+import { CoreModule } from './core/core.module';
+import * as Papa from 'papaparse';
 
 @NgModule({
   declarations: [
@@ -15,15 +17,14 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     ConfirmationComponent
   ],
   imports: [
+    CoreModule,
     BrowserModule,
     AccountModule,
     AppRoutingModule,
-    DashboardModule,
     BrowserAnimationsModule,
-    ContactModule
-    
+    ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [{ provide: 'Papa', useValue: Papa }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

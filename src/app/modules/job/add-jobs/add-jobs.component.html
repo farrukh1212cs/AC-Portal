@@ -1,0 +1,441 @@
+<div class="mat-modal">
+  <div class="mat-modal-header">
+    <p class="title">{{ this.updateData.FormTitle }}</p>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="closeAddJobsModal()"
+    ></button>
+  </div>
+  <form [formGroup]="jobForm">
+    <div class="mat-modal-body">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="mb-1">
+                  <mat-label>Office Location</mat-label>
+                  <mat-select
+                    class="form-control form-control-sm"
+                    formControlName="officeLocationId"
+                    required
+                    placeholder="Choose an office"
+                  >
+                    <mat-option
+                      *ngFor="let ofc of officeLocationDropdownValues"
+                      [value]="ofc.id"
+                    >
+                    {{ofc.officeLocationName}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      jobForm.get('officeLocationId')?.touched &&
+                      jobForm.get('officeLocationId')?.value === ''
+                    "
+                  >
+                    Please select an office location
+                  </mat-error>
+                </div>
+                <div class="mb-1">
+                  <mat-label>Workflow</mat-label>
+                  <mat-select
+                    formControlName="workFlowId"
+                    class="form-control form-control-sm"
+                    placeholder="Choose a Workflow"
+                    required
+                  >
+                    <mat-option *ngFor="let wf of workflows" [value]="wf.id">
+                      {{ wf.workFlowName }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      jobForm.get('workFlowId')?.touched &&
+                      jobForm.get('workFlowId')?.value === ''
+                    "
+                  >
+                    Please select an workflow
+                  </mat-error>
+                </div>
+                <div class="mb-1">
+                  <mat-label className="form-label">Status</mat-label>
+                  <mat-select
+                    class="form-control form-control-sm"
+                    formControlName="statusId"
+                    required
+                    placeholder="Choose a status"
+                  >
+                    <mat-option *ngFor="let ss of statuses" [value]="ss.id">
+                      {{ ss.statusName }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      jobForm.get('statusId')?.touched &&
+                      jobForm.get('statusId')?.value === ''
+                    "
+                  >
+                    Please select an status
+                  </mat-error>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-1">
+                  <mat-label>Sales Representative</mat-label>
+                  <mat-select
+                    formControlName="salesRepId"
+                    class="form-control form-control-sm"
+                    required
+                    placeholder="Choose sales representative"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let salesRep of salesReps"
+                      [value]="salesRep.id"
+                    >
+                      {{ salesRep.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      jobForm.get('salesRepId')?.touched &&
+                      jobForm.get('salesRepId')?.value === ''
+                    "
+                  >
+                    Please select an sales representative
+                  </mat-error>
+                </div>
+                <div class="mb-1">
+                  <mat-label>Source</mat-label>
+                  <mat-select
+                    formControlName="sourceId"
+                    class="form-control form-control-sm"
+                    placeholder="Choose a source"
+                  >
+                    <mat-option *ngFor="let src of sources" [value]="src.id">
+                      {{ src.value }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+                <div class="mb-1">
+                  <mat-label>Subcontractor</mat-label>
+                  <mat-select
+                    formControlName="subContractorId"
+                    class="form-control form-control-sm"
+                    placeholder="Choose a subcontractor"
+                  >
+                    <mat-option
+                      *ngFor="let sc of subcontractors"
+                      [value]="sc.id"
+                    >
+                      {{ sc.name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mb-1">
+                  <mat-label>Related Contacts</mat-label>
+                  <mat-select
+                    formControlName="RelatedContactId"
+                    class="form-control form-control-sm"
+                    placeholder="Choose a related contacts"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let rl of RelatedContactId"
+                      [value]="rl.id"
+                    >
+                      {{ rl.name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+                <div class="mb-1">
+                  <mat-label>Assigned Team Members</mat-label>
+                  <mat-select
+                    formControlName="TeamMememberId"
+                    class="form-control form-control-sm"
+                    placeholder="Choose a team members"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let tm of TeamMememberId"
+                      [value]="tm.id"
+                    >
+                      {{ tm.name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- GenernalInformation -->
+      <div class="col-md-12">
+        <div class="divider divider-start">
+          <div class="divider-text gray-2px">
+            <h3>General Information</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-1">
+                  <mat-label>Display Name</mat-label>
+                  <input
+                    matInput
+                    formControlName="name"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="mb-1">
+                  <mat-label>Address Line 1</mat-label>
+                  <input
+                    matInput
+                    formControlName="addressLine1"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="mb-1">
+                  <mat-label>Address Line 2</mat-label>
+                  <input
+                    matInput
+                    formControlName="addressLine2"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="mb-1">
+                  <mat-label>City</mat-label>
+                  <input
+                    matInput
+                    formControlName="city"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="mb-1">
+                  <mat-label className="form-label">State</mat-label>
+                  <mat-select
+                    class="form-control form-control-sm"
+                    formControlName="stateId"
+                    required
+                    placeholder="Choose a state"
+                    (value)="jobForm.get('stateId')?.value"
+                  >
+                    <mat-option *ngFor="let state of states" [value]="state.id">
+                      {{ state.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      jobForm.get('stateId')?.touched &&
+                      jobForm.get('stateId')?.value === ''
+                    "
+                  >
+                    Please select a state
+                  </mat-error>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <!-- <div class="mb-1"><label class="form-label" for="faxNo">Fax Number</label><input type="text" name="faxNo" class="form-control form-control-sm" id="faxNo" placeholder="xxxx..." value=""></div>
+                  <div class="mb-1"><label class="form-label" for="mobileNumber">Mobile Number</label><input type="text" name="mobileNumber" class="form-control form-control-sm" id="mobileNumber" placeholder="xxxx..." value=""></div>
+                  <div class="mb-1"><label class="form-label" for="homeNumber">Home Number</label><input type="text" name="homeNumber" class="form-control form-control-sm" id="homeNumber" placeholder="xxxx..." value=""></div>
+                  <div class="mb-1"><label class="form-label" for="officeNumber">Office Number</label><input type="text" name="officeNumber" class="form-control form-control-sm" id="officeNumber" placeholder="xxxx..." value=""></div>
+                   -->
+                <div class="mb-1">
+                  <mat-label>Fax Number</mat-label>
+                  <input
+                    matInput
+                    formControlName="faxNo"
+                    type="number"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="mb-1">
+                  <mat-label>Mobile Number</mat-label>
+                  <input
+                    matInput
+                    formControlName="mobileNumber"
+                    type="number"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="mb-1">
+                  <mat-label>Home Number</mat-label>
+                  <input
+                    matInput
+                    formControlName="homeNumber"
+                    type="number"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="mb-1">
+                  <mat-label>Office Number</mat-label>
+                  <input
+                    matInput
+                    formControlName="officeNumber"
+                    type="number"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+
+                <div class="mb-1">
+                  <mat-label>Zip Code</mat-label>
+                  <input
+                    matInput
+                    formControlName="zipCode"
+                    type="number"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="mb-1"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-1">
+                  <mat-label>Start Date</mat-label>
+                  <div class="d-flex">
+                    <input
+                      matInput
+                      type="datetime"
+                      [matDatepicker]="startDatePicker"
+                      formControlName="startDate"
+                      class="form-control form-control-sm"
+                      required
+                    />
+                    <div class="date-picker">
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="startDatePicker"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #startDatePicker></mat-datepicker>
+                    </div>
+                    <mat-error
+                      *ngIf="
+                        jobForm.get('startDate')?.touched &&
+                        jobForm.get('startDate')?.invalid
+                      "
+                      >Please select date</mat-error
+                    >
+                  </div>
+                </div>
+                <div class="mb-1">
+                  <mat-label>End Date</mat-label>
+                  <div class="d-flex">
+                    <input
+                      matInput
+                      formControlName="endDate"
+                      [matDatepicker]="picker"
+                      [value]="jobForm.get('endDate')?.value"
+                      class="form-control form-control-sm"
+                      type="datetime"
+                      required
+                    />
+                    <div class="date-picker">
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </div>
+                    <mat-error
+                      *ngIf="
+                        jobForm.get('endDate')?.touched &&
+                        jobForm.get('endDate')?.invalid
+                      "
+                      >Please select date</mat-error
+                    >
+                  </div>
+                </div>
+                <div class="mb-1" [formGroup]="phoneNumbersForm">
+                  <mat-label>Phone Number</mat-label>
+                  <input
+                    matInput
+                    class="form-control form-control-sm"
+                    formControlName="phoneNumber"
+                    type="text"
+                    placeholder="Enter phone number"
+                  />
+                  <div class="mt-2">
+                    <mat-label>Type</mat-label>
+                    <div class="d-flex">
+                      <div style="width: 80%">
+                        <mat-select
+                          formControlName="typeId"
+                          placeholder="Select type"
+                          class="form-control form-control-sm"
+                        >
+                          <mat-option
+                            *ngFor="let type of phoneTypes"
+                            [value]="type.id"
+                            >{{ type.value }}</mat-option
+                          >
+                        </mat-select>
+                      </div>
+                      <button
+                        mat-raised-button
+                        (click)="addPhoneNumber(phoneTypes)"
+                        class="form-control form-control-sm"
+                        style="width: 20%"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngIf="phoneNumbers.length > 0">
+                    <p *ngFor="let phoneNumber of phoneNumbers">
+                      {{ phoneNumber.phoneNumber }} ({{ phoneNumber.typeName }})
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-1">
+                  <label class="form-label" for="note">Note</label
+                  ><input
+                    type="text"
+                    name="note"
+                    class="form-control form-control-sm"
+                    id="note"
+                    placeholder="Some note..."
+                    value=""
+                  />
+                </div>
+                <div class="mb-1">
+                  <mat-label>Description</mat-label>
+                  <textarea
+                    matInput
+                    formControlName="discription"
+                    class="form-control form-control-sm"
+                  ></textarea>
+                </div>
+                <div class="mb-1">
+                  <label class="form-label">Tags</label>
+                  <tag-input
+                    formControlName="tags"
+                    class="form-control form-control-sm"
+                  ></tag-input>
+                </div>
+              </div>
+              <!-- <div class="col-md-12">
+                  <div class="divider divider-start"><div class="divider-text gray-2px"><h3>Additional Information</h3></div></div>
+                </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mat-modal-footer">
+      <div class="mt-4 text-end">
+         <button type="submit" class="btn btn-primary btn-lg" (click)="onSubmit(this.updateData.Request_Type)">{{
+            this.updateData.Request_Type }}</button>
+      </div>
+   </div>
+  </form>
+</div>

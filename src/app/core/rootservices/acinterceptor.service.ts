@@ -19,6 +19,5 @@ export class AcinterceptorService implements HttpInterceptor {
         return next.handle(req);
       }
 
-
     }
 }

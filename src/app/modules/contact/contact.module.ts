@@ -14,11 +14,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { TagInputModule } from 'ngx-chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AddcontactComponent } from './addcontact/addcontact.component';
+import { ContactdetailComponent } from './contactdetail/contactdetail.component';
+import { RelatedContactDetailsComponent } from './related-contact-details/related-contact-details.component';
+import { CoreModule } from 'src/app/core/core.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
   declarations: [
-    ContactComponent
+    ContactComponent,
+    AddcontactComponent,
+    ContactdetailComponent,
+    RelatedContactDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +41,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatIconModule,
     TagInputModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
+    CoreModule
   ]
 })
 export class ContactModule { }
