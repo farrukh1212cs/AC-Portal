@@ -23,12 +23,12 @@
 //     }
 // }
 
-// .btn-sm{
-//     height: $h-sm;
-//     &.btn-icon{
-//         width: $h-sm;
-//     }
-// }
+.btn-sm{
+    height: $h-sm;
+    &.btn-icon{
+        width: $h-sm;
+    }
+}
 /**************************************/
 .btn-primary{
     background: $primary;

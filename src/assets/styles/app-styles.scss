@@ -39,6 +39,7 @@ body{
         border: none;
         padding: 20px 20px 0;
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
         background: #fff;
@@ -70,35 +71,7 @@ body{
 }
 /*******************************/
 
-.data-view{
-    .item{
-        .data-title{
-            font-size: 14px;
-            font-family: $gotham-m;
-            color: #45496A;
-        }
-        .data-value{
-            font-size: 14px;
-            font-family: $gotham-r;
-            color: #686C87;
-        }
-    }
-}
-/*new data view styles the above one will obsolete*/
-.data_view{
-    &_item{
-       &_title{
-            font-size: 14px;
-            font-family: $gotham-m;
-            color: #45496A;
-        }
-        &_value{
-            font-size: 14px;
-            font-family: $gotham-r;
-            color: #686C87;
-        }
-    }
-}
+
 /*******************************/
 .mat-modal{
     .mat-modal-header{

@@ -26,78 +26,80 @@
                 </div>
             </div>
             <div class="card-body px-0">
-                <table class="table striped-td">
-                    <thead>
-                        <tr>
-                            <th>Contact Name</th>
-                            <th>WorkFlow</th>
-                            <th>Status</th>
-                            <th>Sales</th>
-                            <th>Assign To</th>
-                            <th>Address & Info</th>
-                            <th>Actions</th>
-                            <!-- <th>Notes</th>
-                                <th>Action</th> -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!--  -->
-                        <tr *ngFor="let contact of contacts">
-                            <td (click)="redirect(contact)" style="cursor: pointer;">
-                                {{contact.firstName + ' ' + contact.lastName}}
-                                <!-- <div class="d-flex text-muted">Mon Nov 8, 1:00PM - 2:30PM
-                                    </div> -->
-                            </td>
-                            <td (click)="redirect(contact)" style="cursor: pointer;">
-                                {{contact.workFlow.workFlowName}}
-                            </td>
-
-                            <td (click)="redirect(contact)" style="cursor: pointer;">
-                                <div class="d-flex">
-                                    <i class="material-symbols-outlined text-success icon-size-dot">
-                                        radio_button_checked
-                                    </i>
-                                    &nbsp; {{contact.status.statusName}}
-                                </div>
-                            </td>
-                            <td (click)="redirect(contact)" style="cursor: pointer;">
-                                {{contact?.salesRep?.name}}
-                            </td>
-                            <td (click)="redirect(contact)" style="cursor: pointer;">
-                                <div class="avatar-group">
-                                    <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar pull-up my-0" title="" data-bs-original-title="Lilian Nenez">
-                                        <img src="../assets/images/sm-5.jpeg" alt="Avatar" height="26" width="26" />
+                <div class="table-responsive">
+                    <table class="table striped-td text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Contact Name</th>
+                                <th>WorkFlow</th>
+                                <th>Status</th>
+                                <th>Sales</th>
+                                <th>Assign To</th>
+                                <th>Address & Info</th>
+                                <th>Actions</th>
+                                <!-- <th>Notes</th>
+                                    <th>Action</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--  -->
+                            <tr *ngFor="let contact of contacts">
+                                <td (click)="redirect(contact)" style="cursor: pointer;">
+                                    {{contact.firstName + ' ' + contact.lastName}}
+                                    <!-- <div class="d-flex text-muted">Mon Nov 8, 1:00PM - 2:30PM
+                                        </div> -->
+                                </td>
+                                <td (click)="redirect(contact)" style="cursor: pointer;">
+                                    {{contact.workFlow.workFlowName}}
+                                </td>
+    
+                                <td (click)="redirect(contact)" style="cursor: pointer;">
+                                    <div class="d-flex">
+                                        <i class="material-symbols-outlined text-success icon-size-dot">
+                                            radio_button_checked
+                                        </i>
+                                        &nbsp; {{contact.status.statusName}}
                                     </div>
-                                    <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar pull-up my-0" title="" data-bs-original-title="Alberto Glotzbach">
-                                        <img src="../assets/images/sm-6.jpeg" alt="Avatar" height="26" width="26" />
+                                </td>
+                                <td (click)="redirect(contact)" style="cursor: pointer;">
+                                    {{contact?.salesRep?.name}}
+                                </td>
+                                <td (click)="redirect(contact)" style="cursor: pointer;">
+                                    <div class="avatar-group">
+                                        <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar pull-up my-0" title="" data-bs-original-title="Lilian Nenez">
+                                            <img src="../assets/images/sm-5.jpeg" alt="Avatar" height="26" width="26" />
+                                        </div>
+                                        <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar pull-up my-0" title="" data-bs-original-title="Alberto Glotzbach">
+                                            <img src="../assets/images/sm-6.jpeg" alt="Avatar" height="26" width="26" />
+                                        </div>
+                                        <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar pull-up my-0" title="" data-bs-original-title="Alberto Glotzbach">
+                                            <img src="../assets/images/sm-5.jpeg" alt="Avatar" height="26" width="26" />
+                                        </div>
                                     </div>
-                                    <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar pull-up my-0" title="" data-bs-original-title="Alberto Glotzbach">
-                                        <img src="../assets/images/sm-5.jpeg" alt="Avatar" height="26" width="26" />
-                                    </div>
-                                </div>
-                            </td>
-                            <td (click)="redirect(contact)" style="cursor: pointer;">
-                                {{contact.addressLine1 + ',' + contact.city}}
-                            </td>
-                            <td>
-                                <mat-menu #menu="matMenu" class="dropdown">
-                                    <button mat-menu-item (click)="openAddContactModal(contact)">
-                                        <mat-icon class="material-symbols-outlined">border_color</mat-icon>
-                                        <span>Edit</span>
+                                </td>
+                                <td (click)="redirect(contact)" style="cursor: pointer;">
+                                    {{contact.addressLine1 + ',' + contact.city}}
+                                </td>
+                                <td>
+                                    <mat-menu #menu="matMenu" class="dropdown">
+                                        <button mat-menu-item (click)="openAddContactModal(contact)">
+                                            <mat-icon class="material-symbols-outlined">border_color</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button mat-menu-item class="btn btn-sm dropdown-toggle hide-arrow">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Delete</span>
+                                        </button>
+                                    </mat-menu>
+    
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="btn btn-sm dropdown-toggle hide-arrow">
+                                        <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
                                     </button>
-                                    <button mat-menu-item class="btn btn-sm dropdown-toggle hide-arrow">
-                                        <mat-icon>delete</mat-icon>
-                                        <span>Delete</span>
-                                    </button>
-                                </mat-menu>
-
-                                <button mat-icon-button [matMenuTriggerFor]="menu" class="btn btn-sm dropdown-toggle hide-arrow">
-                                    <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <section class="px-3">
                 <div class="row">

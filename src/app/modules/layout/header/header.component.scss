@@ -12,3 +12,18 @@
         padding-left: 50px;
     }
 }
+
+.sidbar-toggler{
+    color: #fff;
+    display: none;
+    @media (max-width:600px) {
+        display: block;
+    }
+}
+
+.header-search{
+    display: none;
+    @media (max-width:600px) {
+        display: none;
+    }
+}
