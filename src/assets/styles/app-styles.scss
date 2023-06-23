@@ -110,11 +110,12 @@ body{
         padding: 20px 20px;
         overflow: hidden;
         overflow-y: auto;
-        max-height: 50vh;
+        max-height: 60vh;
     }
     .mat-modal-footer{
         padding: 0 20px 20px 20px;
         border-top: 2px solid #d1d1d1;
+        max-height: 100px;
     }
 }
 

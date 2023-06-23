@@ -56,32 +56,34 @@ export class JobsComponent {
     });
   }
 
-  getAllJobs(pageNumber = 1, pageSize = 25) {
-    this.jobService.getAllJobsWithPagination(pageNumber, pageSize).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.Jobs = [];
-        this.Jobs = res;
-        const statusesMap = new Map<number, string>();
-        this.statuses.forEach((status) => {
-          statusesMap.set(status.id, status.statusName);
-        });
+  getAllJobs(pageNumber = 1, pageSize = 1000) {
+    this.subscriptions.add(
+      this.jobService.getAllJobsWithPagination(pageNumber, pageSize).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.Jobs = [];
+          this.Jobs = res;
+          const statusesMap = new Map<number, string>();
+          this.statuses.forEach((status) => {
+            statusesMap.set(status.id, status.statusName);
+          });
 
-        const salesRepsMap = new Map<number, string>();
-        this.salesReps.forEach((salesRep) => {
-          salesRepsMap.set(salesRep.id, salesRep.name);
-        });
+          const salesRepsMap = new Map<number, string>();
+          this.salesReps.forEach((salesRep) => {
+            salesRepsMap.set(salesRep.id, salesRep.name);
+          });
 
-        this.Jobs.forEach((x) => {
-          x.jobStatus = statusesMap.get(x.jobStatusId) || '';
-          x.workFlow = statusesMap.get(x.workFlowId) || '';
-          x.salesRepName = salesRepsMap.get(x.salesRepsentativeId) || '';
-        });
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+          this.Jobs.forEach((x) => {
+            x.jobStatus = statusesMap.get(x.jobStatusId) || '';
+            x.workFlow = statusesMap.get(x.workFlowId) || '';
+            x.salesRepName = salesRepsMap.get(x.salesRepsentativeId) || '';
+          });
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
+    );
   }
 
   exportTable() {
@@ -124,22 +126,20 @@ export class JobsComponent {
       data.FormTitle = 'Edit Job';
       data.Request_Type = 'Save';
     }
-  
+
     const dialogRef = this.dialog.open(AddJobsComponent, {
       width: '80vw',
       height: '80vh',
       data: data,
       disableClose: true,
     });
-  
+
     dialogRef.afterClosed().subscribe(() => {
       this.getAllJobs();
     });
   }
-  
 
   redirect(jobs: any) {
-    debugger;
     this.router.navigate(['/jobs', jobs.id], { state: { model: jobs } });
   }
 
@@ -149,10 +149,19 @@ export class JobsComponent {
     data.Request_Type = 'Delete';
     dialogRef = this.dialog.open(ConfirmationComponent, {
       width: '30vw',
-      height: '27vh',
+      height: '200px',
       data: data,
       disableClose: true,
     });
-    dialogRef.afterClosed().subscribe((result: any) => {});
+    dialogRef.afterClosed().subscribe((result: any) => {
+      debugger
+      if (result) {
+        this.jobService.deleteJob(data).subscribe({
+          next: (res) => {
+            console.log(res);
+          },
+        });
+      }
+    });
   }
 }

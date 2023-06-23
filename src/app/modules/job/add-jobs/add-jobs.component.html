@@ -214,6 +214,8 @@
                     matInput
                     formControlName="city"
                     class="form-control form-control-sm"
+                    maxlength="50"
+                    
                   />
                 </div>
                 <div class="mb-1">
@@ -250,7 +252,7 @@
                   <input
                     matInput
                     formControlName="faxNo"
-                    type="number"
+                    type="text"
                     class="form-control form-control-sm"
                   />
                 </div>
@@ -353,45 +355,53 @@
                     >
                   </div>
                 </div>
-                <div class="mb-1" [formGroup]="phoneNumbersForm">
-                  <mat-label>Phone Number</mat-label>
+                <div class="input" [formGroup]="phoneNumbersForm">
+                  <label>Phone Number</label>
                   <input
-                    matInput
-                    class="form-control form-control-sm"
+                    class="form-control"
                     formControlName="phoneNumber"
-                    type="text"
                     placeholder="Enter phone number"
                   />
-                  <div class="mt-2">
-                    <mat-label>Type</mat-label>
-                    <div class="d-flex">
-                      <div style="width: 80%">
-                        <mat-select
-                          formControlName="typeId"
-                          placeholder="Select type"
-                          class="form-control form-control-sm"
-                        >
-                          <mat-option
-                            *ngFor="let type of phoneTypes"
-                            [value]="type.id"
-                            >{{ type.value }}</mat-option
-                          >
-                        </mat-select>
-                      </div>
-                      <button
-                        mat-raised-button
-                        (click)="addPhoneNumber(phoneTypes)"
-                        class="form-control form-control-sm"
-                        style="width: 20%"
+
+                  <div class="input">
+                    <label>Type</label>
+                    <mat-select
+                      formControlName="typeId"
+                      placeholder="Select type"
+                      class="form-control"
+                    >
+                      <mat-option
+                        *ngFor="let type of phoneTypes"
+                        [value]="type.id"
+                        >{{ type.value }}</mat-option
                       >
-                        Add
-                      </button>
+                    </mat-select>
+
+                    <button
+                      mat-raised-button
+                      (click)="addPhoneNumber(phoneTypes)"
+                      class="form-control mt-2"
+                    >
+                      Add
+                    </button>
+
+                    <div *ngIf="phoneNumbers.length > 0">
+                      <ng-container *ngFor="let phoneNumber of phoneNumbers">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <p class="m-0 my-1">
+                            {{ phoneNumber.phoneNumber }} ({{
+                              phoneNumber.typeName
+                            }})
+                         </p>
+                         <span class="m-0 my-1" style="cursor: pointer;"
+                           (click)="
+                             removePhoneNumber(phoneNumber.phoneNumber)
+                           "
+                           ><mat-icon matChipRemove>cancel</mat-icon>
+                         </span>
+                        </div>
+                      </ng-container>
                     </div>
-                  </div>
-                  <div *ngIf="phoneNumbers.length > 0">
-                    <p *ngFor="let phoneNumber of phoneNumbers">
-                      {{ phoneNumber.phoneNumber }} ({{ phoneNumber.typeName }})
-                    </p>
                   </div>
                 </div>
               </div>

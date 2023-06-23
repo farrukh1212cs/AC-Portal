@@ -37,7 +37,7 @@ export interface CreateJobDto {
   phoneNumbers?: CreatePhoneNumbersDto[];
   customFields?: CreateCustomFieldsDto[];
   mobileNumber: string;
-  faxNo: number | string;
+  faxNo: string;
   officeNumber: string;
   homeNumber: string;
 }

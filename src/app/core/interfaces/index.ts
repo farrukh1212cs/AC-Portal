@@ -12,3 +12,4 @@ export * from './UpdateBusinessHoursDto';
 export * from './UpdateOfficeLocationDto';
 export * from './UserDto';
 export * from './JobDTO';
+export * from './projectDto';

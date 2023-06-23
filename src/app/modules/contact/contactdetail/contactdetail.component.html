@@ -179,7 +179,7 @@
                           <small>John Aston</small>
                         </td>
                         <td class="py-0">
-                          <small>{{ contact.subContractor }}</small>
+                          <small>{{ contact?.subContractor?.name }}</small>
                         </td>
                       </tr>
                       <tr>
@@ -388,7 +388,7 @@
                                 <span>Edit</span>
                               </a>
                               <a
-                                href="#"
+                                type="button"
                                 class="dropdown-item d-flex align-items-center"
                               >
                                 <i

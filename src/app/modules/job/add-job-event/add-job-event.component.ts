@@ -44,18 +44,18 @@ export class AddJobEventComponent implements OnDestroy {
   }
 
   ngOnInit(): void {
-    this.eventForm = this.formBuilder.group({
-      eventType: [''],
-      eventPriority: [''],
-      eventName: [''],
-      startDate: [''],
-      endDate: [''],
-      estimatedDuration: [''],
-      description: [''],
-      tags: [''],
-      lastStatusChangeDate: [''],
-      jobId: [''],
-      id: [''],
+    this.eventForm = new FormGroup({
+      eventType: new FormControl(''),
+      eventPriority: new FormControl(''),
+      eventName: new FormControl(''),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+      estimatedDuration: new FormControl(''),
+      description: new FormControl(''),
+      tags: new FormControl(''),
+      lastStatusChangeDate: new FormControl(''),
+      jobId: new FormControl(''),
+      id: new FormControl(''),
     });
     this.getAllJobs()
   }

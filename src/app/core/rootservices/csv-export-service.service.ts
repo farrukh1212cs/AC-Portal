@@ -16,9 +16,8 @@ export class CsvExportService {
     for (let i = 0; i < headerRows.length; i++) {
       const headerCells = headerRows[i].cells;
       for (let j = 0; j < headerCells.length - 1; j++) { // Exclude last column
-        // headers.push(headerCells[j].textContent);
         const headerCellText = headerCells[j].textContent;
-        const formattedHeader = `${headerCellText}`; // Wrap in <strong> tags for bold formatting
+        const formattedHeader = `${headerCellText}`; 
     headers.push(formattedHeader);
       }
     }
@@ -45,4 +44,19 @@ export class CsvExportService {
     URL.revokeObjectURL(url);
   }
   
+  importCsvFile(file: File): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const config: Papa.ParseConfig = {
+        complete: (results: Papa.ParseResult) => {
+          resolve(results.data);
+        },
+        error: (error: Papa.ParseError) => {
+          reject(error);
+        }
+      };
+
+      this.papa.parse(file, config);
+    });
+  }
+
 }

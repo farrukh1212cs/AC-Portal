@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { RelatedContactDetailsComponent } from '../related-contact-details/related-contact-details.component';
+import { ContactService } from 'src/app/core/services/contact.service';
 
 @Component({
   selector: 'app-contactdetail',
@@ -11,7 +12,7 @@ import { RelatedContactDetailsComponent } from '../related-contact-details/relat
 export class ContactdetailComponent {
   contact: any;
 
-  constructor(private route: ActivatedRoute, private dialog: MatDialog) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog,public contactService: ContactService,) {
     this.route.paramMap.subscribe(params => {
       const contactId =  params.get('id');
       this.contact = history.state.model;
@@ -22,7 +23,6 @@ export class ContactdetailComponent {
 
   openRelatedContactModal(data:any): void {
     let dialogRef: any = {};
-    
     dialogRef = this.dialog.open(RelatedContactDetailsComponent, {
       width: '50vw',
       height: '50vh',
@@ -33,4 +33,6 @@ export class ContactdetailComponent {
       
     });
   }
+
+
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { config } from '../app-config';
+import { AppConfig } from '../app-config';
 import { CreateContactDto } from 'src/app/modules/contact/CreateContactDto';
 import { customFieldDto } from 'src/app/modules/contact/customFieldDto';
 import { createNoteDto, updateNoteDto } from 'src/app/modules/contact/createNoteDto';
@@ -15,7 +15,7 @@ import { WorkFlowDto } from 'src/app/modules/contact/WorkFlowDto';
   providedIn: 'root',
 })
 export class ContactService {
-  baseUrl = config.Base_url;
+  baseUrl = AppConfig.Base_url;
   contactDto: any;
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -28,28 +28,28 @@ export class ContactService {
 
   allOfficeLocations() {
     return this.http.get<any>(
-      config.OfficeLocation.officelocationsdropdown
+      AppConfig.OfficeLocation.officelocationsdropdown
     );
   }
 
   //-----------officeLocations
   allSalesRep() {
     return this.http.get<any>(
-      config.SalesRepresentative.getsalesrepresentative
+      AppConfig.SalesRepresentative.getsalesrepresentative
     );
   }
 
   allWorkFlows() {
-    return this.http.get<any>(config.WorkFlow.allWorkFlows);
+    return this.http.get<any>(AppConfig.WorkFlow.allWorkFlows);
   }
 
   allStatus() {
-    return this.http.get<any>(config.status.allStatuses);
+    return this.http.get<any>(AppConfig.status.allStatuses);
   }
 
   allSubcontractors() {
     return this.http.get<any>(
-      config.SubContractor.getsubcontractors
+      AppConfig.SubContractor.getsubcontractors
     );
   }
 
@@ -84,7 +84,6 @@ export class ContactService {
     if (contact?.id?.toString()) {
       formData.append('id', contact?.id?.toString() ?? '0');
     }
-
     formData.append('firstName', contact.firstName);
     formData.append('lastName', contact.lastName);
     formData.append('company', contact.company);
@@ -96,7 +95,6 @@ export class ContactService {
     formData.append('website', contact.website as string);
     formData.append('faxNo', contact?.faxNo?.toString() ?? '');
     formData.append('displayName', contact?.displayName?.toString() ?? '');
-
     const startDate = contact?.startDate;
     if (startDate !== undefined) {
       const startDateObj = new Date(startDate);
@@ -111,6 +109,7 @@ export class ContactService {
     }
 
     formData.append('discription', contact?.discription?.toString() ?? '');
+    formData.append('note', contact?.note?.toString() ?? '');
     formData.append('sourceId', contact?.sourceId?.toString() ?? '');
     formData.append('stateId', contact?.stateId?.toString() ?? '');
     formData.append('salesRepId', contact?.salesRepId?.toString() ?? '');

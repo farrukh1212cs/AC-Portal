@@ -10,6 +10,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ContactModule } from './modules/contact/contact.module';
 import { CoreModule } from './core/core.module';
 import * as Papa from 'papaparse';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import * as Papa from 'papaparse';
     CoreModule,
     BrowserModule,
     AccountModule,
+    MatDialogModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),

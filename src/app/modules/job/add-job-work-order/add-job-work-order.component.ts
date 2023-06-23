@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { createWorkOrderDto } from '../createWorkOrderDto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { JobService } from 'src/app/core/services/job.service';
+import { Subscription } from 'rxjs';
 
 enum Priorities {
   High = 'High',
@@ -33,6 +34,7 @@ export class AddJobWorkOrderComponent {
   workOrderDto?: createWorkOrderDto;
   priorities = Priorities;
   prioritykeys: string[] = [];
+  subscription: Subscription;
 
   constructor(
     private dialogRef: MatDialogRef<AddJobWorkOrderComponent>,
@@ -52,16 +54,16 @@ export class AddJobWorkOrderComponent {
   }
 
   ngOnInit(): void {
-    this.workOrderForm = this.formBuilder.group({
-      workOrderPriority: [''],
-      name: [''],
-      workOrderStatus: [''],
-      startDate: [''],
-      dueDate: [''],
-      notes: [''],
-      lastStatusChangeDate: [''],
-      contactId: [''],
-      jobId: [''],
+    this.workOrderForm = new FormGroup({
+      workOrderPriority: new FormControl(''),
+      name: new FormControl(''),
+      workOrderStatus: new FormControl(''),
+      startDate: new FormControl(''),
+      dueDate: new FormControl(''),
+      notes: new FormControl(''),
+      lastStatusChangeDate: new FormControl(''),
+      contactId: new FormControl(''),
+      jobId: new FormControl(''),
     });
 
     Promise.all([this.getAllJobs()]).then(() => {});
@@ -97,7 +99,7 @@ export class AddJobWorkOrderComponent {
     if (this.workOrderForm.valid) {
       this.dialogRef.close();
       this.workOrderDto = this.workOrderForm.value;
-      this.jobService.createWorkOrder(this.workOrderForm.value).subscribe(
+        this.subscription = this.jobService.createWorkOrder(this.workOrderForm.value).subscribe(
         (res) => {
           this.snackBar.open('Record inserted successfully', 'Close', {
             duration: 3000,
@@ -116,5 +118,10 @@ export class AddJobWorkOrderComponent {
         }
       );
     }
+  }
+
+
+  ngOnDistroy(){
+    this.subscription.unsubscribe()
   }
 }

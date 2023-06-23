@@ -13,7 +13,6 @@ export class RelatedContactDetailsComponent {
 
   constructor(private dialogRef: MatDialogRef<RelatedContactDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
-      console.log(data);
       this.modelMain = data;
       this.updateData = Object.assign({}, this.modelMain);
     }

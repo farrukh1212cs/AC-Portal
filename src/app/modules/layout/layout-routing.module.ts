@@ -29,6 +29,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('src/app/modules/job/job.module').then((m) => m.JobModule),
       },
+      {
+        path: 'projects',
+        loadChildren: () =>
+          import('src/app/modules/projects/projects.module').then((m) => m.ProjectsModule),
+      },
     ],
     canActivate: [AuthGuradService],
   },

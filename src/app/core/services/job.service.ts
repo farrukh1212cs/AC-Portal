@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { config } from '../app-config';
+import { AppConfig } from '../app-config';
 import { UtilityService } from './shared/UtilityService';
 import { JobDTO } from '../interfaces';
 import { EventDTO } from 'src/app/modules/job/createEventDto';
@@ -11,217 +11,139 @@ import { createLeadSourceDto } from 'src/app/modules/job/createLeadSourceDto';
 import { createTagDto } from 'src/app/modules/job/createTagDto';
 import { createWorkOrderDto } from 'src/app/modules/job/createWorkOrderDto';
 import { createWorkflowDto } from 'src/app/modules/job/createWorkflowDto';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JobService {
-  baseUrl = config.Base_url;
-  constructor(private utilityService: UtilityService) {}
+  baseUrl = AppConfig.Base_url;
+  constructor(
+    private utilityService: UtilityService,
+    private http: HttpClient
+  ) {}
 
   //-----------Office Locations
   allOfficeLocations() {
-    return this.utilityService.get<any>(
-      config.OfficeLocation.allOfficeLocations
-    );
+    return this.http.get<any>(AppConfig.OfficeLocation.allOfficeLocations);
   }
 
   allSalesRep() {
-    return this.utilityService.get<any>(
-      config.SalesRepresentative.getsalesrepresentative
+    return this.http.get<any>(
+      AppConfig.SalesRepresentative.getsalesrepresentative
     );
   }
 
   allWorkFlows() {
-    return this.utilityService.get<any>(config.WorkFlow.allWorkFlows);
+    return this.http.get<any>(AppConfig.WorkFlow.allWorkFlows);
   }
 
   allStatus() {
-    return this.utilityService.get<any>(config.status.allStatuses);
+    return this.http.get<any>(AppConfig.status.allStatuses);
   }
 
   allSubcontractors() {
-    return this.utilityService.get<any>(config.SubContractor.getsubcontractors);
+    return this.http.get<any>(AppConfig.SubContractor.getsubcontractors);
   }
 
   allRelatedContacts() {
-    return this.utilityService.get<any>(
-      config.RelatedContact.getRelatedContactsDropDown
-    );
+    return this.http.get<any>(AppConfig.RelatedContact.getRelatedContactsDropDown);
   }
 
   ///TeamMember/getteammebers
   allTeamMembers() {
-    return this.utilityService.get<any>(config.TeamMember.getteammebers);
+    return this.http.get<any>(AppConfig.TeamMember.getteammebers);
   }
 
   allphoneTypes() {
-    return this.utilityService.get<any>(
-      config.DropDown.allDropDownsList + '?PageName=addcontact'
+    return this.http.get<any>(
+      AppConfig.DropDown.allDropDownsList + '?PageName=addcontact'
     );
   }
   allSource() {
-    return this.utilityService.get<any>(
-      config.DropDown.allDropDownsList + '?PageName=addcontact'
+    return this.http.get<any>(
+      AppConfig.DropDown.allDropDownsList + '?PageName=addcontact'
     );
   }
   allState() {
-    return this.utilityService.get<any>(config.States);
+    return this.http.get<any>(AppConfig.States);
   }
 
   //Job Requests
 
   //---------Get Jobs
   getAllJob() {
-    return this.utilityService.get<any>(config.Jobs.GetAllJob);
+    return this.http.get<any>(AppConfig.Jobs.GetAllJob);
   }
 
   //Get Job By ID
   getJobByID(id: number) {
-    return this.utilityService.get<any>(config.Jobs.GetJobById, id, { id: id });
+    return this.http.get<any>(AppConfig.Jobs.GetJobById);
   }
 
   //get all jobs by company ID
   getAllJobsByCompanyID() {
-    return this.utilityService.get<JobDTO[]>(config.Jobs.GetAllJobByCompanyId);
+    return this.http.get<JobDTO[]>(AppConfig.Jobs.GetAllJobByCompanyId);
   }
 
   //get all jobs with pagination
   getAllJobsWithPagination(pageNumber: number, pageSize: number) {
-    return this.utilityService.get<any>(
-      config.Jobs.GetAllJobWithPagination + pageNumber + '&PageSize=' + pageSize
+    return this.http.get<any>(
+      AppConfig.Jobs.GetAllJobWithPagination + pageNumber + '&PageSize=' + pageSize
     );
   }
 
   //----------Add Jobs
   createJob(requestBody: JobDTO, phonesno: any): Observable<any> {
-    console.log(requestBody);
-    return this.utilityService.post<any>(
-      config.Jobs.CreateJob,
-      requestBody,
-      null
-    );
+    return this.http.post<any>(AppConfig.Jobs.CreateJob, requestBody, null);
   }
 
   updateJob(requestBody: JobDTO, phonesno: any): Observable<any> {
-    return this.utilityService.post<any>(
-      config.Jobs.UpdateJob,
-      requestBody,
-      requestBody.id.toString(),
-      { id: requestBody.id }
-    );
+    return this.http.post<any>(AppConfig.Jobs.UpdateJob, requestBody, {
+      params: { id: requestBody.id },
+    });
   }
 
-  deleteJob(Jobs: any, phonesno: any) {
-    var requestBody: any = {};
-    requestBody['id'] = Jobs.id;
-    requestBody['name'] = Jobs.name;
-    requestBody['address1'] = Jobs.address1;
-    requestBody['address2'] = Jobs.address2;
-    requestBody['city'] = Jobs.city;
-    requestBody['stateId'] = Jobs.stateId;
-    requestBody['zip'] = Jobs.zip;
-    requestBody['jobStatusId'] = Jobs.jobStatusId;
-    requestBody['startDate'] = Jobs.startDate;
-    requestBody['endDate'] = Jobs.endDate;
-    requestBody['description'] = Jobs.description;
-    requestBody['leadSourceId'] = Jobs.leadSourceId;
-    requestBody['salesRepsentativeId'] = Jobs.salesRepsentativeId;
-    requestBody['lastStatusChangeDate'] = Jobs.lastStatusChangeDate;
-    requestBody['primaryContactId'] = Jobs.primaryContactId;
-    requestBody['officeLocationId'] = Jobs.officeLocationId;
-    requestBody['workFlowId'] = Jobs.workFlowId;
-    requestBody['subContractorId'] = Jobs.subContractorId;
-    requestBody['relatedContactId'] = Jobs.relatedContactId;
-    requestBody['teamMememberId'] = Jobs.teamMememberId;
-
-    console.log(requestBody);
-
-    // const formData = new FormData();
-
-    // formData.append('id', Jobs?.id?.toString() ?? "0");
-    // formData.append('address1', Jobs?.address1?.toString() ?? "");
-    // formData.append('address2', Jobs?.address2?.toString() ?? "");
-    // formData.append('city', Jobs?.city?.toString() ?? "");
-    // formData.append('stateId', Jobs?.stateId?.toString() ?? "");
-    // formData.append('zip', Jobs?.zip?.toString() ?? "");
-    // formData.append('jobStatusId', Jobs?.jobStatusId?.toString() ?? "");
-    // formData.append('name', Jobs?.name?.toString() ?? "");
-    // const startDate = Jobs?.startDate;
-    // if (startDate !== undefined) {
-    //   const startDateObj = new Date(startDate);
-    //   startDateObj.setDate(startDateObj.getDate() + 1);
-    //   formData.append('startDate', startDateObj.toISOString());
-    // }
-    // const endDate = Jobs?.endDate;
-    // if (endDate !== undefined) {
-    //   const endDateObj = new Date(endDate);
-    //   endDateObj.setDate(endDateObj.getDate() + 1);
-    //   formData.append('endDate', endDateObj.toISOString());
-    // }
-    // formData.append('description', Jobs?.description?.toString() ?? "");
-    // formData.append('leadSourceId', Jobs?.leadSourceId?.toString() ?? "");
-    // formData.append('salesRepsentativeId', Jobs?.salesRepsentativeId?.toString() ?? "");
-    // formData.append('officeLocationId', Jobs?.officeLocationId?.toString() ?? "");
-    // formData.append('workFlowId', Jobs?.workFlowId?.toString() ?? "");
-    // formData.append('subContractorId', Jobs?.subContractorId?.toString() ?? "");
-    // formData.append('primaryContactId', Jobs?.primaryContactId?.toString() ?? "");
-    // formData.append('lastStatusChangeDate', Jobs?.lastStatusChangeDate?.toString() ?? "");
-    // formData.append('relatedContactId', Jobs?.relatedContactId?.toString() ?? "");
-    // formData.append('teamMememberId', Jobs?.teamMememberId?.toString() ?? "");
-
-    return this.utilityService.delete<any>(
-      Jobs.id,
-      config.Jobs.DeleteJob,
-      { id: Jobs.id },
-      requestBody
-    );
+  deleteJob(Jobs: any) {
+    return this.http.delete<any>(AppConfig.Jobs.DeleteJob, { body: Jobs });
   }
 
   //Events Requests
 
   getEventById(id: number) {
-    return this.utilityService.get<any>(config.Events.GetEventById, 0, {
-      id: id,
+    return this.http.get<any>(AppConfig.Events.GetEventById, {
+      params: { id: id },
     });
   }
 
   getAllEvents() {
-    return this.utilityService.get<any>(config.Events.GetAllEvent);
+    return this.http.get<any>(AppConfig.Events.GetAllEvent);
   }
 
   createEvent(Event: EventDTO): Observable<any> {
     if (Event?.id?.toString()) {
-      return this.utilityService.put<any>(
-        config.Events.UpdateEvent,
-        Event,
-        Event?.id.toString(),
-        { id: Event?.id ?? 0 }
-      );
+      return this.http.put<any>(AppConfig.Events.UpdateEvent, Event, {
+        params: Event?.id.toString(),
+      });
     } else {
-      return this.utilityService.post<any>(
-        config.Events.CreateEvent,
-        Event,
-        null
-      );
+      return this.http.post<any>(AppConfig.Events.CreateEvent, Event, null);
     }
   }
 
   // JOB status requests
 
   getJobStatusByID(id: number) {
-    return this.utilityService.get<any>(config.Events.GetJobsStatusById, id, {
-      Id: id,
+    return this.http.get<any>(AppConfig.Events.GetJobsStatusById, {
+      params: { Id: id },
     });
   }
 
   getAllJobStatus() {
-    return this.utilityService.get<any>(config.Events.GetAllJobsStatus);
+    return this.http.get<any>(AppConfig.Events.GetAllJobsStatus);
   }
 
   createJobStatus(jobStatus: createJobStatusDto): Observable<any> {
     const formData = new FormData();
-
     formData.append('id', jobStatus?.id?.toString() ?? '');
     formData.append('userId', jobStatus?.userId?.toString() ?? '');
     formData.append('createdBy', jobStatus?.createdBy?.toString() ?? '');
@@ -244,141 +166,99 @@ export class JobService {
     formData.append('isDeleted', jobStatus?.isDeleted?.toString() ?? '');
 
     if (jobStatus?.id?.toString()) {
-      return this.utilityService.put<any>(
-        config.JobStatus.CreateJobStatus,
-        formData,
-        null
-      );
+      const url = AppConfig.JobStatus.CreateJobStatus;
+      return this.http.put<any>(url, formData);
     } else {
-      return this.utilityService.post<any>(
-        config.JobStatus.UpdateJobStatus,
-        formData,
-        jobStatus?.id?.toString(),
-        { Id: jobStatus?.id?.toString() }
-      );
+      const url = AppConfig.JobStatus.UpdateJobStatus;
+      const params = { Id: jobStatus?.id?.toString() };
+      return this.http.post<any>(url, formData, { params });
     }
   }
 
   // Lead Source
 
-  getLeadSourceById(id: number) {
-    return this.utilityService.get<any>(
-      config.LeadSource.GetLeadSourceById,
-      id,
-      { Id: id }
-    );
+  getLeadSourceById(id: number): Observable<any> {
+    const url = `${AppConfig.LeadSource.GetLeadSourceById}/${id}`;
+    return this.http.get<any>(url);
   }
 
-  getAllLeadSource() {
-    return this.utilityService.get<any>(config.LeadSource.GetAllLeadSource);
+  getAllLeadSource(): Observable<any> {
+    const url = AppConfig.LeadSource.GetAllLeadSource;
+    return this.http.get<any>(url);
   }
 
-  createLeadSource(leadSource: createLeadSourceDto) {
+  createLeadSource(leadSource: createLeadSourceDto): Observable<any> {
     const formData = new FormData();
-
     formData.append('jobId', leadSource?.jobId?.toString() ?? '');
     formData.append('name', leadSource?.name?.toString() ?? '');
 
     if (leadSource.jobId?.toString()) {
-      return this.utilityService.put<any>(
-        config.LeadSource.CreateLeadSource,
-        formData,
-        leadSource?.jobId?.toString()
-      );
+      const url = `${AppConfig.LeadSource.CreateLeadSource}/${leadSource.jobId}`;
+      return this.http.put<any>(url, formData);
     } else {
-      return this.utilityService.post<any>(
-        config.LeadSource.CreateLeadSource,
-        formData,
-        null,
-        { id: leadSource.jobId?.toString() }
-      );
+      const url = AppConfig.LeadSource.CreateLeadSource;
+      const params = { id: leadSource.jobId?.toString() };
+      return this.http.post<any>(url, formData, { params });
     }
   }
-
   //Tags
 
   getAllTag() {
-    return this.utilityService.get<any>(config.Tags.GetAllTag);
+    return this.http.get<any>(AppConfig.Tags.GetAllTag);
   }
 
-  createTag(Tag: createTagDto): Observable<any> {
+  createTag(tag: createTagDto): Observable<any> {
     const formData = new FormData();
+    formData.append('jobId', tag?.jobId?.toString() ?? '');
+    formData.append('name', tag?.name?.toString() ?? '');
 
-    formData.append('jobId', Tag?.jobId?.toString() ?? '');
-    formData.append('name', Tag?.name?.toString() ?? '');
-
-    if (Tag.jobId?.toString()) {
-      return this.utilityService.put<any>(
-        config.Tags.CreateTag,
-        formData,
-        null
-      );
+    if (tag.jobId?.toString()) {
+      const url = AppConfig.Tags.CreateTag;
+      return this.http.put<any>(url, formData);
     } else {
-      return this.utilityService.post<any>(
-        config.Tags.UpdateTag,
-        formData,
-        Tag.jobId?.toString() ?? '',
-        { Id: Tag?.jobId ?? '' }
-      );
+      const url = AppConfig.Tags.UpdateTag;
+      const jobIdParam = tag?.jobId?.toString() ?? '';
+      const params = { Id: jobIdParam };
+      return this.http.post<any>(url, formData, { params });
     }
   }
 
   // Work Order
-
-  getWorkOrderById(id: number) {
-    return this.utilityService.get<any>(
-      config.WorkOrder.GetWorkOrderById,
-      id,
-      {}
-    );
+  getWorkOrderById(id: number): Observable<any> {
+    const url = `${AppConfig.WorkOrder.GetWorkOrderById}/${id}`;
+    return this.http.get<any>(url);
   }
 
-  getAllWorkOrder() {
-    return this.utilityService.get<any>(config.WorkOrder.GetAllWorkOrder);
+  getAllWorkOrder(): Observable<any> {
+    const url = AppConfig.WorkOrder.GetAllWorkOrder;
+    return this.http.get<any>(url);
   }
 
   createWorkOrder(workOrder: createWorkOrderDto): Observable<any> {
     workOrder.lastStatusChangeDate = new Date();
     workOrder.contactId = 4;
-
-    // if (workOrder?.jobId?.toString()) {
-    //   return this.utilityService.post<any>(this.baseUrl + "/WorkOrder/CreateWorkOrder", workOrder);
-    // } else {
-    //   return this.utilityService.post<any>(this.baseUrl + "/WorkOrder/UpdateWorkOrder", workOrder);
-    // }
-    console.log(workOrder);
-    return this.utilityService.post<any>(
-      config.WorkOrder.CreateWorkOrder,
-      workOrder,
-      null
-    );
+    const url = AppConfig.WorkOrder.CreateWorkOrder;
+    return this.http.post<any>(url, workOrder);
   }
 
   //WorkFlow
-
-  getWorkFlowById(id: number) {
-    return this.utilityService.get<any>(config.WorkFlow.GetWorkFlowById, 0, {
-      id: id,
-    });
+  getWorkFlowById(id: number): Observable<any> {
+    const url = `${AppConfig.WorkFlow.GetWorkFlowById}/${id}`;
+    return this.http.get<any>(url, { params: { id: id.toString() } });
   }
 
-  getAllWorkFlows() {
-    return this.utilityService.get<any>(config.WorkFlow.allWorkFlows);
+  getAllWorkFlows(): Observable<any> {
+    const url = AppConfig.WorkFlow.allWorkFlows;
+    return this.http.get<any>(url);
   }
 
   createWorkflow(workFlow: createWorkflowDto): Observable<any> {
     if (workFlow.jobId?.toString()) {
-      return this.utilityService.put<any>(
-        config.WorkFlow.UpdateWorkFlow,
-        workFlow,
-        workFlow.jobId.toString()
-      );
+      const url = `${AppConfig.WorkFlow.UpdateWorkFlow}/${workFlow.jobId}`;
+      return this.http.put<any>(url, workFlow);
     } else {
-      return this.utilityService.post<any>(
-        config.WorkFlow.CreateWorkFlow,
-        workFlow,
-        null
-      );
+      const url = AppConfig.WorkFlow.CreateWorkFlow;
+      return this.http.post<any>(url, workFlow);
     }
   }
 }

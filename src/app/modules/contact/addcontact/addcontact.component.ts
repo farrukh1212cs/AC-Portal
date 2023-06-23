@@ -100,7 +100,7 @@ export class AddcontactComponent implements OnInit {
       displayName: new FormControl(''),
       startDate: new FormControl(''),
       endDate: new FormControl(''),
-      description: new FormControl(''),
+      discription: new FormControl(''),
       homeNumber: new FormControl(''),
       officeNumber: new FormControl(''),
       file: new FormControl(''),
@@ -136,7 +136,8 @@ export class AddcontactComponent implements OnInit {
       .then(() => {
         console.log(this.updateData);
         // All asynchronous functions have completed
-        if (this.updateData) {
+        if (this.updateData && this.updateData?.id) {
+          debugger
           this.imagePath = this.updateData.picUrl
           this.contactForm.setValue({
             id: this.updateData?.id,
@@ -153,28 +154,28 @@ export class AddcontactComponent implements OnInit {
             displayName: this.updateData?.displayName,
             startDate: this.updateData?.startDate,
             endDate: this.updateData?.endDate,
-            description: this.updateData?.description ?? '',
+            discription: this.updateData?.discription ?? '',
             file: this.updateData?.file ?? '',
-            sourceId: this.updateData?.source?.id,
-            stateId: this.updateData?.state?.id,
-            salesRepId: this.updateData?.salesRep?.id,
-            subContractorId: this.updateData?.subContractor?.id,
+            sourceId: this.updateData?.source?.id??'',
+            stateId: this.updateData?.state?.id??'',
+            salesRepId: this.updateData?.salesRep?.id??'',
+            subContractorId: this.updateData?.subContractor?.id??'',
             teamMembers: this.updateData?.teamMembers?.map(
               (contact: any) => contact.id
-            ),
-            officeLocationId: this.updateData?.officeLocation.id,
-            workFlowId: this.updateData?.workFlow?.id,
-            statusId: this.updateData?.status?.id,
+            )??[],
+            officeLocationId: this.updateData?.officeLocation.id??'',
+            workFlowId: this.updateData?.workFlow?.id??'',
+            statusId: this.updateData?.status?.id??'',
             relatedContacts: this.updateData?.relatedContacts?.map(
               (contact: any) => contact.id
-            ),
+            )??[],
             tags: this.updateData?.tags?.map((tagd: any) => ({
               display: tagd.tag,
               value: tagd.tag,
-            })),
+            }))??[],
             note: this.updateData.note,
-            phoneNumbers: this.updateData?.phoneNumbers,
-            customFields: this.updateData.customFields,
+            phoneNumbers: this.updateData?.phoneNumbers??[],
+            customFields: this.updateData.customFields??[],
             homeNumber: this.updateData?.homeNumber ?? '',
             officeNumber: this.updateData?.officeNumber ?? '',
           });
@@ -203,6 +204,7 @@ export class AddcontactComponent implements OnInit {
   }
 
   addPhoneNumber(types: any): void {
+    debugger
     const phoneNumber = this.phoneNumbersForm.value.phoneNumber.trim();
     const typeId = this.phoneNumbersForm.value.typeId;
     const id = this.phoneNumbersForm.value.id;

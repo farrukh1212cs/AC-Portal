@@ -24,6 +24,9 @@
             height: $h-lg;
         }
     }
+    .tagsInput {
+        height: auto !important;
+    }
     .date-picker{
         width: 100%;
         .mat-mdc-text-field-wrapper{

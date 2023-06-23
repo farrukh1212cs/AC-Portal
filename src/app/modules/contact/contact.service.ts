@@ -96,6 +96,7 @@ createContact(contact: CreateContactDto, img : any,phonesno : any): Observable<a
   }
 
   formData.append('discription', contact?.discription?.toString() ?? "");
+  formData.append('note', contact?.discription?.toString() ?? "");
   formData.append('sourceId', contact?.sourceId?.toString() ?? "");
   formData.append('stateId', contact?.stateId?.toString() ?? "");
   formData.append('salesRepId', contact?.salesRepId?.toString() ?? "");

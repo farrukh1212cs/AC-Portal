@@ -26,33 +26,11 @@ export class ConfirmationComponent {
   
 
   closeConfirmModal() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
-  deleteJobClick() : void {
-    this.jobService.deleteJob(this.updateData, this.phoneNumbers).subscribe(
-      res => {
-        // this.snackBar.open('Record inserted successfully', 'Close', {
-        //   duration: 3000,
-        //   verticalPosition: 'top',
-        //   panelClass: ['success-snackbar']
-        // });
-        this.router.navigate(['/jobs']);
-        console.log("Record deleted Successfully...");
-      },
-      err => {
-        console.log(err)
-        // this.snackBar.open('Error', 'Close', {
-        //   duration: 3000,
-        //   verticalPosition: 'top',
-        //   panelClass: ['error-snackbar']
-        // });
-        this.router.navigate(['/jobs']);
-        console.log("error deleting Successfully...");
-      },
-      () => {
-      }
-    );
+  confirmDelete() : void {
+    this.dialogRef.close(true);
   }
 }
 

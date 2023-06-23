@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment';
 const API_URL = environment.apiBaseUrl;
 
-export const config = {
+export const AppConfig = {
   Base_url: API_URL,
   auth: {
     login: `${API_URL}/login`,

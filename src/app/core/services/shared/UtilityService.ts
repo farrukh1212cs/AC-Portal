@@ -28,7 +28,7 @@ export class UtilityService {
   ): Observable<T> {
     const cfqu = this.correctFormatForQueryUrl(qp);
     return this.http['delete'](
-      `${route}${id ? '/' + id : ''}${cfqu}`,
+      `${route}${id??'' ? '/' + id : ''}${cfqu}`,
       data
     ) as Observable<T>;
   }

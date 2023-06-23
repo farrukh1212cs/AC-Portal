@@ -29,7 +29,7 @@ export class JobDetailsComponentComponent {
         data.Request_Type = "Add";
         dialogRef = this.dialog.open(AddWorkflowComponent, {
           width: '40vw',
-          height: '70vh',
+          height: '50vh',
           data: data,
           disableClose: true
         });
@@ -42,7 +42,7 @@ export class JobDetailsComponentComponent {
         data.Request_Type = "Update";
         dialogRef = this.dialog.open(AddWorkflowComponent, {
           width: '40vw',
-          height: '70vh',
+          height: '50vh',
           data: data,
           disableClose: true
         });
@@ -59,7 +59,7 @@ export class JobDetailsComponentComponent {
         data.Request_Type = "Add";
         dialogRef = this.dialog.open(AddJobEventComponent, {
           width: '50vw',
-          height: '85vh',
+          height: '70vh',
           data: data,
           disableClose: true
         });
@@ -72,7 +72,7 @@ export class JobDetailsComponentComponent {
         data.Request_Type = "Update";
         dialogRef = this.dialog.open(AddJobEventComponent, {
           width: '50vw',
-          height: '85vh',
+          height: '70vh',
           data: data,
           disableClose: true
         });
@@ -89,7 +89,7 @@ export class JobDetailsComponentComponent {
         data.Request_Type = "Add";
         dialogRef = this.dialog.open(AddJobWorkOrderComponent, {
           width: '70vw',
-          height: '70vh',
+          height: '50vh',
           data: data,
           disableClose: true
         });
@@ -102,7 +102,7 @@ export class JobDetailsComponentComponent {
         data.Request_Type = "Update";
         dialogRef = this.dialog.open(AddJobWorkOrderComponent, {
           width: '70vw',
-          height: '70vh',
+          height: '50vh',
           data: data,
           disableClose: true
         });

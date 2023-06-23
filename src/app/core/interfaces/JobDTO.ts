@@ -1,41 +1,33 @@
+
 export interface JobDTO {
-  salesRepName?: any;
+  id: number | 0
   name: string;
   address1: string;
   address2: string;
   city: string;
-  faxNo: string | "";
-  mobileNo: string | "";
-  homeNo: string | "";
-  officeNo: string | null;
-  phoneNo: string | null;
-  jobType: string | null;
-  note: string | null;
-  teamMememberId?: number[];
-  relatedContactId?: number[];
+  stateId: number;
+  faxNo: string;
+  mobileNo: string;
+  homeNo: string;
+  officeNo: string;
+  phoneNo: string;
+  jobType: string;
+  note: string;
   zip: number;
-  startDate: string | Date;
-  endDate: string | Date;
+  jobStatusId: number;
+  startDate: string;
+  endDate: string;
   description: string;
-  stateId: number | null;
+  leadSourceId: number;
   salesRepsentativeId: number;
-  lastStatusChangeDate: string | Date | null;
-  primaryContactId: number | null;
+  lastStatusChangeDate: string;
+  primaryContactId: number;
   officeLocationId: number;
   workFlowId: number;
   subContractorId: number;
-  timelineId: number;
-  jobStatusId: number;
-  leadSourceId: number | string;
-  id: number;
-  userId: number | null;
-  createdBy: number;
-  modifiedBy: number;
-  companyId: number;
-  createdDate: string;
-  modifiedDate: string;
-  isDeleted: boolean | null;
-  jobStatus?: any;
-  workFlow?: any;
-  salesRepId: any;
+  relatedContactId: number[];
+  teamMememberId: number[];
+  jobStatus?: any
+  workFlow?: any
+  salesRepName? : any
 }
