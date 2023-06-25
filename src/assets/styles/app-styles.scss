@@ -1,122 +1,128 @@
-@import 'variables';
-html ,body{
-    font-family: $gotham-m;
-    height: 100%;
-    margin: 0;
+@import "variables";
+html,
+body {
+  font-family: $gotham-m;
+  height: 100%;
+  margin: 0;
 }
-html{
-
+html {
 }
-body{
-
+body {
 }
 /*******************************/
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+  width: 5px;
+  height: 5px;
 }
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #E3E5F5; 
+  background: #e3e5f5;
   border-radius: 10px;
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #94A3B8; 
+  background: #94a3b8;
   border-radius: 10px;
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8; 
+  background: #94a3b8;
 }
 /*******************************/
-.card{
-    background: #fff;
+.card {
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  .card-header {
     border: none;
-    border-radius: 10px;
-    .card-header{
-        border: none;
-        padding: 20px 20px 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #fff;
-        border-radius: 10px 10px 0 0;
-        .card-title{
-            color: #455468;
-            font-size: 20px;
-            font-family: $gotham-m;
-            margin: 0;
-        }
+    padding: 20px 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+    .card-title {
+      color: #455468;
+      font-size: 20px;
+      font-family: $gotham-m;
+      margin: 0;
     }
-    .card-body{
-        padding: 20px;
-    }
-    &.border{
-        border: 1px solid #D9D9D9 !important;
-        border-radius: 8px;
-    }
+  }
+  .card-body {
+    padding: 20px;
+  }
+  &.border {
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 8px;
+  }
 }
 /*******************************/
-.component-header{
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.component-header {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.section-padding{
-    padding: 50px 0;
+.section-padding {
+  padding: 50px 0;
 }
 /*******************************/
 
-.data-view{
-    .item{
-        .data-title{
-            font-size: 14px;
-            font-family: $gotham-m;
-            color: #45496A;
-        }
-        .data-value{
-            font-size: 14px;
-            font-family: $gotham-r;
-            color: #686C87;
-        }
+.data-view {
+  .item {
+    .data-title {
+      font-size: 14px;
+      font-family: $gotham-m;
+      color: #45496a;
     }
+    .data-value {
+      font-size: 14px;
+      font-family: $gotham-r;
+      color: #686c87;
+    }
+  }
 }
 /*new data view styles the above one will obsolete*/
-.data_view{
-    &_item{
-       &_title{
-            font-size: 14px;
-            font-family: $gotham-m;
-            color: #45496A;
-        }
-        &_value{
-            font-size: 14px;
-            font-family: $gotham-r;
-            color: #686C87;
-        }
+.data_view {
+  &_item {
+    &_title {
+      font-size: 14px;
+      font-family: $gotham-m;
+      color: #45496a;
     }
+    &_value {
+      font-size: 14px;
+      font-family: $gotham-r;
+      color: #686c87;
+    }
+  }
 }
 /*******************************/
-.mat-modal{
-    .mat-modal-header{
-        padding: 20px 20px 0;
-        display: flex;
-        justify-content: space-between;
-    }
-    .mat-modal-body{
-        padding: 20px 20px;
-        overflow: hidden;
-        overflow-y: auto;
-        max-height: 60vh;
-    }
-    .mat-modal-footer{
-        padding: 0 20px 20px 20px;
-        border-top: 2px solid #d1d1d1;
-        max-height: 100px;
-    }
+.mat-modal {
+  .mat-modal-header {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .mat-modal-body {
+    padding: 20px 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 60vh;
+    max-height: 65vh;
+  }
+  .mat-modal-footer {
+    padding: 15px;
+    border-top: 2px solid #d1d1d1;
+    max-height: 90px;
+  }
+}
+color-picker {
+  .color-picker.open {
+    width: 100% !important;
+    height: 200px !important;
+  }
 }
 
 /*******************************/

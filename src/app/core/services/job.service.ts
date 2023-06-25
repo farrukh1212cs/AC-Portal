@@ -60,11 +60,13 @@ export class JobService {
       AppConfig.DropDown.allDropDownsList + '?PageName=addcontact'
     );
   }
+  
   allSource() {
     return this.http.get<any>(
       AppConfig.DropDown.allDropDownsList + '?PageName=addcontact'
     );
   }
+
   allState() {
     return this.http.get<any>(AppConfig.States);
   }
@@ -126,7 +128,7 @@ export class JobService {
         params: Event?.id.toString(),
       });
     } else {
-      return this.http.post<any>(AppConfig.Events.CreateEvent, Event, null);
+      return this.http.post<any>(AppConfig.Events.CreateEvent, Event);
     }
   }
 
@@ -201,8 +203,8 @@ export class JobService {
       return this.http.post<any>(url, formData, { params });
     }
   }
-  //Tags
 
+  //Tags
   getAllTag() {
     return this.http.get<any>(AppConfig.Tags.GetAllTag);
   }

@@ -11,6 +11,7 @@ import { ContactModule } from './modules/contact/contact.module';
 import { CoreModule } from './core/core.module';
 import * as Papa from 'papaparse';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
