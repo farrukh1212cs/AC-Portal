@@ -4,13 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { JobService } from 'src/app/core/services/job.service';
 
 @Component({
-  selector: 'app-work-order',
-  templateUrl: './work-order.component.html',
-  styleUrls: ['./work-order.component.css']
+  selector: 'app-workflow',
+  templateUrl: './workflow.component.html',
+  styleUrls: ['./workflow.component.css']
 })
-export class WorkOrderComponent {
+export class WorkflowComponent {
   jobId: any;
-  WorkOrders: any;
+  workFlows: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,9 +25,9 @@ export class WorkOrderComponent {
   }
 
   ngOnInit() {
-    this.JobService.getAllWorkOrder().subscribe((res) => {
-      this.WorkOrders = []
-      this.WorkOrders = res.payload
+    this.JobService.getAllWorkFlows().subscribe((res) => {
+      this.workFlows = []
+      this.workFlows = res.payload
       this.cRef.detectChanges()
     });
   }

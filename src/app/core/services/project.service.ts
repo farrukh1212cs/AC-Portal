@@ -8,7 +8,7 @@ import { AppConfig } from '../app-config';
   providedIn: 'root',
 })
 export class ProjectService {
-  private baseUrl = AppConfig.Base_url+'/Projects';
+  private baseUrl = 'http://20.12.65.123:2005/Api/Projects';
 
   constructor(private http: HttpClient) {}
 
