@@ -30,4 +30,5 @@ export interface JobDTO {
   jobStatus?: any
   workFlow?: any
   salesRepName? : any
+  primaryContactName?: any
 }

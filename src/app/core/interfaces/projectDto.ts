@@ -1,10 +1,10 @@
 export interface DTOProject {
-  id: number;
+  id?: number;
   projectName: string;
   projectType: string;
   projectColor: string;
   background: string;
-  accessUserID: number;
+  accessUserID: any | {};
 }
 
 export interface DTOProjectInsert {

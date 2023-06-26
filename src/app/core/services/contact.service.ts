@@ -81,6 +81,8 @@ export class ContactService {
   ): Observable<any> {
     debugger
     const formData = new FormData();
+    // const formData = new FormData();
+    // Object.assign(formData, contact);
     if (contact?.id?.toString()) {
       formData.append('id', contact?.id?.toString() ?? '0');
     }
@@ -107,7 +109,6 @@ export class ContactService {
       endDateObj.setDate(endDateObj.getDate() + 1);
       formData.append('endDate', endDateObj.toISOString());
     }
-
     formData.append('discription', contact?.discription?.toString() ?? '');
     formData.append('note', contact?.note?.toString() ?? '');
     formData.append('sourceId', contact?.sourceId?.toString() ?? '');
@@ -192,7 +193,6 @@ export class ContactService {
   }
 
   //Custom Fields
-
   addCustomField(customField: customFieldDto): Observable<any> {
     const formData = new FormData();
     if (customField?.contactId?.toString()) {
@@ -214,9 +214,9 @@ export class ContactService {
     }
   }
 
+
   deleteCustomField(customField: customFieldDto): Observable<any> {
     const formData = new FormData();
-
     formData.append('id', customField?.contactId?.toString() ?? '0');
     formData.append('customFieldName', customField.customFieldName);
     formData.append('value', customField.value);
@@ -272,10 +272,8 @@ export class ContactService {
   }
 
   // Files
-
   uploadMultipleFiles(Files: any, ContactId: number) {
     const formData = new FormData();
-
     formData.append('Files', Files?.toString() ?? '0');
     formData.append('ContactId', ContactId?.toString() ?? '0');
     return this.http.get<any>(this.baseUrl + '/File/uploadFiles' + formData);
@@ -283,7 +281,6 @@ export class ContactService {
 
   uploadFile(File: any, ContactId: number, IsProfile: boolean) {
     const formData = new FormData();
-
     formData.append('File', File?.toString() ?? '0');
     formData.append('ContactId', ContactId?.toString() ?? '0');
     formData.append('IsProfile', IsProfile?.toString() ?? '0');
@@ -309,10 +306,8 @@ export class ContactService {
   }
 
   //Notes
-
   addNewNote(note: createNoteDto) {
     const formData = new FormData();
-
     formData.append('note', note?.note?.toString() ?? '0');
     formData.append('typeId', note?.typeId?.toString() ?? '0');
     formData.append('contactId', note?.contactId?.toString() ?? '0');
@@ -322,11 +317,9 @@ export class ContactService {
 
   updateNote(note: updateNoteDto) {
     const formData = new FormData();
-
     formData.append('note', note?.note?.toString() ?? '0');
     formData.append('typeId', note?.typeId?.toString() ?? '0');
     formData.append('contactId', note?.id?.toString() ?? '0');
-
     return this.http.put<any>(this.baseUrl + '/Note/updateNote', formData);
   }
 
@@ -379,10 +372,8 @@ export class ContactService {
     if (phone?.contactId?.toString()) {
       formData.append('contactId', phone?.contactId?.toString() ?? '0');
     }
-
     formData.append('phoneNumber', phone?.phoneNumber?.toString() ?? '0');
     formData.append('typeId', phone?.typeId?.toString() ?? '0');
-
     return this.http.post<any>(
       this.baseUrl + '/PhoneNumber/addPhoneNumber',
       formData
@@ -394,7 +385,6 @@ export class ContactService {
     if (phone?.id?.toString()) {
       formData.append('contactId', phone?.id?.toString() ?? '0');
     }
-
     formData.append('phoneNumber', phone?.phoneNumber?.toString() ?? '0');
     formData.append('typeId', phone?.typeId?.toString() ?? '0');
 
