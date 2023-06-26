@@ -25,9 +25,10 @@
               "src/assets"
             ],
             "styles": [
-              "./src/index.css",
-              "@angular/material/prebuilt-themes/deeppurple-amber.css"
-             
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/index.css",
+              "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css" 
             ],
             "scripts": 
             [

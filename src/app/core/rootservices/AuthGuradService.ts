@@ -12,7 +12,7 @@ export class AuthGuradService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): boolean {
 
     if (!this.localStorage.get('Obj')) {
-      this.router.navigate(['./login']);
+      this.router.navigate(['./auth/login']);
       return false;
     }
     else if (route.data['hasRole'] &&

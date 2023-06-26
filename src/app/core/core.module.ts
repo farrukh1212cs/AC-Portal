@@ -6,6 +6,8 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AcinterceptorService } from './rootservices/acinterceptor.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CsvExportService } from './rootservices/csv-export-service.service';
 
 
 
@@ -14,17 +16,17 @@ import { AcinterceptorService } from './rootservices/acinterceptor.service';
     NavBarComponent,
     SideBarComponent,
     FooterComponent
-
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatSnackBarModule
   ],
   exports : [
     NavBarComponent,
     SideBarComponent,
     FooterComponent
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AcinterceptorService, multi: true }],
+  providers: [CsvExportService,{ provide: HTTP_INTERCEPTORS, useClass: AcinterceptorService, multi: true }],
 })
 export class CoreModule { }

@@ -1,23 +1,22 @@
-.modal-dialog {
-    width: 25vw;
-    height: 20vh;
-}
+
   
 .modal-content {
   display: flex;
   flex-direction: column;
+  padding: 20px 0px;
 }
+
 
 .modal-default-close {
   margin: 0;
-
+border-top-right-radius: 0px;
+border-bottom-right-radius: 0px;
   position: absolute;
   width: 25px;
   height: 25px;
-  border-radius: 50px;
   background-color: #7367f0 !important;
   color: #ffffff;
-  font-size: 40px;
+  font-size: 25px;
   opacity: 1;
   z-index: 10;
   cursor: pointer;
@@ -25,9 +24,8 @@
   justify-content: center;
   align-items: center;
 
-  top: 0;
-  left: 100%;
-  transform: translate(-50%, -50%);
+  top: 0px;
+  right: 0px;
 
 }
 
