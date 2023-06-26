@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { JobService } from 'src/app/core/services/job.service';
 
 @Component({
   selector: 'app-financials',
@@ -8,10 +9,26 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./financials.component.css']
 })
 export class FinancialsComponent {
-  constructor(private route: ActivatedRoute, private dialog: MatDialog) {
-    this.route.paramMap.subscribe(params => {
-      const jobId =  params.get('id');
-      console.log(jobId)
+  jobId: any;
+  events: any;
+
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private JobService: JobService,
+    private cRef: ChangeDetectorRef
+  ) {
+    this.route.paramMap.subscribe((params) => {
+      this.jobId = history.state.data;
+      console.log(this.jobId);
+    });
+  }
+
+  ngOnInit() {
+    this.JobService.getAllEvents().subscribe((res) => {
+      this.events = []
+      this.events = res
+      this.cRef.detectChanges()
     });
   }
 }

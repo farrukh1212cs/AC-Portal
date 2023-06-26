@@ -2,24 +2,27 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="text-capitalize">Activity</th>
-          <th class="text-uppercase">Type</th>
-          <th class="text-uppercase">Performed by</th>
-          <th class="text-uppercase">date</th>
-          <th class="text-uppercase"></th>
+          <th class="text-capitalize">EVENT NAME</th>
+          <th class="text-uppercase">EVENT TYPE</th>
+          <th class="text-uppercase">START DATE</th>
+          <th class="text-uppercase">END DATE</th>
+          <th class="text-uppercase">DESCRIPTION</th>
+          <th class="text-uppercase">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr *ngFor="let event of events">
           <td class="text-capitalize">
-            status changed
-            <small class="text-uppercase"
-              >"ACV SENT TO AZ" ACV MEET HOMEOWNER"</small
+            <small class="text-uppercase">
+              {{event.eventName}}
+              </small
             >
           </td>
-          <td class="text-capitalize">status changed</td>
-          <td class="text-capitalize">Nora dona</td>
-          <td>10/12/2021</td>
+          <td class="text-capitalize">{{event.eventName}}</td>
+          <td class="text-capitalize">{{event.eventType}}</td>
+          <td class="text-capitalize">{{event.startDate | date}}</td>
+          <td class="text-capitalize">{{event.endDate | date}}</td>
+          <td>{{event.description | date}}</td>
           <td>
             <div class="dropdown">
               <button

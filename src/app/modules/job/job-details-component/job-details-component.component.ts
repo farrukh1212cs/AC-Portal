@@ -111,8 +111,9 @@ export class JobDetailsComponentComponent {
       }
     }
 
-    redirectTO(route)
-    {
-      this.router.navigate([route, this.job], { state: { jobId: this.job } });
+    redirectTO(route) {
+      const fullRoute = `/jobs/${this.job.id}/`;
+      const childRoute = route; // Child route path
+      this.router.navigate([fullRoute, childRoute], { state: { data: this.job } });
     }
 }

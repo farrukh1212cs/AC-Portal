@@ -26,6 +26,7 @@ import { FinancialsComponent } from './financials/financials.component';
 import { WorkOrderComponent } from './work-order/work-order.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { WorkflowComponent } from './workflow/workflow.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { RouterModule } from '@angular/router';
     EventsComponent,
     FinancialsComponent,
     WorkOrderComponent,
+    WorkflowComponent,
   ],
   imports: [
     CommonModule,

@@ -2,45 +2,16 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="text-capitalize">WORK ORDER</th>
-          <th class="text-uppercase">DESCRIPTION</th>
-          <th class="text-uppercase"></th>
+          <th class="text-capitalize">NAME</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr *ngFor="let workFlow of workFlows">
           <td class="text-capitalize">
-            status changed
             <small class="text-uppercase"
-              >"ACV SENT TO AZ" ACV MEET HOMEOWNER"</small
+              >{{workFlow.workFlowName}}</small
             >
           </td>
-          <td class="text-capitalize">status changed</td>
-          <!-- <td class="text-capitalize">Nora dona</td>
-          <td>10/12/2021</td>
-          <td>
-            <div class="dropdown">
-              <button
-                type="button"
-                class="btn btn-sm dropdown-toggle hide-arrow"
-                data-bs-toggle="dropdown"
-              >
-                <i class="material-symbols-outlined">more_vert</i>
-              </button>
-              <div class="dropdown-menu">
-                <a href="#" class="dropdown-item d-flex align-items-center">
-                  <i class="material-symbols-outlined me-50 fs-15px"
-                    >border_color</i
-                  >
-                  <span>Edit</span>
-                </a>
-                <a type="button" class="dropdown-item d-flex align-items-center">
-                  <i class="material-symbols-outlined me-50 fs-15px">delete</i>
-                  <span>Delete</span>
-                </a>
-              </div>
-            </div>
-          </td> -->
         </tr>
       </tbody>
     </table>

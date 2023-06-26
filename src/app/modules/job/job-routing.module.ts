@@ -7,6 +7,7 @@ import { JobsLogbookComponent } from './jobs-logbook/jobs-logbook.component';
 import { FinancialsComponent } from './financials/financials.component';
 import { EventsComponent } from './events/events.component';
 import { WorkOrderComponent } from './work-order/work-order.component';
+import { WorkflowComponent } from './workflow/workflow.component';
 
 const routes: Routes = [
   { path: '', component: JobsComponent },
@@ -14,10 +15,12 @@ const routes: Routes = [
     path: ':id',
     component: JobDetailsComponentComponent,
     children: [
+      { path: '', component: JobsLogbookComponent },
       { path: 'logbook', component: JobsLogbookComponent },
       { path: 'financials', component: FinancialsComponent },
       { path: 'events', component: EventsComponent },
       { path: 'workorder', component: WorkOrderComponent },
+      { path: 'workflows', component: WorkflowComponent },
     ],
   },
 ];
