@@ -52,6 +52,9 @@ export class JobsComponent {
         this.salesReps = salesRepRes.payload;
         this.statuses = statusesRes.payload;
         this.allContacts = contactsRes.payload;
+        this.allContacts.forEach(element => {
+          element.name = element.firstName + ' ' + element.lastName
+        });
 
         // Now call getAllJobs()
         this.getAllJobs();

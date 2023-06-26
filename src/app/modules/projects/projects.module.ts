@@ -18,6 +18,7 @@ import { TagInputModule } from 'ngx-chips';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { ProjectsLogbookComponent } from './projects-logbook/projects-logbook.component';
 
 
 
@@ -26,6 +27,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     ProjectsComponent,
     AddProjectComponent,
     ProjectDetailsComponent,
+    ProjectsLogbookComponent,
     
   ],
   imports: [

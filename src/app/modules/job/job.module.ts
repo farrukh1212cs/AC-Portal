@@ -20,6 +20,12 @@ import { AddJobEventComponent } from './add-job-event/add-job-event.component';
 import { AddJobWorkOrderComponent } from './add-job-work-order/add-job-work-order.component';
 import { JobDetailsComponentComponent } from './job-details-component/job-details-component.component';
 import { CoreModule } from 'src/app/core/core.module';
+import { JobsLogbookComponent } from './jobs-logbook/jobs-logbook.component';
+import { EventsComponent } from './events/events.component';
+import { FinancialsComponent } from './financials/financials.component';
+import { WorkOrderComponent } from './work-order/work-order.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -29,6 +35,10 @@ import { CoreModule } from 'src/app/core/core.module';
     AddJobEventComponent,
     AddJobWorkOrderComponent,
     JobDetailsComponentComponent,
+    JobsLogbookComponent,
+    EventsComponent,
+    FinancialsComponent,
+    WorkOrderComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +56,8 @@ import { CoreModule } from 'src/app/core/core.module';
     TagInputModule,
     MatMenuModule,
     MatSnackBarModule,
-    CoreModule
+    CoreModule,
+    RouterModule
   ]
 })
 export class JobModule { }
