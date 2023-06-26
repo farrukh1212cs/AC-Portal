@@ -1,7 +1,7 @@
 FROM node:latest as build
 WORKDIR /app
 COPY . . 
-RUN npm install
+RUN npm install -f
 RUN npm run build --prod
 
 
