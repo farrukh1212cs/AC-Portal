@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AcinterceptorService } from './rootservices/acinterceptor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CsvExportService } from './rootservices/csv-export-service.service';
+import { ColorSliderComponent } from './color-slider/color-slider.component';
 
 
 
@@ -15,7 +16,8 @@ import { CsvExportService } from './rootservices/csv-export-service.service';
   declarations: [
     NavBarComponent,
     SideBarComponent,
-    FooterComponent
+    FooterComponent,
+    ColorSliderComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { CsvExportService } from './rootservices/csv-export-service.service';
   exports : [
     NavBarComponent,
     SideBarComponent,
-    FooterComponent
+    FooterComponent,
+    ColorSliderComponent
   ],
   providers: [CsvExportService,{ provide: HTTP_INTERCEPTORS, useClass: AcinterceptorService, multi: true }],
 })

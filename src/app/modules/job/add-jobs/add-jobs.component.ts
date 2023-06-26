@@ -15,6 +15,7 @@ import { UtilityService } from 'src/app/core/services/shared/UtilityService';
 import { Subscription } from 'rxjs';
 import { CreatePhoneNumbersDto } from 'src/app/modules/contact/CreatePhoneNumbersDto';
 import { JobService } from 'src/app/core/services/job.service';
+import { ContactService } from 'src/app/core/services/contact.service';
 
 @Component({
   selector: 'app-add-jobs',
@@ -50,6 +51,7 @@ export class AddJobsComponent implements OnInit {
   sources: any;
   states: any;
   @ViewChild('fileInput') fileInput: any;
+  PrimaryContacts: any;
 
   constructor(
     private dialogRef: MatDialogRef<AddJobsComponent>,
@@ -58,7 +60,8 @@ export class AddJobsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private utilityService: UtilityService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private contactService: ContactService
   ) {
     if (data) {
       this.modelMain = data;
@@ -99,6 +102,7 @@ export class AddJobsComponent implements OnInit {
       stateId: new FormControl(''),
       salesRepId: new FormControl('', Validators.required),
       subContractorId: new FormControl(''),
+      primaryContactId: new FormControl(''),
       TeamMememberId: new FormControl([]),
       officeLocationId: new FormControl('', Validators.required),
       workFlowId: new FormControl('', Validators.required),
@@ -118,6 +122,7 @@ export class AddJobsComponent implements OnInit {
       this.getOfficeLocation(),
       this.getSalesRep(),
       this.getWorkflows(),
+      this.getAllcontacts(),
       this.getStatuses(),
       this.getSubcontractors(),
       this.getRelatedcontacts(),
@@ -139,18 +144,22 @@ export class AddJobsComponent implements OnInit {
             startDate: this.updateData.startDate,
             endDate: this.updateData.endDate,
             discription: this.updateData.description,
-            leadSourceId: this.updateData.leadSourceId,
+            sourceId: this.updateData.leadSourceId,
             stateId: this.updateData.stateId,
             salesRepId: this.updateData.salesRepsentativeId,
             subContractorId: this.updateData.subContractorId,
             officeLocationId: this.updateData.officeLocationId,
+            primaryContactId: this.updateData.primaryContactId,
             workFlowId: this.updateData.workFlowId,
             statusId: this.updateData.jobStatusId,
             faxNo: this.updateData.faxNo,
             officeNumber: this.updateData.officeNo,
             homeNumber: this.updateData.homeNo,
             mobileNumber: this.updateData.mobileNo,
+            TeamMememberId: this.updateData.TeamMememberId,
+            lastStatusChangeDate: this.updateData.lastStatusChangeDate,
           });
+          
         }
       })
       .catch((error) => {
@@ -229,7 +238,7 @@ export class AddJobsComponent implements OnInit {
         startDate: new Date(this.JobDto.startDate).toISOString(),
         endDate: new Date(this.JobDto.endDate).toISOString(),
         description: this.JobDto.discription,
-        leadSourceId: Number(this.JobDto.leadSource?? "0"),
+        leadSourceId: Number(this.JobDto.sourceId?? "0"),
         salesRepsentativeId: this.JobDto.salesRepId,
         officeLocationId: this.JobDto.officeLocationId,
         workFlowId: this.JobDto.workFlowId,
@@ -312,6 +321,7 @@ export class AddJobsComponent implements OnInit {
       })
     );
   }
+
   getStatuses() {
     this.subscriptions.add(
       this.jobService.allStatus().subscribe({
@@ -324,6 +334,7 @@ export class AddJobsComponent implements OnInit {
       })
     );
   }
+
   getSubcontractors() {
     this.subscriptions.add(
       this.jobService.allSubcontractors().subscribe({
@@ -336,11 +347,29 @@ export class AddJobsComponent implements OnInit {
       })
     );
   }
+
   getRelatedcontacts() {
     this.subscriptions.add(
       this.jobService.allRelatedContacts().subscribe({
         next: (res) => {
           this.RelatedContactId = res.payload;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
+    );
+  }
+
+  getAllcontacts() {
+    this.subscriptions.add(
+      this.contactService.allResult().subscribe({
+        next: (res) => {
+          console.log("Contacts: ", res.payload);
+          this.PrimaryContacts = res.payload.map(contact => ({
+            id: contact.id,
+            name: contact.firstName + ' ' + contact.lastName
+          }));
         },
         error: (err) => {
           console.log(err);

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddJobWorkOrderComponent } from '../add-job-work-order/add-job-work-order.component';
 import { AddJobEventComponent } from '../add-job-event/add-job-event.component';
@@ -13,7 +13,7 @@ import { AddWorkflowComponent } from '../add-workflow/add-workflow.component';
 export class JobDetailsComponentComponent {
   job: any;
 
-  constructor(private route: ActivatedRoute, private dialog: MatDialog) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog,private router:Router) {
     this.route.paramMap.subscribe(params => {
       const jobId =  params.get('id');
       this.job = history.state.model;
@@ -109,5 +109,10 @@ export class JobDetailsComponentComponent {
         dialogRef.afterClosed().subscribe((result: any) => {
         });
       }
+    }
+
+    redirectTO(route)
+    {
+      this.router.navigate([route, this.job], { state: { jobId: this.job } });
     }
 }
