@@ -31,8 +31,8 @@ export class ProjectsComponent {
     typeName: string;
   }[] = [];
   salesReps: any[] = [];
-  allContacts: any;
   projects: DTOProject[] = [];
+  relatedcontacts: any;
 
   constructor(
     private router: Router,
@@ -44,57 +44,26 @@ export class ProjectsComponent {
   ) {}
 
   ngOnInit() {
-    this.getAllProjects()
-    // this.openAddProjectModal()
-    // const salesRepObservable = this.jobService.allSalesRep();
-    // const statusesObservable = this.jobService.allStatus();
-    // const contactsObservable = this.contactService.allResult();
-    // forkJoin([salesRepObservable, statusesObservable,contactsObservable]).subscribe({
-    //   next: (results) => {
-    //     const salesRepRes = results[0];
-    //     const statusesRes = results[1];
-    //     const contactsRes = results[2];
-    //     this.salesReps = salesRepRes.payload;
-    //     this.statuses = statusesRes.payload;
-    //     this.allContacts = contactsRes.payload;
-
-    //     // Now call getAllJobs()
-    //     this.getAllJobs();
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //   },
-    // });
+    this.getRelatedcontacts()
   }
 
   getAllProjects(pageNumber = 1, pageSize = 1000) {
     this.subscriptions.add(
       this.projService.getAllProjects().subscribe({
         next: (res: any) => {
-          console.log(res)
-          this.projects = res.payload
+          const primaryContactMap = new Map<number, string>();
+          this.relatedcontacts.forEach((contact) => {
+            primaryContactMap.set(contact.id, contact.name);
+          });
+
+          this.projects = res
+          this.projects.forEach((x) => {
+            x.accessUserName = primaryContactMap.get(x.accessUserID) || '';
+          });
         },
         error: (err) => {
           console.log(err);
-          const data: DTOProject[] = [{
-            id: 1,
-            projectName: 'Test Project 1',
-            projectType: 'Test Type 1',
-            projectColor: '#a897b7',
-            background: '#a867b6',
-            accessUserID: {id: 1, name: 'Access User 1'}
-          },
-          {
-            id: 2,
-            projectName: 'Test Project 2',
-            projectType: 'Test Type 2',
-            projectColor: '#a897b7',
-            background: '#a867b6',
-            accessUserID: {id: 2, name: 'Access User 2'}
-          }
-        ]
-          this.projects = data
-        },
+        }
       })
     );
   }
@@ -171,12 +140,34 @@ export class ProjectsComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       debugger
       if (result) {
-        this.jobService.deleteJob(data).subscribe({
+        const proj: DTOProject = {
+          projectName: data.projectName,
+          projectType: data.projectType,
+          projectColor: data.projectColor,
+          background: data.background,
+          accessUserID: data.accessUserID
+        }
+        this.projService.deleteProject(proj).subscribe({
           next: (res) => {
             console.log(res);
           },
         });
       }
     });
+  }
+
+
+  getRelatedcontacts() {
+    this.subscriptions.add(
+      this.contactService.getRelatedContactsDropDown().subscribe({
+        next: (res) => {
+          this.relatedcontacts = res.payload;
+          this.getAllProjects()
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      })
+    );
   }
 }

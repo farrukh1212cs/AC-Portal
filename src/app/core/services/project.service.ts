@@ -23,17 +23,21 @@ export class ProjectService {
   }
 
   createProject(project: DTOProjectInsert): Observable<any> {
-    const url = `${this.baseUrl}/CreateProject`;
+    const url = `${this.baseUrl}/CreateProjects`;
     return this.http.post(url, project);
   }
 
   updateProject(project: DTOProject): Observable<any> {
-    const url = `${this.baseUrl}/UpdateProject`;
+    const url = `${this.baseUrl}/UpdateProjects`;
     return this.http.post(url, project);
   }
 
   deleteProject(project: DTOProject): Observable<any> {
-    const url = `${this.baseUrl}/DeleteProject`;
-    return this.http.post(url, project);
+    const url = `${this.baseUrl}/DeleteProjects`;
+    const options = {
+      body: project // Pass the project as the request body
+    };
+    return this.http.delete(url, options);
   }
+  
 }

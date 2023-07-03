@@ -24,10 +24,10 @@
                         placeholder="Choose an office"
                       >
                         <mat-option
-                          *ngFor="let ofc of relatedcontacts"
-                          [value]="ofc.id"
+                          *ngFor="let contact of relatedcontacts"
+                          [value]="contact.id"
                         >
-                        {{ofc.officeLocationName}}
+                        {{contact.name}}
                         </mat-option>
                       </mat-select>
                       <mat-error

@@ -85,7 +85,7 @@ export class AddProjectComponent {
   onSubmit(): void {
     console.log(this.projectForm.value)
     this.projectForm.markAllAsTouched();
-    if (this.projectForm.valid && this.updateData?.id) {
+    if (this.projectForm.valid && !this.updateData?.id) {
       this.subscriptions.add(
         this.projectService
           .createProject(

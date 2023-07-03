@@ -3,6 +3,7 @@ export interface DTOProject {
   projectName: string;
   projectType: string;
   projectColor: string;
+  accessUserName? : any;
   background: string;
   accessUserID: any | {};
 }
